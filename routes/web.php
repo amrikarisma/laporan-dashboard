@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['validate_session']], function () {
+    Route::get('/', function () {
+        return view('pages.dashboard');
+    });
 });
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'processLogin'])->name('login.post');
+Route::any('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
