@@ -8,38 +8,42 @@
                 <thead>
                     <tr>
                         <th>
-                            {{ _('Date')}}
-                        </th>
-                        <th>
                             {{ _('Nama')}}
                         </th>
                         <th>
-                            {{ _('Jam Masuk')}}
+                            {{ _('Jabatan')}}
                         </th>
                         <th>
-                            {{ _('Jam Keluar')}}
+                            {{ _('Divisi')}}
                         </th>
                         <th>
-                            {{ _('Lokasi Masuk')}}
+                            {{ _('Unit Cabang')}}
                         </th>
                         <th>
-                            {{ _('Lokasi Keluar')}}
+                            {{ _('Tanggal Bergabung')}}
                         </th>
                         <th>
-                            {{ _('Keterangan')}}
+                            {{ _('SK Pengangkatan')}}
+                        </th>
+                        <th>
+                            {{ _('NIK')}}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($anggotas as $anggota)
                     <tr>
-                        <td>{{ $absent['date'] }}</td>
-                        <td>{{ $absent['user']['name'] }}</td>
-                        <td>{{ $absent['time_in'] }}</td>
-                        <td>{{ $absent['time_out'] }}</td>
-                        <td>{{ $absent['geolocation_in'] }}</td>
-                        <td>{{ $absent['geolocation_out'] }}</td>
-                        <td>{{ $absent['keterangan'] }}</td>
+                        <td>{{ $anggota['user']['name'] }}</td>
+                        <td>{{ $anggota['jabatan']['name'] }}</td>
+                        <td>{{ $anggota['divisi']['name'] }}</td>
+                        <td>{{ $anggota['cabang']['name'] }}</td>
+                        <td>{{ \Carbon\Carbon::parse($anggota['join_date'])->locale('id_ID')->isoFormat('D MMMM Y')??'' }}</td>
+                        <td>{{ $anggota['sk_pengangkatan'] }}</td>
+                        <td>{{ $anggota['nik'] }}</td>
+                        <td>
+                            <a class="btn btn-primary"
+                            href="{{ route('anggota.show', $anggota['id']) }}">Detail</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

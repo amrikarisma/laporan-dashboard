@@ -39,18 +39,25 @@
                         <th>
                             {{ _('Pengirim')}}
                         </th>
+                        <th>
+                            {{ _('')}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($kunjungans as $kunjungan)
                     <tr>
                         <td>{{ $kunjungan['laporan_title'] }}</td>
-                        <td>{{ $kunjungan['laporan_description'] }}</td>
+                        <td>{{ strip_tags(Str::limit($kunjungan['laporan_description'],20) ) }}</td>
                         <td>{{ $kunjungan['laporan_geolocation'] }}</td>
                         <td>{{ $kunjungan['laporan_performance'] }}</td>
                         <td>{{ $kunjungan['laporan_category'] }}</td>
-                        <td>{{ $kunjungan['created_at'] }}</td>
+                        <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                         <td>{{ $kunjungan['user']['name'] }}</td>
+                        <td>
+                            <a class="btn btn-primary"
+                            href="{{ route('kunjungan.show', $kunjungan['id']) }}">Detail</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

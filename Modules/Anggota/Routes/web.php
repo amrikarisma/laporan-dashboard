@@ -12,5 +12,6 @@
 */
 
 Route::prefix('anggota')->group(function() {
-    Route::get('/', 'AnggotaController@index');
+    Route::get('/', 'AnggotaController@index')->name('anggota.index');
+    Route::get('/{id}', 'AnggotaController@show')->name('anggota.show');
 });

@@ -16,6 +16,7 @@ class KunjunganController extends Controller
     public function index()
     {
         $kunjungans = MyHelper::apiGet('laporan')['data']??[];
+        
         return view('kunjungan::index', compact('kunjungans'));
     }
 
@@ -45,7 +46,13 @@ class KunjunganController extends Controller
      */
     public function show($id)
     {
-        return view('kunjungan::show');
+        $kunjungan = MyHelper::apiGet('laporan/'.$id)['data']??[];
+
+        if(!$kunjungan) {
+            return redirect(route('kunjungan.index'));
+        }
+
+        return view('kunjungan::show', compact('kunjungan'));
     }
 
     /**

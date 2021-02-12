@@ -16,6 +16,7 @@ class AnggotaController extends Controller
     public function index()
     {
         $anggotas = MyHelper::apiGet('anggota')['data']??[];
+
         return view('anggota::index', compact('anggotas'));
     }
 
@@ -45,7 +46,9 @@ class AnggotaController extends Controller
      */
     public function show($id)
     {
-        return view('anggota::show');
+        $anggota = MyHelper::apiGet('anggota/'.$id)['data']??[];
+        // return $anggota;
+        return view('anggota::show', compact('anggota'));
     }
 
     /**

@@ -12,6 +12,7 @@
 */
 
 Route::prefix('laporan-kunjungan')->group(function() {
-    Route::get('/', 'KunjunganController@index');
-    Route::post('/', 'KunjunganController@index');
+    Route::get('/', 'KunjunganController@index')->name('kunjungan.index');
+    Route::get('/{id}', 'KunjunganController@show')->name('kunjungan.show');
+    Route::post('/', 'KunjunganController@index')->name('kunjungan.post');
 });
