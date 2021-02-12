@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Presensi\Http\Controllers;
+namespace Modules\Kunjungan\Http\Controllers;
 
 use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class PresensiController extends Controller
+class KunjunganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,8 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        $absents = MyHelper::apiGet('presensi')['data']??[];
-
-        return view('presensi::index', compact('absents'));
+        $kunjungans = MyHelper::apiGet('laporan')['data']??[];
+        return view('kunjungan::index', compact('kunjungans'));
     }
 
     /**
@@ -26,7 +25,7 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        return view('presensi::create');
+        return view('kunjungan::create');
     }
 
     /**
@@ -46,7 +45,7 @@ class PresensiController extends Controller
      */
     public function show($id)
     {
-        return view('presensi::show');
+        return view('kunjungan::show');
     }
 
     /**
@@ -56,7 +55,7 @@ class PresensiController extends Controller
      */
     public function edit($id)
     {
-        return view('presensi::edit');
+        return view('kunjungan::edit');
     }
 
     /**

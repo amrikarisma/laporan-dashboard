@@ -1,4 +1,6 @@
 {
     "Dashboard": true,
-    "Presensi": true
+    "Presensi": true,
+    "Anggota": true,
+    "Kunjungan": true
 }

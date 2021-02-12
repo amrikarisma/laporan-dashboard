@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-    <h1>Laporan Presensi</h1>
+    <h1>Data Anggota</h1>
     <div class="card">
         <div class="card-body">
             <table class="table">
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($absents as $absent)
+                    @foreach ($anggotas as $anggota)
                     <tr>
                         <td>{{ $absent['date'] }}</td>
                         <td>{{ $absent['user']['name'] }}</td>
