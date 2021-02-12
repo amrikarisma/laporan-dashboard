@@ -1,0 +1,13 @@
+{
+    "name": "Presensi",
+    "alias": "presensi",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Presensi\\Providers\\PresensiServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

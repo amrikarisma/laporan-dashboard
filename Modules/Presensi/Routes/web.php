@@ -11,7 +11,6 @@
 |
 */
 
-
-Route::group(['middleware' => ['validate_session']], function () {
-    Route::get('/', 'DashboardController@index');
+Route::prefix('laporan-presensi')->group(function() {
+    Route::get('/', 'PresensiController@index');
 });

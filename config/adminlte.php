@@ -65,11 +65,11 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
+    'usermenu_image' => true,
     'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -234,12 +234,73 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+        ['header' => 'MAIN NAVIGATION'],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
+            'text'        => 'Dashboard',
+            'url'         => '/',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
+        ],
+        [
+            'text'        => 'History Lokasi Anggota',
+            'url'         => '/history',
+            'icon'        => 'fas fa-fw fa-history',
+        ],
+        [
+            'text'        => 'Monitoring Laporan',
+            'url'         => '/monitoring',
+            'icon'        => 'fas fa-fw fa-laptop',
+            'submenu' => [
+                [
+                    'text' => 'Laporan Presensi',
+                    'url'  => '/laporan-presensi',
+                ],
+                [
+                    'text' => 'Laporan Kunjungan',
+                    'url'  => '/laporan-kunjungan',
+                ],
+                [
+                    'text' => 'Laporan Kegiatan',
+                    'url'  => '/laporan-kegiatan',
+                ],
+                [
+                    'text' => 'GPS aktif',
+                    'url'  => '/laporan-gps',
+                ],
+            ],
+        ],
+        [
+            'text'        => 'Indikator Kegiatan',
+            'url'         => '/kegiatan',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        ['header' => 'MASTER DATA'],
+        [
+            'text'        => 'Data Pegawai dan Anggota',
+            'url'         => '/anggota',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Presensi Anggota',
+            'url'         => '/presensi',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Jabatan',
+            'url'         => '/jabatan',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Unit Cabang',
+            'url'         => '/unit-cabang',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        ['header' => 'INFORMASI'],
+        [
+            'text'        => 'Broadcast Pengumuman',
+            'url'         => '/broadcast',
+            'icon'        => 'far fa-fw fa-file',
         ],
         ['header' => 'account_settings'],
         [

@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         } else {
             session([
-                'token'         => $post_login['token'],
+                'token'         => 'Bearer '.$post_login['token'],
                 'email'         => $request->email,
             ]);
 
