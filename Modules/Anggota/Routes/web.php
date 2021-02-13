@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('anggota')->group(function() {
+Route::prefix('anggota')->middleware('validate_session')->group(function() {
     Route::get('/', 'AnggotaController@index')->name('anggota.index');
     Route::get('/{id}', 'AnggotaController@show')->name('anggota.show');
 });

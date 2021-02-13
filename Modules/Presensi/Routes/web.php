@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('laporan-presensi')->group(function() {
+Route::prefix('laporan-presensi')->middleware('validate_session')->group(function() {
     Route::get('/', 'PresensiController@index')->name('presensi.index');
     Route::get('/{id}', 'PresensiController@show')->name('presensi.show');
 });

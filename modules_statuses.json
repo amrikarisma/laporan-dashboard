@@ -3,5 +3,6 @@
     "Presensi": true,
     "Anggota": true,
     "Kunjungan": true,
-    "History": true
+    "History": true,
+    "Jabatan": true
 }

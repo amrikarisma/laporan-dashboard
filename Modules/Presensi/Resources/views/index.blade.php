@@ -1,8 +1,10 @@
 @extends('adminlte::page')
 
 @section('content')
-    <h1>Laporan Presensi</h1>
     <div class="card">
+        <div class="card-header">
+            <h3>Laporan Presensi</h3>
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>

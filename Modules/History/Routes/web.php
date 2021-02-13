@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('history')->group(function() {
+Route::prefix('history')->middleware('validate_session')->group(function() {
     Route::get('/', 'HistoryController@index');
 });
