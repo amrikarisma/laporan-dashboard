@@ -2,5 +2,6 @@
     "Dashboard": true,
     "Presensi": true,
     "Anggota": true,
-    "Kunjungan": true
+    "Kunjungan": true,
+    "History": true
 }
