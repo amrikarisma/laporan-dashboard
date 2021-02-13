@@ -4,5 +4,6 @@
     "Anggota": true,
     "Kunjungan": true,
     "History": true,
-    "Jabatan": true
+    "Jabatan": true,
+    "Cabang": true
 }
