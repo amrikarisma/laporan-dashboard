@@ -15,7 +15,7 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        $jabatans = MyHelper::apiGet('jabatan')['data']??[];
+        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
 
         return view('jabatan::index', compact('jabatans'));
     }
@@ -26,7 +26,13 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        return view('jabatan::create');
+        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
+        $jabatan_parent = [];
+        foreach ($jabatans as $jabatan) {
+            $jabatan_parent[$jabatan['id']] = $jabatan['name'];
+        }
+        // return $jabatan_parent;
+        return view('jabatan::create', compact('jabatan_parent'));
     }
 
     /**
@@ -37,11 +43,11 @@ class JabatanController extends Controller
     public function store(Request $request)
     {
         $form = $request->except(['_token']);
-        $jabatan = MyHelper::apiRequest('post','jabatan', $form )??[];
+        $jabatan = MyHelper::apiRequest('post', 'jabatan', $form) ?? [];
         // return $jabatan;
-        if(isset($jabatan['error'])) {
+        if (isset($jabatan['error'])) {
             return redirect()->back()->withErrors($jabatan['error'])->withInput();
-        }   
+        }
         // return redirect()->route('jabatan.show',$jabatan['data']['id'])->with('message', $jabatan['message']);        //
         return redirect()->route('jabatan.index')->with('message', $jabatan['message']);        //
     }
@@ -53,8 +59,8 @@ class JabatanController extends Controller
      */
     public function show($id)
     {
-        $jabatan = MyHelper::apiGet('jabatan/'.$id)['data']??[];
-        if(!$jabatan) {
+        $jabatan = MyHelper::apiGet('jabatan/' . $id)['data'] ?? [];
+        if (!$jabatan) {
             return redirect()->route('jabatan.index');
         }
 
@@ -68,11 +74,17 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        $jabatan = MyHelper::apiGet('jabatan/'.$id)['data']??[];
-        if(!$jabatan) {
+        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
+        $jabatan_parent = [];
+        foreach ($jabatans as $jabatan) {
+            $jabatan_parent[$jabatan['id']] = $jabatan['name'];
+        }
+
+        $jabatan = MyHelper::apiGet('jabatan/' . $id)['data'] ?? [];
+        if (!$jabatan) {
             return redirect()->route('jabatan.index');
         }
-        return view('jabatan::edit', compact('jabatan'));
+        return view('jabatan::edit', compact('jabatan','jabatan_parent'));
     }
 
     /**
@@ -84,11 +96,13 @@ class JabatanController extends Controller
     public function update(Request $request, $id)
     {
         $form = $request->except(['_token']);
-        $jabatan = MyHelper::apiRequest('put','jabatan/'.$id, $form )??[];
-        if($jabatan['error']) {
+        $jabatan = MyHelper::apiRequest('put', 'jabatan/' . $id, $form) ?? [];
+
+        if (isset($jabatan['error'])) {
             return redirect()->back()->with('error', $jabatan['error']);
         }
-        return redirect()->route('jabatan.show',$id)->with('message', $jabatan['message']);
+        
+        return redirect()->route('jabatan.show', $id)->with('message', $jabatan['message']);
     }
 
     /**
@@ -98,7 +112,7 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        $jabatan = MyHelper::apiRequest('delete','jabatan/'.$id )??[];
+        $jabatan = MyHelper::apiRequest('delete', 'jabatan/' . $id) ?? [];
         return redirect()->route('jabatan.index')->with('message', $jabatan['message']);
     }
 }

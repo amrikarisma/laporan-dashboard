@@ -10,6 +10,11 @@
                 <thead></thead>
                 <tbody>
                     <tr>
+                        <td>{{ 'Jabatan Diatasnya' }}</td>
+                        <td>:</td>
+                        <td>{{ $jabatan['parent']['name']??'' }}</td>
+                    </tr>
+                    <tr>
                         <td>{{ 'Nama' }}</td>
                         <td>:</td>
                         <td>{{ $jabatan['name']??'' }}</td>

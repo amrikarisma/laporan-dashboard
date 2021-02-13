@@ -1,8 +1,12 @@
 @extends('adminlte::page')
 
 @section('content')
-    <h1>Data Anggota</h1>
     <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h3>Data Anggota</h3>
+            </div>
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>
