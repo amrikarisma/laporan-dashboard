@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($cabangs as $cabang)
+                    @foreach ($cabangs['data'] as $cabang)
                     <tr>
                         <td>
                             <div class="parent d-inline-flex">
