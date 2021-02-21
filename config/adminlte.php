@@ -271,9 +271,23 @@ return [
             ],
         ],
         [
-            'text'        => 'Indikator Kegiatan',
-            'url'         => '/kegiatan',
+            'text'        => 'Indikator',
+            'url'         => '/indikator',
             'icon'        => 'far fa-fw fa-file',
+            'submenu' => [
+                [
+                    'text' => 'Akurasi Kedisiplinan',
+                    'url'  => '/indikator/kedisiplinan',
+                ],
+                [
+                    'text' => 'Akurasi Lokasi',
+                    'url'  => '/indikator/akurasi-lokasi',
+                ],
+                [
+                    'text' => 'Akurasi Bobot Kegiatan',
+                    'url'  => '/indikator/bobot-kegiatan',
+                ],
+            ]
         ],
         ['header' => 'MASTER DATA'],
         [

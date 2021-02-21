@@ -5,5 +5,9 @@
     "Kunjungan": true,
     "History": true,
     "Jabatan": true,
-    "Cabang": true
+    "Cabang": true,
+    "Indikator": true,
+    "IndikatorKedisiplinan": true,
+    "IndikatorAkurasiLokasi": true,
+    "IndikatorBobotKegiatan": true
 }

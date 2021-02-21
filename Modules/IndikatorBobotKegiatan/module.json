@@ -1,0 +1,13 @@
+{
+    "name": "IndikatorBobotKegiatan",
+    "alias": "indikatorbobotkegiatan",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\IndikatorBobotKegiatan\\Providers\\IndikatorBobotKegiatanServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -2,19 +2,30 @@
 
 namespace Modules\History\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class HistoryController extends Controller
 {
+    public function location()
+    {
+        $location = MyHelper::apiGet('location')['data']??[];
+        return $location;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('history::index');
+        $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
+
+        $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
+
+        return view('history::index', compact('anggota','jabatan', 'request'));
+
     }
 
     /**
