@@ -17,17 +17,17 @@
                     <tr>
                         <td>Nama Cabang</td>
                         <td>:</td>
-                        <td>{{ $cabang['name'] }}</td>
+                        <td>{{ $cabang['name']??'' }}</td>
                     </tr>
                     <tr>
                         <td>Penanggung Jawab</td>
                         <td>:</td>
-                        <td>{{ $cabang['anggota']['user']['name'] }}</td>
+                        <td>{{ $cabang['anggota']['user']['name']??'' }}</td>
                     </tr>
                     <tr>
                         <td>No. Telp</td>
                         <td>:</td>
-                        <td>{{ $cabang['phone_number'] }}</td>
+                        <td>{{ $cabang['phone_number']??'' }}</td>
                     </tr>
                 </table>
             </div>
