@@ -3,7 +3,9 @@
 @section('content')
 <div class="row">
     <div class="col-3">
-        <img src="{{ $anggota['user']['userdata']['profile_photo']??'' }}"  width="img-thumbnail"/>
+        <div class="img-thumbnail">
+        <img src="{{ $anggota['user']['userdata']['profile_photo'] ?? asset('image/avatar-no-image.png') }}"  class="img-fluid"/>
+        </div>
     </div>
     <div class="col-9">
         <div class="card">
