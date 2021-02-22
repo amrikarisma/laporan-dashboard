@@ -51,10 +51,10 @@ class MyHelper{
     }
 
     public static function apiGet($url, $data = []){
-        $api = env('CMS_PB_API_URL');
+        $api = env('API_URL');
         $client = new Client;
 
-        $ses = session('access_token');
+        $ses = session('token');
 
         $content = array(
             'headers' => [
@@ -77,7 +77,7 @@ class MyHelper{
         }
 
         try {
-            $response =  $client->request('GET',$api.'/api/cms/'.$url, $content);
+            $response =  $client->request('GET',$api.'/api/'.$url, $content);
             return json_decode($response->getBody(), true);
         }
         catch (\GuzzleHttp\Exception\RequestException $e) {
@@ -104,17 +104,16 @@ class MyHelper{
     }
 
     public static function apiPost($url,$post){
-        $api = env('CMS_PB_API_URL');
+        $api = env('API_URL');
         $client = new Client;
-        // return $api.'api/cms/'.$url;
-        $ses = session('access_token');
+        $ses = session('token');
 
         $content = array(
             'headers' => [
                 'Authorization' => $ses,
                 'Accept'        => 'application/json',
                 'Content-Type'  => 'application/json',
-                'ip-address-view' => \Request::ip(),
+                'ip-address-view' => Request::ip(),
                 'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
             ],
             'json' => (array) $post,
@@ -123,7 +122,7 @@ class MyHelper{
         );
 
         try {
-            $response = $client->post($api.'/api/cms/'.$url,$content);
+            $response = $client->post($api.'/api/'.$url,$content);
             if(!is_array(json_decode($response->getBody(), true)));
             return json_decode($response->getBody(), true);
         }catch (\GuzzleHttp\Exception\RequestException $e) {
@@ -144,17 +143,17 @@ class MyHelper{
 
     public static function apiRequest($method, $url, $post = []){
         $method = strtolower($method);
-        $api = env('CMS_PB_API_URL');
+        $api = env('API_URL');
         $client = new Client;
 
-        $ses = session('access_token');
+        $ses = session('token');
 
         $content = array(
             'headers' => [
                 'Authorization' => $ses,
                 'Accept'        => 'application/json',
                 'Content-Type'  => 'application/json',
-                'ip-address-view' => \Request::ip(),
+                'ip-address-view' => Request::ip(),
                 'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
             ],
             'connect_timeout' => 30
@@ -174,7 +173,7 @@ class MyHelper{
         }
 
         try {
-            $response = $client->$method($api.'/api/cms/'.$url,$content);
+            $response = $client->$method($api.'/api/'.$url,$content);
             if(!is_array(json_decode($response->getBody(), true)));
             return json_decode($response->getBody(), true);
         }catch (\GuzzleHttp\Exception\RequestException $e) {

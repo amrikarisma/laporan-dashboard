@@ -1,0 +1,13 @@
+{
+    "name": "Kunjungan",
+    "alias": "kunjungan",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Kunjungan\\Providers\\KunjunganServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -1,0 +1,13 @@
+{
+    "Dashboard": true,
+    "Presensi": true,
+    "Anggota": true,
+    "Kunjungan": true,
+    "History": true,
+    "Jabatan": true,
+    "Cabang": true,
+    "Indikator": true,
+    "IndikatorKedisiplinan": true,
+    "IndikatorAkurasiLokasi": true,
+    "IndikatorBobotKegiatan": true
+}

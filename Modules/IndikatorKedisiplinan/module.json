@@ -1,0 +1,13 @@
+{
+    "name": "IndikatorKedisiplinan",
+    "alias": "indikatorkedisiplinan",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\IndikatorKedisiplinan\\Providers\\IndikatorKedisiplinanServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

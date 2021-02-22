@@ -1,0 +1,13 @@
+{
+    "name": "IndikatorAkurasiLokasi",
+    "alias": "indikatorakurasilokasi",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\IndikatorAkurasiLokasi\\Providers\\IndikatorAkurasiLokasiServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

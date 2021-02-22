@@ -19,7 +19,7 @@ class ValidateSession
         if (session()->has('email')) {
             return $next($request);
         } elseif ($request->path() == '/') {
-            return redirect('login');
+            return redirect('login')->withErrors(['e' => 'Please login.']);
         } else {
             return redirect('login')->withErrors(['e' => 'Please login.']);
         }
