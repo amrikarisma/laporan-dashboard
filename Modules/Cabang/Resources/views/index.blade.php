@@ -23,9 +23,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($cabangs as $cabang)
+                    @foreach ($cabangs['data'] as $cabang)
                     <tr>
-                        <td>{{ $cabang['name']??'' }}</td>
+                        <td>
+                            <div class="parent d-inline-flex">
+
+                                <a role="button" data-toggle="collapse" href="#{{ 'parent'.$cabang['id'] }}" aria-expanded="true" aria-controls="{{ 'parent'.$cabang['id'] }}" class="trigger-panel collapsed">
+                                    <i class="more-less fas fa-fw fa-plus "></i>
+                                </a>
+                                <div class="name"> {{ $cabang['name']??'' }}</div>
+
+                            </div>
+                            <div id="{{ 'parent'.$cabang['id'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                {{-- @if ($cabang['children']) --}}
+                                    @forelse ($cabang['children'] as $subcabang)
+                                        <div class="children"> {{  $subcabang['name']??'' }}</div>
+
+                                    @empty
+                                        <div class="children">Tidak memiliki cabang di bawahnya.</div>
+                                    @endforelse
+                                {{-- @endif --}}
+                            </div>
+                        </td>
                         <td>
                             <div style="display: inline-block">
                                 <a class="btn btn-sm btn-outline-primary" href="{{ route('cabang.show', $cabang['id']) }}">Detail</a>
@@ -48,4 +67,17 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('css')
+<style>
+  .children {
+      margin-left: 40px;
+  }
+</style>
+@endsection
+@section('js')
+    <script>
+
+    </script>
 @endsection

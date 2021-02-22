@@ -7,7 +7,23 @@
 
         </div>
         <div class="card-body">
-
+            <form action="" method="GET" class="form-horizontal">
+                {{-- @csrf --}}
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control', 'placeholder' => 'Filter Anggota')) !!}
+                    </div>
+                    <div class="col-md-3">
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
+                    </div>
+                    <div class="col-md-3">
+                        {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!}
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
             <div id='map'></div>
 
         </div>
@@ -31,8 +47,10 @@
 
     <script>
         $(function(){
-            var map = L.map('map').setView([-7.75913, 110.414314], 13);
-        
+            $.ajax({url: `{{ route('history.location') }}`, success: function(result){
+                var viewmap = result[0].pin.split(',');
+                var map = L.map('map').setView([viewmap[0], viewmap[1]], 13);
+            
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
@@ -48,13 +66,19 @@
                     }
                 });
         
-                var greenIcon = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'}),
-                    redIcon = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'}),
-                    orangeIcon = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'});
+                var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/tentara.png') }}`});
         
-                L.marker([-7.748591, 110.386664], {icon: greenIcon}).bindPopup("I am a green leaf.").addTo(map);
-                L.marker([-7.759130, 110.414314], {icon: redIcon}).bindPopup("I am a red leaf.").addTo(map);
-                L.marker([-7.759452, 110.418285], {icon: orangeIcon}).bindPopup("I am an orange leaf.").addTo(map);
+                result.forEach(el => {
+                    var split = el.pin.split(',');
+                    console.log(split)
+
+                    L.marker([split[0],split[1]], {icon: greenIcon}).bindPopup(el.user.name).addTo(map);
+                });
+      
+            }});
+            
+            // L.marker([-7.759130, 110.414314], {icon: greenIcon}).bindPopup("I am a red leaf.").addTo(map);
+            // L.marker([-7.759452, 110.418285], {icon: greenIcon}).bindPopup("I am an orange leaf.").addTo(map);
         });
     </script>
 @endsection

@@ -12,6 +12,7 @@
 */
 
 Route::prefix('unit-cabang')->group(function() {
+    Route::get('/data', 'CabangController@getCabang')->name('cabang.data');
     Route::get('/', 'CabangController@index')->name('cabang.index');
     Route::get('/create', 'CabangController@create')->name('cabang.create');
     Route::post('/create', 'CabangController@store')->name('cabang.store');

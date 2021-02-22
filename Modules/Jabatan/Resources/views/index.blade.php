@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($jabatans as $jabatan)
+                    @foreach ($jabatans['data'] as $jabatan)
                     <tr>
                         <td>{{ $jabatan['name']??'' }}</td>
                         <td>{{ $jabatan['time_in']??'' }}</td>

@@ -6,6 +6,10 @@
             <div class="card-title">
                 <h3>Data Anggota</h3>
             </div>
+            <div class="card-tools">
+                <a class="btn btn-primary"
+                href="{{ route('anggota.create') }}">Tambah</a>
+            </div>
         </div>
         <div class="card-body">
             <table class="table">
@@ -45,8 +49,13 @@
                         <td>{{ $anggota['sk_pengangkatan'] }}</td>
                         <td>{{ $anggota['nik'] }}</td>
                         <td>
-                            <a class="btn btn-primary"
-                            href="{{ route('anggota.show', $anggota['id']) }}">Detail</a>
+                            <div style="display: inline-block">
+                                <a class="btn btn-sm btn-outline-primary" href="{{ route('anggota.show', $anggota['id']) }}">Detail</a>
+                            </div>
+                            <div style="display: inline-block">
+                                <a class="btn btn-sm btn-outline-primary"
+                                href="{{ route('anggota.edit', $anggota['id']) }}">Edit</a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

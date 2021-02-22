@@ -30,6 +30,11 @@
                         <td>{{ $absent['time_out']??'' }}</td>
                     </tr>
                     <tr>
+                        <td>{{ 'Total Jam Kerja' }}</td>
+                        <td>:</td>
+                        <td>{{ $absent['work_time']??'' }}</td>
+                    </tr>
+                    <tr>
                         <td>{{ 'Lokasi Presensi Masuk' }}</td>
                         <td>:</td>
                         <td>{{ $absent['geolocation_in']??'' }}</td>
@@ -71,7 +76,7 @@
 
     <script>
         $(function(){
-            var map = L.map('mapMasuk').setView([-7.75913, 110.414314], 13);
+            var map = L.map('mapMasuk').setView([{{ $absent['geolocation_in'] }}], 13);
         
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

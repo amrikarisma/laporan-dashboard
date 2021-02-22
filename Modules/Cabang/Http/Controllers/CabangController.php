@@ -4,11 +4,26 @@ namespace Modules\Cabang\Http\Controllers;
 
 use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Yajra\DataTables\Facades\DataTables;
 
 class CabangController extends Controller
 {
+    public function getCabang(Request $request)
+    {
+        $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
+
+        $data = new Collection($cabangs);
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->addColumn('action', 'cabang::datatables-action' )
+        ->rawColumns(['action'])
+        ->filter(function(){}) // disable built-in search function
+        ->make(true);
+    }
+    
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -26,7 +41,10 @@ class CabangController extends Controller
      */
     public function create()
     {
-        return view('cabang::create');
+        $anggotas = MyHelper::apiRequest('get', 'anggota?pluck=1')['data']??[];
+        $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
+
+        return view('cabang::create', compact('parent','anggotas'));
     }
 
     /**
@@ -46,7 +64,9 @@ class CabangController extends Controller
      */
     public function show($id)
     {
-        return view('cabang::show');
+        $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
+        // return $cabang;
+        return view('cabang::show', compact('cabang'));
     }
 
     /**
@@ -56,7 +76,12 @@ class CabangController extends Controller
      */
     public function edit($id)
     {
-        return view('cabang::edit');
+        $anggotas = MyHelper::apiRequest('get', 'anggota?pluck=1')['data']??[];
+        $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
+
+        $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
+
+        return view('cabang::edit', compact('cabang', 'parent','anggotas'));
     }
 
     /**
