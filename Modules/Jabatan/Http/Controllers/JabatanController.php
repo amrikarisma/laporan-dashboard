@@ -16,7 +16,7 @@ class JabatanController extends Controller
     public function index()
     {
         $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
-
+        
         return view('jabatan::index', compact('jabatans'));
     }
 
@@ -74,16 +74,14 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
-        $jabatan_parent = [];
-        foreach ($jabatans as $jabatan) {
-            $jabatan_parent[$jabatan['id']] = $jabatan['name'];
-        }
+        $jabatan_parent = MyHelper::apiGet('jabatan?pluck=1')['data'] ?? [];
 
         $jabatan = MyHelper::apiGet('jabatan/' . $id)['data'] ?? [];
+
         if (!$jabatan) {
             return redirect()->route('jabatan.index');
         }
+        
         return view('jabatan::edit', compact('jabatan','jabatan_parent'));
     }
 

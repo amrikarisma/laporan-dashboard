@@ -47,26 +47,27 @@
 
     <script>
         $(function(){
-            var map = L.map('map').setView([-7.75913, 110.414314], 13);
-        
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-    
-            var LeafIcon = L.Icon.extend({
-                options: {
-                    shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-                    iconSize:     [38, 95],
-                    shadowSize:   [50, 64],
-                    iconAnchor:   [22, 94],
-                    shadowAnchor: [4, 62],
-                    popupAnchor:  [-3, -76]
-                }
-            });
-    
-            var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/tentara.png') }}`});
-    
             $.ajax({url: `{{ route('history.location') }}`, success: function(result){
+                var viewmap = result[0].pin.split(',');
+                var map = L.map('map').setView([viewmap[0], viewmap[1]], 13);
+            
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+        
+                var LeafIcon = L.Icon.extend({
+                    options: {
+                        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+                        iconSize:     [38, 95],
+                        shadowSize:   [50, 64],
+                        iconAnchor:   [22, 94],
+                        shadowAnchor: [4, 62],
+                        popupAnchor:  [-3, -76]
+                    }
+                });
+        
+                var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/tentara.png') }}`});
+        
                 result.forEach(el => {
                     var split = el.pin.split(',');
                     console.log(split)

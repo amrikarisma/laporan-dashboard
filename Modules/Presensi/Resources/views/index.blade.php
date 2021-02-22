@@ -43,7 +43,7 @@
                         <td>{{ $absent['user']['name']??'' }}</td>
                         <td>{{ $absent['time_in']??'' }}</td>
                         <td>{{ $absent['time_out']??'' }}</td>
-                        <td>{{ $absent['work_time']??0 }} Jam</td>
+                        <td>{{ $absent['work_time']??0 }}</td>
                         <td>{{ $absent['geolocation_in']??'' }}</td>
                         <td>{{ $absent['geolocation_out']??'' }}</td>
                         <td>{{ $absent['category']['name']??'' }}</td>

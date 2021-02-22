@@ -32,7 +32,6 @@ class CabangController extends Controller
     {
         $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
 
-
         return view('cabang::index', compact('cabangs'));
     }
 
@@ -42,18 +41,8 @@ class CabangController extends Controller
      */
     public function create()
     {
-        $getAnggotas = MyHelper::apiRequest('get', 'anggota')['data']??[];
-        $anggotas = [];
-        foreach ($getAnggotas as $anggota) {
-            $anggotas[$anggota['id']] = $anggota['user']['name'];
-        }
-
-        $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-        $parent = [];
-        foreach ($cabangs as $cabang) {
-            $parent[$cabang['id']] = $cabang['name'];
-        }
-
+        $anggotas = MyHelper::apiRequest('get', 'anggota?pluck=1')['data']??[];
+        $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
 
         return view('cabang::create', compact('parent','anggotas'));
     }
@@ -87,22 +76,9 @@ class CabangController extends Controller
      */
     public function edit($id)
     {
-        $getAnggotas = MyHelper::apiRequest('get', 'anggota')['data']??[];
-        $anggotas = [];
-        foreach ($getAnggotas as $anggota) {
-            if($anggota['id'] != $anggotaid) {
-                $anggotas[$anggota['id']] = $anggota['user']['name'];
-            }
-        }
+        $anggotas = MyHelper::apiRequest('get', 'anggota?pluck=1')['data']??[];
+        $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
 
-        $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-        $parent = [];
-        
-        foreach ($cabangs as $cabang) {
-            if($cabang['id'] != $id) {
-                $parent[$cabang['id']] = $cabang['name'];
-            }
-        }
         $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
 
         return view('cabang::edit', compact('cabang', 'parent','anggotas'));

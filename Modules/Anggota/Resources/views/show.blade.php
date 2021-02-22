@@ -53,7 +53,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">
-                    <h3>Data Ketentaraan</h3>
+                    <h3>Data Keanggotaan</h3>
                 </div>
             </div>
             <div class="card-body">
