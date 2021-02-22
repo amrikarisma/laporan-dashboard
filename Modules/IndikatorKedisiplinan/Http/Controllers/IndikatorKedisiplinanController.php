@@ -2,6 +2,7 @@
 
 namespace Modules\IndikatorKedisiplinan\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,8 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function index()
     {
-        return view('indikatorkedisiplinan::index');
+        $kedisiplinans = MyHelper::apiGet('indikatorkedisiplinan')['data']??[];
+        return view('indikatorkedisiplinan::index', compact('kedisiplinans'));
     }
 
     /**

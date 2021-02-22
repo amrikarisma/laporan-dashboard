@@ -11,6 +11,14 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('indikator/kedisiplinan')->group(function() {
-    Route::get('/', 'IndikatorKedisiplinanController@index');
+    Route::get('/', 'IndikatorKedisiplinanController@index')->name('kedisiplinan.index');
+    Route::get('/create', 'IndikatorKedisiplinanController@create')->name('kedisiplinan.create');
+    Route::post('/store', 'IndikatorKedisiplinanController@store')->name('kedisiplinan.store');
+    Route::post('/destroy', 'IndikatorKedisiplinanController@destroy')->name('kedisiplinan.destroy');
+    Route::get('/{id}', 'IndikatorKedisiplinanController@show')->name('kedisiplinan.show');
+    Route::post('/{id}/update', 'IndikatorKedisiplinanController@update')->name('kedisiplinan.update');
+    Route::get('/{id}/edit', 'IndikatorKedisiplinanController@edit')->name('kedisiplinan.edit');
 });
