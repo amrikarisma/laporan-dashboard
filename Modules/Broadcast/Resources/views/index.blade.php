@@ -16,16 +16,19 @@
                 <thead>
                     <tr>
                         <th>
-                            {{ _('Nama')}}
+                            {{ _('Tanggal')}}
                         </th>
                         <th>
-                            {{ _('Logic')}}
+                            {{ _('Dari')}}
                         </th>
                         <th>
-                            {{ _('Nilai')}}
+                            {{ _('Kepada')}}
                         </th>
                         <th>
-                            {{ _('Keterangan')}}
+                            {{ _('Judul')}}
+                        </th>
+                        <th>
+                            {{ _('Isi')}}
                         </th>
                         <th>
                             {{ _('Status')}}
@@ -34,8 +37,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($broadcasts as $broadcast)
+                    @forelse ($broadcasts as $broadcast)
                         <tr>
+                            <td>{{ $broadcast['name'] }}</td>
                             <td>{{ $broadcast['name'] }}</td>
                             <td>{{ $broadcast['logic'] }} {{ $broadcast['param'] }}</td>
                             <td>{{ $broadcast['score'] }}</td>
@@ -58,7 +62,16 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td>23 Feb 2021</td>
+                        <td>Admin Kodim</td>
+                        <td>Anggota Cabang Koramil Sektor 2</td>
+                        <td>Pengumuman: Membantu memantau masyarakat</td>
+                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima, fugiat consequuntur mollitia eius quos nisi, repellendus rerum omnis ipsum dolorum aliquid consequatur voluptate, dolores odit. Quaerat, a? Aperiam, est expedita.</td>
+                        <td><span class="badge badge-success">Terkirim</span></td>
+                    </tr>
+                    @endforelse
             
                 </tbody>
             </table>
