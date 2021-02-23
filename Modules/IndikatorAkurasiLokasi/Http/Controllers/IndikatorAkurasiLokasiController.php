@@ -2,9 +2,11 @@
 
 namespace Modules\IndikatorAkurasiLokasi\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class IndikatorAkurasiLokasiController extends Controller
 {
@@ -14,7 +16,8 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function index()
     {
-        return view('indikatorakurasilokasi::index');
+        $akurasilokasis = MyHelper::apiGet('indikatorakurasilokasi')['data'] ?? [];
+        return view('indikatorakurasilokasi::index', compact('akurasilokasis'));
     }
 
     /**
@@ -23,7 +26,14 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function create()
     {
-        return view('indikatorakurasilokasi::create');
+        $list_logic = [
+            '<'     => 'Kurang Dari',
+            '>'     => 'Lebih Dari',
+            '='     => 'Sama Dengan',
+            '<='    => 'Kurang Dari Sama Dengan',
+            '>='    => 'Lebih Dari Sama Dengan',
+        ];
+        return view('indikatorakurasilokasi::create', compact('list_logic'));
     }
 
     /**
@@ -33,7 +43,34 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'param' => ['required','integer'],
+            'logic' => ['required'],
+            'score' => ['required'],
+            'note' => ['nullable'],
+            'status' => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'      => $request->name,
+            'logic'     => $request->logic,
+            'param'     => $request->param,
+            'score'     => $request->score,
+            'note'      => $request->note,
+            'status'    => $request->status
+        ];
+
+        $akurasilokasi = MyHelper::apiPost('indikatorakurasilokasi', $input);
+        if(isset($akurasilokasi['status']) && $akurasilokasi['status'] == 'success'){
+            return redirect()->route('akurasilokasi.index')->with('message', $akurasilokasi['message']);
+        }
+
+        return redirect()->back()->withErrors($akurasilokasi['error'])->withInput();
     }
 
     /**
@@ -53,7 +90,17 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function edit($id)
     {
-        return view('indikatorakurasilokasi::edit');
+        $akurasilokasi  = MyHelper::apiGet('indikatorakurasilokasi/'.$id)['data'] ?? [];
+
+        $list_logic = [
+            '<'     => 'Kurang Dari',
+            '>'     => 'Lebih Dari',
+            '='     => 'Sama Dengan',
+            '<='    => 'Kurang Dari Sama Dengan',
+            '>='    => 'Lebih Dari Sama Dengan',
+        ];
+
+        return view('indikatorakurasilokasi::edit', compact('list_logic', 'akurasilokasi'));
     }
 
     /**
@@ -64,7 +111,34 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'param' => ['required','integer'],
+            'logic' => ['required'],
+            'score' => ['required'],
+            'note' => ['nullable'],
+            'status' => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'      => $request->name,
+            'logic'     => $request->logic,
+            'param'     => $request->param,
+            'score'     => $request->score,
+            'note'      => $request->note,
+            'status'    => $request->status
+        ];
+
+        $akurasilokasi = MyHelper::apiRequest('PUT','indikatorakurasilokasi/'.$id, $input);
+        if(isset($akurasilokasi['status']) && $akurasilokasi['status'] == 'success'){
+            return redirect()->route('akurasilokasi.index')->with('message', $akurasilokasi['message']);
+        }
+
+        return redirect()->back()->withErrors($akurasilokasi['error'])->withInput();
     }
 
     /**
@@ -74,6 +148,11 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $akurasilokasi = MyHelper::apiRequest('DELETE','indikatorakurasilokasi/'.$id);
+        if(isset($akurasilokasi['status']) && $akurasilokasi['status'] == 'success'){
+            return redirect()->route('akurasilokasi.index')->with('message', $akurasilokasi['message']);
+        }
+
+        return redirect()->back()->withErrors($akurasilokasi['error'])->withInput();
     }
 }

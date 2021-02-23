@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-title">
-                <h3>Indikator Nilai</h3>
+                <h3>Indikator Nilai Kedisiplinan</h3>
             </div>
             <div class="card-tools">
                 <a class="btn btn-primary"
@@ -42,9 +42,9 @@
                             <td>{{ $kedisiplinan['note'] }}</td>
                             <td>{!! $kedisiplinan['status'] == 'Aktif' ? '<span class="badge badge-success">'. $kedisiplinan['status'] .'</span>' : '<span class="badge badge-danger">'. $kedisiplinan['status'] .'</span>'  !!}</td>
                             <td>
-                                <div style="display: inline-block">
+                                {{-- <div style="display: inline-block">
                                     <a class="btn btn-sm btn-outline-primary" href="{{ route('kedisiplinan.show', $kedisiplinan['id']) }}">Detail</a>
-                                </div>
+                                </div> --}}
                                 <div style="display: inline-block">
                                         <a class="btn btn-sm btn-outline-primary"
                                         href="{{ route('kedisiplinan.edit', $kedisiplinan['id']) }}">Edit</a>

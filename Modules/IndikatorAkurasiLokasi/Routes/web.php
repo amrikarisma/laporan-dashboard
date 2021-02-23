@@ -12,5 +12,12 @@
 */
 
 Route::prefix('indikator/akurasi-lokasi')->group(function() {
-    Route::get('/', 'IndikatorAkurasiLokasiController@index');
+    Route::get('/', 'IndikatorAkurasiLokasiController@index')->name('akurasilokasi.index');
+    Route::get('/create', 'IndikatorAkurasiLokasiController@create')->name('akurasilokasi.create');
+    Route::post('/store', 'IndikatorAkurasiLokasiController@store')->name('akurasilokasi.store');
+    Route::post('/destroy', 'IndikatorAkurasiLokasiController@destroy')->name('akurasilokasi.destroy');
+    Route::get('/{id}', 'IndikatorAkurasiLokasiController@show')->name('akurasilokasi.show');
+    Route::post('/{id}/update', 'IndikatorAkurasiLokasiController@update')->name('akurasilokasi.update');
+    Route::get('/{id}/edit', 'IndikatorAkurasiLokasiController@edit')->name('akurasilokasi.edit');
+    Route::delete('/{id}', 'IndikatorAkurasiLokasiController@destroy')->name('akurasilokasi.destroy');
 });
