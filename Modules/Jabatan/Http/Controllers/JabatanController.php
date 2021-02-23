@@ -26,11 +26,7 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
-        $jabatan_parent = [];
-        foreach ($jabatans as $jabatan) {
-            $jabatan_parent[$jabatan['id']] = $jabatan['name'];
-        }
+        $jabatan_parent = MyHelper::apiGet('jabatan?pluck=1')['data'] ?? [];
         // return $jabatan_parent;
         return view('jabatan::create', compact('jabatan_parent'));
     }

@@ -2,9 +2,12 @@
 
 namespace Modules\IndikatorKedisiplinan\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+use Modules\Indikator\Http\Controllers\IndikatorController;
 
 class IndikatorKedisiplinanController extends Controller
 {
@@ -14,7 +17,8 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function index()
     {
-        return view('indikatorkedisiplinan::index');
+        $kedisiplinans = MyHelper::apiGet('indikatorkedisiplinan')['data'] ?? [];
+        return view('indikatorkedisiplinan::index', compact('kedisiplinans'));
     }
 
     /**
@@ -23,7 +27,15 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function create()
     {
-        return view('indikatorkedisiplinan::create');
+        $list_logic = [
+            '<'     => 'Kurang Dari',
+            '>'     => 'Lebih Dari',
+            '='     => 'Sama Dengan',
+            '<='    => 'Kurang Dari Sama Dengan',
+            '>='    => 'Lebih Dari Sama Dengan',
+        ];
+
+        return view('indikatorkedisiplinan::create', compact('list_logic'));
     }
 
     /**
@@ -33,6 +45,35 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'param' => ['required','integer'],
+            'logic' => ['required'],
+            'score' => ['required'],
+            'note' => ['nullable'],
+            'status' => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'      => $request->name,
+            'logic'     => $request->logic,
+            'param'     => $request->param,
+            'score'     => $request->score,
+            'note'      => $request->note,
+            'status'    => $request->status
+        ];
+
+        $kedisiplinan = MyHelper::apiPost('indikatorkedisiplinan', $input);
+        if(isset($kedisiplinan['status']) && $kedisiplinan['status'] == 'success'){
+            return redirect()->route('kedisiplinan.index')->with('message', $kedisiplinan['message']);
+        }
+
+        return redirect()->back()->withErrors($kedisiplinan['error'])->withInput();
+
         //
     }
 
@@ -53,7 +94,17 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function edit($id)
     {
-        return view('indikatorkedisiplinan::edit');
+        $kedisiplinan  = MyHelper::apiGet('indikatorkedisiplinan/'.$id)['data'] ?? [];
+
+        $list_logic = [
+            '<'     => 'Kurang Dari',
+            '>'     => 'Lebih Dari',
+            '='     => 'Sama Dengan',
+            '<='    => 'Kurang Dari Sama Dengan',
+            '>='    => 'Lebih Dari Sama Dengan',
+        ];
+
+        return view('indikatorkedisiplinan::edit', compact('list_logic', 'kedisiplinan'));
     }
 
     /**
@@ -64,7 +115,34 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'param' => ['required','integer'],
+            'logic' => ['required'],
+            'score' => ['required'],
+            'note' => ['nullable'],
+            'status' => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'      => $request->name,
+            'logic'     => $request->logic,
+            'param'     => $request->param,
+            'score'     => $request->score,
+            'note'      => $request->note,
+            'status'    => $request->status
+        ];
+
+        $kedisiplinan = MyHelper::apiRequest('PUT','indikatorkedisiplinan/'.$id, $input);
+        if(isset($kedisiplinan['status']) && $kedisiplinan['status'] == 'success'){
+            return redirect()->route('kedisiplinan.index')->with('message', $kedisiplinan['message']);
+        }
+
+        return redirect()->back()->withErrors($kedisiplinan['error'])->withInput();
     }
 
     /**
@@ -74,6 +152,11 @@ class IndikatorKedisiplinanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kedisiplinan = MyHelper::apiRequest('DELETE','indikatorkedisiplinan/'.$id);
+        if(isset($kedisiplinan['status']) && $kedisiplinan['status'] == 'success'){
+            return redirect()->route('kedisiplinan.index')->with('message', $kedisiplinan['message']);
+        }
+
+        return redirect()->back()->withErrors($kedisiplinan['error'])->withInput();
     }
 }

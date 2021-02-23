@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         $post_login = MyHelper::postLogin($request);
-        // return $post_login;
+
         if (isset($post_login['errors']) ) {
 
             return redirect('login')->withErrors($post_login['errors'])->withInput();
@@ -87,7 +87,11 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        MyHelper::apiPost('logout',[]);
         session()->flush();
-        return redirect(url('login'));
+        return redirect('login')->with([
+            'message',
+            'Sukses Logout'
+        ]);
     }
 }

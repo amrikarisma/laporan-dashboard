@@ -291,13 +291,13 @@ return [
         ],
         ['header' => 'MASTER DATA'],
         [
-            'text'        => 'Data Pegawai dan Anggota',
-            'url'         => '/anggota',
+            'text'        => 'Unit Cabang',
+            'url'         => '/unit-cabang',
             'icon'        => 'far fa-fw fa-file',
         ],
         [
-            'text'        => 'Presensi Anggota',
-            'url'         => '/presensi',
+            'text'        => 'Divisi',
+            'url'         => '/divisi',
             'icon'        => 'far fa-fw fa-file',
         ],
         [
@@ -306,8 +306,13 @@ return [
             'icon'        => 'far fa-fw fa-file',
         ],
         [
-            'text'        => 'Unit Cabang',
-            'url'         => '/unit-cabang',
+            'text'        => 'Data Pegawai dan Anggota',
+            'url'         => '/anggota',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Presensi Anggota',
+            'url'         => '/presensi',
             'icon'        => 'far fa-fw fa-file',
         ],
         ['header' => 'INFORMASI'],

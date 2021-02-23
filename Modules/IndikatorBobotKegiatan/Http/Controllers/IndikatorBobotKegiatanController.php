@@ -2,9 +2,11 @@
 
 namespace Modules\IndikatorBobotKegiatan\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class IndikatorBobotKegiatanController extends Controller
 {
@@ -14,7 +16,8 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function index()
     {
-        return view('indikatorbobotkegiatan::index');
+        $bobotkegiatans = MyHelper::apiGet('indikatorbobotkegiatan')['data'] ?? [];
+        return view('indikatorbobotkegiatan::index', compact('bobotkegiatans'));
     }
 
     /**
@@ -23,7 +26,15 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function create()
     {
-        return view('indikatorbobotkegiatan::create');
+        $list_logic = [
+            '<'     => 'Kurang Dari',
+            '>'     => 'Lebih Dari',
+            '='     => 'Sama Dengan',
+            '<='    => 'Kurang Dari Sama Dengan',
+            '>='    => 'Lebih Dari Sama Dengan',
+        ];
+
+        return view('indikatorbobotkegiatan::create', compact('list_logic'));
     }
 
     /**
@@ -33,7 +44,34 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'param' => ['required','integer'],
+            'logic' => ['required'],
+            'score' => ['required'],
+            'note' => ['nullable'],
+            'status' => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'      => $request->name,
+            'logic'     => $request->logic,
+            'param'     => $request->param,
+            'score'     => $request->score,
+            'note'      => $request->note,
+            'status'    => $request->status
+        ];
+
+        $bobotkegiatan = MyHelper::apiPost('indikatorbobotkegiatan', $input);
+        if(isset($bobotkegiatan['status']) && $bobotkegiatan['status'] == 'success'){
+            return redirect()->route('bobotkegiatan.index')->with('message', $bobotkegiatan['message']);
+        }
+
+        return redirect()->back()->withErrors($bobotkegiatan['error'])->withInput();
     }
 
     /**
@@ -53,7 +91,17 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function edit($id)
     {
-        return view('indikatorbobotkegiatan::edit');
+        $bobotkegiatan  = MyHelper::apiGet('indikatorbobotkegiatan/'.$id)['data'] ?? [];
+
+        $list_logic = [
+            '<'     => 'Kurang Dari',
+            '>'     => 'Lebih Dari',
+            '='     => 'Sama Dengan',
+            '<='    => 'Kurang Dari Sama Dengan',
+            '>='    => 'Lebih Dari Sama Dengan',
+        ];
+
+        return view('indikatorbobotkegiatan::edit', compact('list_logic', 'bobotkegiatan'));
     }
 
     /**
@@ -64,7 +112,34 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'param' => ['required','integer'],
+            'logic' => ['required'],
+            'score' => ['required'],
+            'note' => ['nullable'],
+            'status' => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'      => $request->name,
+            'logic'     => $request->logic,
+            'param'     => $request->param,
+            'score'     => $request->score,
+            'note'      => $request->note,
+            'status'    => $request->status
+        ];
+
+        $bobotkegiatan = MyHelper::apiRequest('PUT','indikatorbobotkegiatan/'.$id, $input);
+        if(isset($bobotkegiatan['status']) && $bobotkegiatan['status'] == 'success'){
+            return redirect()->route('bobotkegiatan.index')->with('message', $bobotkegiatan['message']);
+        }
+
+        return redirect()->back()->withErrors($bobotkegiatan['error'])->withInput();
     }
 
     /**
@@ -74,6 +149,11 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bobotkegiatan = MyHelper::apiRequest('DELETE','indikatorbobotkegiatan/'.$id);
+        if(isset($bobotkegiatan['status']) && $bobotkegiatan['status'] == 'success'){
+            return redirect()->route('bobotkegiatan.index')->with('message', $bobotkegiatan['message']);
+        }
+
+        return redirect()->back()->withErrors($bobotkegiatan['error'])->withInput();
     }
 }
