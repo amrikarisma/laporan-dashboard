@@ -8,7 +8,7 @@
             </div>
             <div class="card-tools">
                 <a class="btn btn-primary"
-                href="{{ route('jabatan.create') }}">Tambah</a>
+                href="{{ route('kedisiplinan.create') }}">Tambah</a>
             </div>
         </div>
         <div class="card-body">
@@ -24,6 +24,12 @@
                         <th>
                             {{ _('Nilai')}}
                         </th>
+                        <th>
+                            {{ _('Keterangan')}}
+                        </th>
+                        <th>
+                            {{ _('Status')}}
+                        </th>
                         <th>{{ _('')}}</th>
                     </tr>
                 </thead>
@@ -31,8 +37,10 @@
                     @foreach ($kedisiplinans as $kedisiplinan)
                         <tr>
                             <td>{{ $kedisiplinan['name'] }}</td>
-                            <td>{{ $kedisiplinan['param1'] }} {{ $kedisiplinan['logic'] }} {{ $kedisiplinan['param2'] }}</td>
+                            <td>{{ $kedisiplinan['logic'] }} {{ $kedisiplinan['param'] }}</td>
                             <td>{{ $kedisiplinan['score'] }}</td>
+                            <td>{{ $kedisiplinan['note'] }}</td>
+                            <td>{!! $kedisiplinan['status'] == 'Aktif' ? '<span class="badge badge-success">'. $kedisiplinan['status'] .'</span>' : '<span class="badge badge-danger">'. $kedisiplinan['status'] .'</span>'  !!}</td>
                             <td>
                                 <div style="display: inline-block">
                                     <a class="btn btn-sm btn-outline-primary" href="{{ route('kedisiplinan.show', $kedisiplinan['id']) }}">Detail</a>

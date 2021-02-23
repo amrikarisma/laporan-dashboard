@@ -21,4 +21,5 @@ Route::prefix('indikator/kedisiplinan')->group(function() {
     Route::get('/{id}', 'IndikatorKedisiplinanController@show')->name('kedisiplinan.show');
     Route::post('/{id}/update', 'IndikatorKedisiplinanController@update')->name('kedisiplinan.update');
     Route::get('/{id}/edit', 'IndikatorKedisiplinanController@edit')->name('kedisiplinan.edit');
+    Route::delete('/{id}', 'IndikatorKedisiplinanController@destroy')->name('kedisiplinan.destroy');
 });
