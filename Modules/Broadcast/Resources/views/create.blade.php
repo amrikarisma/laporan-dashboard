@@ -1,50 +1,39 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('kedisiplinan.store' ) }}" method="POST" class="form-horizontal">
+<form action="{{ route('broadcast.store' ) }}" method="POST" class="form-horizontal">
     @csrf
     <div class="card">
         <div class="card-header">
-            <h3>Tambah Indikator Kedisiplinan</h3>
+            <h3>Kirim Broadcast Pengumuman</h3>
         </div>
         <div class="card-body">
-            <div class="form-group row">
-                {!! Form::label('name', 'Nama',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
-                <div class="col-sm-9">
-                    {!! Form::text('name','', array( 'class' => 'form-control', 'placeholder' => 'Nama') ) !!}
-                </div>
-            </div>
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 {!! Form::label('logic', 'Logic',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('logic', $list_logic , $kedisiplinan['logic']??null, array( 'class' => 'form-control', 'placeholder' => 'Pilih Logic') ) !!}
+                    {!! Form::select('logic', $list_logic , $broadcast['logic']??null, array( 'class' => 'form-control', 'placeholder' => 'Pilih Logic') ) !!}
                 </div>
-            </div>
+            </div> --}}
+
             <div class="form-group row">
-                {!! Form::label('param', 'Parameter',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                {!! Form::label('title', 'Judul',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('param', '', array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
-                </div>
-            </div>
-            <div class="form-group row">
-                {!! Form::label('score', 'Nilai',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
-                <div class="col-sm-9">
-                    {!! Form::text('score', '', array( 'class' => 'form-control', 'placeholder' => 'Nilai') ) !!}
-                </div>
-            </div>
-            <div class="form-group row">
-                {!! Form::label('note', 'Keterangan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
-                <div class="col-sm-9">
-                    {!! Form::textarea('note','', array( 'class' => 'form-control', 'rows' => '2','placeholder' => 'Keterangan') ) !!}
-                </div>
-            </div>
-            <div class="form-group row">
-                {!! Form::label('status', 'Status',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
-                <div class="col-sm-9">
-                    {!! Form::select('status', ['Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif'] , '', array( 'class' => 'form-control') ) !!}
+                    {!! Form::text('title', '', array( 'class' => 'form-control', 'placeholder' => 'Judul') ) !!}
                 </div>
             </div>
 
+            <div class="form-group row">
+                {!! Form::label('description', 'Deskripsi',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                <div class="col-sm-9">
+                    {!! Form::textarea('description','', array( 'class' => 'form-control', 'rows' => '4','placeholder' => 'Deskripsi') ) !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                {!! Form::label('schedule', 'Jadwal Kirim',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                <div class="col-sm-9">
+                    {!! Form::text('schedule','', array( 'class' => 'form-control','placeholder' => 'Jadwal Kirim') ) !!}
+                </div>
+            </div>
 
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-3 col-form-label"></label>

@@ -25,6 +25,7 @@
                         <td>{{ 'Deskripsi' }}</td>
                         <td>{!! $kunjungan['laporan_description']??'' !!}</td>
                     </tr>
+                    <tr>
                         <td>{{ 'Kategori' }}</td>
                         <td>{{ $kunjungan['laporan_category']??'' }}</td>
                     </tr>
