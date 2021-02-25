@@ -1,0 +1,13 @@
+{
+    "name": "PresensiReport",
+    "alias": "presensireport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\PresensiReport\\Providers\\PresensiReportServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
