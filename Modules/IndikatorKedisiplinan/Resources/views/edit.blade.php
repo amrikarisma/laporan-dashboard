@@ -56,3 +56,17 @@
     </div>
 </form>
 @endsection
+@section('css')
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css' type='text/css' media='all' />
+@endsection
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+    <script>
+        $(function () {
+            // $('#param').datetimepicker({
+            //     use24hours: true,
+            //     format: 'HH:mm:ss'
+            // });
+        });
+    </script>
+@endsection

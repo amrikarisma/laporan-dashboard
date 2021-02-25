@@ -23,6 +23,21 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div id="columnchart_material" style="width: 100%; height: 500px;"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Tabel Laporan Presensi</h5>
+        </div>
+        <div class="card-body">
+
             <table class="table">
                 <thead>
                     <tr>
@@ -67,4 +82,35 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('js')
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+  google.charts.load('current', {'packages':['bar']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+        let array = [
+            ['Tanggal', 'DD (Dinas Dalam)', 'DL (Dinas Luar)','BP Dim (Bawa Perintah)', 'BP Luar Dim', 'Satgas', 'Siaga', 'LF (Luar Formasi)']
+        ];
+      for (let index = 1; index <= 7; index++) {
+        array.push([index, Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500)]);
+      }
+      console.log(array);
+    var data = google.visualization.arrayToDataTable(array);
+
+    var options = {
+      chart: {
+        title: 'Grafik Performa Presensi Anggota',
+        subtitle: 'Performa presensi anggota selama 7 hari terakhir',
+      }
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+</script>
 @endsection
