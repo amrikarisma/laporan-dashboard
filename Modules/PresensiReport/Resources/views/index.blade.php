@@ -25,92 +25,106 @@
             </form>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+            
+                    <div id="piechart" style="width: 100%; height: 500px;"></div>
 
-    <div class="card">
-        <div class="card-body">
-            <div id="columnchart_material" style="width: 100%; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Tabel Laporan Presensi</h5>
+                </div>
+                <div class="card-body">
+        
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{ _('Date')}}
+                                </th>
+                                <th>
+                                    {{ _('Nama')}}
+                                </th>
+                                <th>
+                                    {{ _('Jam Masuk')}}
+                                </th>
+                                <th>
+                                    {{ _('Jam Keluar')}}
+                                </th>
+                                <th>
+                                    {{ _('Jam Kerja')}}
+                                </th>
+                                <th>
+                                    {{ _('Nilai')}}
+                                </th>
+                                <th>
+                                    {{ _('Kategori')}}
+                                </th>
+                                <th>{{ _('Action')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($absents as $absent)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                                <td>{{ $absent['user']['name']??'' }}</td>
+                                <td>{{ $absent['time_in']??'' }}</td>
+                                <td>{{ $absent['time_out']??'' }}</td>
+                                <td>{{ $absent['work_time']??0 }}</td>
+                                <td>{{ $absent['score']??0 }} - {{ $absent['score_text']??'' }}</td>
+                                <td>{{ $absent['category']['name']??0 }}</td>
+                                
+                                <td>
+                                    <a class="btn btn-primary"
+                                    href="{{ route('presensi.show', $absent['id']) }}">Detail</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Tabel Laporan Presensi</h5>
-        </div>
-        <div class="card-body">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            {{ _('Date')}}
-                        </th>
-                        <th>
-                            {{ _('Nama')}}
-                        </th>
-                        <th>
-                            {{ _('Jam Masuk')}}
-                        </th>
-                        <th>
-                            {{ _('Jam Keluar')}}
-                        </th>
-                        <th>
-                            {{ _('Jam Kerja')}}
-                        </th>
-                        <th>
-                            {{ _('Nilai')}}
-                        </th>
-                        <th>{{ _('Action')}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($absents as $absent)
-                    <tr>
-                        <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
-                        <td>{{ $absent['user']['name']??'' }}</td>
-                        <td>{{ $absent['time_in']??'' }}</td>
-                        <td>{{ $absent['time_out']??'' }}</td>
-                        <td>{{ $absent['work_time']??0 }}</td>
-                        <td>{{ $absent['score']??0 }} - {{ $absent['score_text']??'' }}</td>
-                        
-                        <td>
-                            <a class="btn btn-primary"
-                            href="{{ route('presensi.show', $absent['id']) }}">Detail</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
 @endsection
 
 @section('js')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
 
-  google.charts.load('current', {'packages':['bar']});
-  google.charts.setOnLoadCallback(drawChart);
+<script type="text/javascript"> 
 
-  function drawChart() {
-        let array = [
-            ['Tanggal', 'DD (Dinas Dalam)', 'DL (Dinas Luar)','BP Dim (Bawa Perintah)', 'BP Luar Dim', 'Satgas', 'Siaga', 'LF (Luar Formasi)']
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        let array = ['Tanggal', 'DD (Dinas Dalam)', 'DL (Dinas Luar)','BP Dim (Bawa Perintah)', 'BP Luar Dim', 'Satgas', 'Siaga', 'LF (Luar Formasi)'];
+        let entry = [
+            ['Kategori Presensi', 'Jumlah Anggota'],
         ];
-      for (let index = 1; index <= 7; index++) {
-        array.push([index, Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500), Math.floor(Math.random() * 500)]);
-      }
-      console.log(array);
-    var data = google.visualization.arrayToDataTable(array);
 
-    var options = {
-      chart: {
-        title: 'Grafik Performa Presensi Anggota',
-        subtitle: 'Performa presensi anggota selama 7 hari terakhir',
-      }
-    };
+        for (let index = 1; index < array.length; index++) {
+            entry.push([array[index], Math.floor(Math.random() * 500) ]);
+        }
 
-    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        console.log(entry);
 
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-  }
+        var data = google.visualization.arrayToDataTable(entry);
+
+        var options = {
+            title: 'Grafik Kategori Presensi Anggota',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
 </script>
 @endsection
