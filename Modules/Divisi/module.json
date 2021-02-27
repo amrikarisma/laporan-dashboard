@@ -1,0 +1,13 @@
+{
+    "name": "Divisi",
+    "alias": "divisi",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Divisi\\Providers\\DivisiServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
