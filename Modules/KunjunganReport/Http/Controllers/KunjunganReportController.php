@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\PresensiReport\Http\Controllers;
+namespace Modules\KunjunganReport\Http\Controllers;
 
 use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class PresensiReportController extends Controller
+class KunjunganReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,12 +20,14 @@ class PresensiReportController extends Controller
         $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
 
-        $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)??[];
+        // $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)??[];
 
+        $kunjungans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota)??[];
+        // return $kunjungans;
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
-        return view('presensireport::index', compact('absents', 'anggota', 'jabatan', 'request'));
+        return view('kunjunganreport::index', compact('kunjungans', 'anggota', 'jabatan', 'request'));
     }
 }

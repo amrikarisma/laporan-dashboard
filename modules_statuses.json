@@ -14,5 +14,6 @@
     "Pengumuman": false,
     "Broadcast": true,
     "PresensiReport": true,
-    "Divisi": true
+    "Divisi": true,
+    "KunjunganReport": true
 }
