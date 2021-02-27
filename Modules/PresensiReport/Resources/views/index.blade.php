@@ -77,7 +77,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($absents as $absent)
+
+                            @foreach ($absents['data']['data'] as $absent)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $absent['user']['name']??'' }}</td>
@@ -108,31 +109,39 @@
 
 <script type="text/javascript"> 
 
-
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
+    
 
     function drawChart() {
-        let array = ['Tanggal', 'DD (Dinas Dalam)', 'DL (Dinas Luar)','BP Dim (Bawa Perintah)', 'BP Luar Dim', 'Satgas', 'Siaga', 'LF (Luar Formasi)'];
-        let entry = [
-            ['Kategori Presensi', 'Jumlah Anggota'],
-        ];
 
-        for (let index = 1; index < array.length; index++) {
-            entry.push([array[index], Math.floor(Math.random() * 500) ]);
+        let param = {
+            ajax : true,
         }
 
-        console.log(entry);
+        let entry = [
+                ['Kategori Presensi', 'Jumlah Anggota'],
+            ];
+        // $.getJSON( `{{ route('laporan.presensi.index') }}?ajax=1`, function( data ) {
+            let dataArray = @json($absents['count']);
+            console.log(dataArray);
 
-        var data = google.visualization.arrayToDataTable(entry);
+            $.each(dataArray, function(index, element) {
+                entry.push([index, element ]);
+            });
 
-        var options = {
-            title: 'Grafik Kategori Presensi Anggota',
-        };
+            var data = google.visualization.arrayToDataTable(entry);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            var options = {
+                title: 'Grafik Kategori Presensi Anggota',
+            };
 
-        chart.draw(data, options);
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+
+        // });
+
     }
 
     $(function() {
