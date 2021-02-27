@@ -493,6 +493,41 @@ return [
                 ],
             ],
         ],
+        'Charts' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//www.gstatic.com/charts/loader.js',
+                ],
+            ],
+        ],
+        'Momentjs' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//momentjs.com/downloads/moment.min.js',
+                ],
+            ],
+        ],
+        'Daterangepicker' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*

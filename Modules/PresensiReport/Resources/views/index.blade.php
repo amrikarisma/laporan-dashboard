@@ -15,14 +15,17 @@
                     <div class="col-md-3">
                         {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
-                    <div class="col-md-3">
-                        <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                            <i class="fa fa-calendar"></i>&nbsp;
-                            <span></span> <i class="fa fa-caret-down"></i>
+                    <div class="col-md-4">
+                        <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                            <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
+                            <span id="showdate"></span>
+                            <input type="hidden" name="start">
+                            <input type="hidden" name="end">
+                            <span style="align-self:center" ><i class="fa fa-caret-down"></i></span> 
                         </div>
                         {{-- {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!} --}}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
                 </div>
@@ -83,7 +86,6 @@
                                 <td>{{ $absent['work_time']??0 }}</td>
                                 <td>{{ $absent['score']??0 }} - {{ $absent['score_text']??'' }}</td>
                                 <td>{{ $absent['category']['name']??0 }}</td>
-                                
                                 <td>
                                     <a class="btn btn-primary"
                                     href="{{ route('presensi.show', $absent['id']) }}">Detail</a>
@@ -100,7 +102,9 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+@section('plugins.Charts', true)
 
 <script type="text/javascript"> 
 
@@ -133,11 +137,13 @@
 
     $(function() {
 
-        var start = moment().subtract(29, 'days');
-        var end = moment();
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
 
         function cb(start, end) {
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            $('#showdate').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            $('[name=start]').val(start.format('YYYY-MM-DD'));
+            $('[name=end]').val(end.format('YYYY-MM-DD'));
         }
 
         $('#reportrange').daterangepicker({

@@ -15,8 +15,12 @@ class PresensiReportController extends Controller
      */
     public function index(Request $request)
     {
-        $absents = MyHelper::apiGet('presensi')['data']??[];
+        $filterDate = ($request->start && $request->end) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterJabatan = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
 
+        $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)['data']??[];
+        // return $absents;
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
