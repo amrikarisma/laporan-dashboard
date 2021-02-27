@@ -2,9 +2,11 @@
 
 namespace Modules\Broadcast\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class BroadcastController extends Controller
 {
@@ -14,7 +16,8 @@ class BroadcastController extends Controller
      */
     public function index()
     {
-        $broadcasts = [];
+        $broadcasts = MyHelper::apiGet('broadcast')['data']??[];
+
         return view('broadcast::index', compact('broadcasts'));
     }
 
@@ -34,7 +37,29 @@ class BroadcastController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title'         => ['required'],
+            'description'   => ['required'],
+            'image'         => ['nullable'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'user'          => session('id_user'),
+            'title'         => $request->title,
+            'description'   => $request->description,
+            'image'         => $request->image,
+        ];
+
+        $broadcast = MyHelper::apiPost('broadcast', $input);
+        if(isset($broadcast['status']) && $broadcast['status'] == 'success'){
+            return redirect()->route('broadcast.index')->with('message', $broadcast['message']);
+        }
+        // return $broadcast;
+        return redirect()->back()->withErrors($broadcast['error'])->withInput();
     }
 
     /**
@@ -44,7 +69,13 @@ class BroadcastController extends Controller
      */
     public function show($id)
     {
-        return view('broadcast::show');
+        $broadcast = MyHelper::apiGet('broadcast/'.$id)['data']??[];
+
+        if(!$broadcast) {
+            return redirect(route('broadcast.index'));
+        }
+
+        return view('broadcast::show', compact('broadcast'));
     }
 
     /**
@@ -75,6 +106,11 @@ class BroadcastController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $broadcast = MyHelper::apiRequest('DELETE','broadcast/'.$id);
+        if(isset($broadcast['status']) && $broadcast['status'] == 'success'){
+            return redirect()->route('broadcast.index')->with('message', $broadcast['message']);
+        }
+
+        return redirect()->back()->withErrors($broadcast['error'])->withInput();
     }
 }

@@ -12,5 +12,6 @@
     "IndikatorBobotKegiatan": true,
     "News": true,
     "Pengumuman": false,
-    "Broadcast": true
+    "Broadcast": true,
+    "PresensiReport": true
 }
