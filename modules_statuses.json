@@ -9,5 +9,9 @@
     "Indikator": true,
     "IndikatorKedisiplinan": true,
     "IndikatorAkurasiLokasi": true,
-    "IndikatorBobotKegiatan": true
+    "IndikatorBobotKegiatan": true,
+    "News": true,
+    "Pengumuman": false,
+    "Broadcast": true,
+    "PresensiReport": true
 }

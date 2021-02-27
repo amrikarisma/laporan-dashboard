@@ -1,0 +1,13 @@
+{
+    "name": "Broadcast",
+    "alias": "broadcast",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Broadcast\\Providers\\BroadcastServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

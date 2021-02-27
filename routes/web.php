@@ -22,5 +22,8 @@ Route::any('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
     return "Cache is cleared";
 });
