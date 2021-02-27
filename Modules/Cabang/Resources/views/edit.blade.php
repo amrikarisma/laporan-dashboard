@@ -10,6 +10,8 @@
             <h3>Edit Cabang</h3>
         </div>
         <div class="card-body">
+            @include('layouts.notification')
+
             <div class="form-group row">
                 {!! Form::label('parent_id', 'Cabang Diatasnya',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">

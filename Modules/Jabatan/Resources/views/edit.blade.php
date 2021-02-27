@@ -5,9 +5,10 @@
     @csrf
     <div class="card">
         <div class="card-header">
-            <h3>Tambah Jabatan</h3>
+            <h3>Edit Jabatan</h3>
         </div>
         <div class="card-body">
+            @include('layouts.notification')
             <div class="form-group row">
                 {!! Form::label('jabatan_parent', 'Jabatan Diatasnya',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">

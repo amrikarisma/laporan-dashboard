@@ -122,26 +122,23 @@
         let entry = [
                 ['Kategori Presensi', 'Jumlah Anggota'],
             ];
-        // $.getJSON( `{{ route('laporan.presensi.index') }}?ajax=1`, function( data ) {
-            let dataArray = @json($absents['count']);
-            console.log(dataArray);
 
-            $.each(dataArray, function(index, element) {
-                entry.push([index, element ]);
-            });
+        let countJson = @json($absents['count']);
 
-            var data = google.visualization.arrayToDataTable(entry);
+        $.each(countJson, function(index, element) {
+            entry.push([index, element ]);
+        });
 
-            var options = {
-                title: 'Grafik Kategori Presensi Anggota',
-            };
+        var data = google.visualization.arrayToDataTable(entry);
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        var options = {
+            title: 'Grafik Kategori Presensi Anggota',
+        };
 
-            chart.draw(data, options);
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-        // });
-
+        chart.draw(data, options);
+            
     }
 
     $(function() {

@@ -8,6 +8,7 @@
             <h3>Tambah Indikator Kedisiplinan</h3>
         </div>
         <div class="card-body">
+            @include('layouts.notification')
             <div class="form-group row">
                 {!! Form::label('name', 'Nama',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">

@@ -12,6 +12,8 @@
             </div>
         </div>
         <div class="card-body">
+            @include('layouts.notification')
+
             <table class="table">
                 <thead>
                     <tr>
