@@ -16,7 +16,13 @@
                 <thead>
                     <tr>
                         <th>
-                            {{ _('Nama')}}
+                            {{ _('Nama Cabang')}}
+                        </th>
+                        <th>
+                            {{ _('Tingkat Cabang')}}
+                        </th>
+                        <th>
+                            {{ _('Penanggung Jawab')}}
                         </th>
                         </th>
                         <th>{{ _('')}}</th>
@@ -26,6 +32,8 @@
                     @foreach ($cabangs['data'] as $cabang)
                         <tr data-widget="expandable-table" aria-expanded="false">
                             <td>{{ $cabang['name']??'' }}</td>
+                            <td>{{ $cabang['branch']['name']??'' }}</td>
+                            <td>{{ $cabang['anggota']['user']['name']??'' }}</td>
                             {{-- <td>
                                 <div class="parent d-inline-flex">
 

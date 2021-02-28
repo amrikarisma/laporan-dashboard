@@ -20,6 +20,11 @@
                         <td>{{ $cabang['name']??'' }}</td>
                     </tr>
                     <tr>
+                        <td>Tingkat Cabang</td>
+                        <td>:</td>
+                        <td>{{ $cabang['branch']['name']??'' }}</td>
+                    </tr>
+                    <tr>
                         <td>Penanggung Jawab</td>
                         <td>:</td>
                         <td>{{ $cabang['anggota']['user']['name']??'' }}</td>
