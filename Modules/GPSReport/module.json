@@ -1,0 +1,13 @@
+{
+    "name": "GPSReport",
+    "alias": "gpsreport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\GPSReport\\Providers\\GPSReportServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

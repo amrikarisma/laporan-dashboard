@@ -1,0 +1,13 @@
+{
+    "name": "KunjunganReport",
+    "alias": "kunjunganreport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\KunjunganReport\\Providers\\KunjunganReportServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

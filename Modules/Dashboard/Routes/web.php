@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['validate_session']], function () {
     Route::get('/', 'DashboardController@index');

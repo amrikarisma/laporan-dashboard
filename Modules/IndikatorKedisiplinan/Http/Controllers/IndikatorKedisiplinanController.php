@@ -47,7 +47,7 @@ class IndikatorKedisiplinanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'param' => ['required','integer'],
+            'param' => ['required'],
             'logic' => ['required'],
             'score' => ['required'],
             'note' => ['nullable'],
@@ -117,7 +117,7 @@ class IndikatorKedisiplinanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'param' => ['required','integer'],
+            'param' => ['required'],
             'logic' => ['required'],
             'score' => ['required'],
             'note' => ['nullable'],
@@ -138,6 +138,7 @@ class IndikatorKedisiplinanController extends Controller
         ];
 
         $kedisiplinan = MyHelper::apiRequest('PUT','indikatorkedisiplinan/'.$id, $input);
+
         if(isset($kedisiplinan['status']) && $kedisiplinan['status'] == 'success'){
             return redirect()->route('kedisiplinan.index')->with('message', $kedisiplinan['message']);
         }
