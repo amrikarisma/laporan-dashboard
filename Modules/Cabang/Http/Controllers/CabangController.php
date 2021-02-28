@@ -111,8 +111,10 @@ class CabangController extends Controller
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
 
         $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
+        $anggotaAvail = isset($cabang['anggota']['id']) ? 'current='.$cabang['anggota']['id'] :'';
+        
         $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
-        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available?current='.$cabang['anggota']['id'])['data']??[];
+        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available/?'.$anggotaAvail)['data']??[];
 
         return view('cabang::edit', compact('cabang','branch', 'parent','anggotas'));
     }
