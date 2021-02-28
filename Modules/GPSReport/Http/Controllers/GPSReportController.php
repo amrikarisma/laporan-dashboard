@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\PresensiReport\Http\Controllers;
+namespace Modules\GPSReport\Http\Controllers;
 
 use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class PresensiReportController extends Controller
+class GPSReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,6 +28,7 @@ class PresensiReportController extends Controller
 
         $hadir = MyHelper::apiGet('kategori-presensi?pluck=1&group=0')['data']??[];
 
-        return view('presensireport::index', compact('absents', 'anggota', 'jabatan','hadir', 'request'));
+        return view('gpsreport::index', compact('absents', 'anggota', 'jabatan','hadir', 'request'));
     }
+
 }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3>Laporan Presensi</h3>
+            <h3>Laporan GPS</h3>
         </div>
         <div class="card-body">
             <form action="" method="GET" class="form-horizontal">

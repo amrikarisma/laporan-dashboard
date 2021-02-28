@@ -49,13 +49,15 @@
                                         <a class="btn btn-sm btn-outline-primary"
                                         href="{{ route('broadcast.edit', $broadcast['slug']) }}">Edit</a>
                                 </div> --}}
-                                <div style="display: inline-block">
-                                    <form action="{{ route('broadcast.destroy', $broadcast['slug']) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-sm btn-outline-danger">Hapus</button>
-                                    </form>
-                                </div>
+                                {{-- @if (\App\MyHelper::hasAccess()) --}}
+                                    {{-- <div style="display: inline-block">
+                                        <form action="{{ route('broadcast.destroy', $broadcast['slug']) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-sm btn-outline-danger">Hapus</button>
+                                        </form>
+                                    </div> --}}
+                                {{-- @endif --}}
                             </td>
                         </tr>
                     @empty
@@ -69,31 +71,5 @@
 @endsection
 
 @section('js')
-    <script>
 
-
-        // function delay(delayInms) {
-        //     return new Promise(resolve => {
-        //         setTimeout(() => {
-        //         resolve(2);
-        //         }, delayInms);
-        //     });
-        // }
-
-        // async function sample() {
-        //     var array = [1,2,3,4,5,6,7,8,9,10];
-        //     for (let index = 0; index < array.length; index++) {
-        //         const element = array[index];
-        //         $(document).Toasts('create', {
-        //             title: 'Toast Title',
-        //             body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        //             autohide:true,
-        //             delay: 6000
-        //         })
-        //         let delayres = await delay(1000);
-        //     }  
-        // }
-
-        // sample();
-    </script>
 @endsection

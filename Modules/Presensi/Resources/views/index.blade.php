@@ -48,8 +48,9 @@
                         <td>{{ $absent['geolocation_out']??'' }}</td>
                         <td>{{ $absent['category']['name']??'' }}</td>
                         <td>
-                            <a class="btn btn-primary"
-                            href="{{ route('presensi.show', $absent['id']) }}">Detail</a>
+                            <div style="display: inline-block">
+                                <a class="btn btn-sm btn-outline-primary" href="{{ route('presensi.show', $absent['id']) }}">Detail</a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
