@@ -24,6 +24,12 @@
                 </div>
             </div>
             <div class="form-group row">
+                {!! Form::label('branch', 'Tingkat Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                <div class="col-sm-9">
+                    {!! Form::select('branch', $branch , $cabang['branch']['id']??'', array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Tingkat Cabang',) ) !!}
+                </div>
+            </div>
+            <div class="form-group row">
                 {!! Form::label('anggota_id', 'Penanggung Jawab',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
                     {!! Form::select('anggota_id', $anggotas , $cabang['anggota']['id']??null, array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Penanggung Jawab', 'required') ) !!}
