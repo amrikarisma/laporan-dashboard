@@ -17,5 +17,6 @@
     "Divisi": true,
     "KunjunganReport": true,
     "GPSReport": true,
-    "KegiatanReport": true
+    "KegiatanReport": true,
+    "SuperFeature": true
 }
