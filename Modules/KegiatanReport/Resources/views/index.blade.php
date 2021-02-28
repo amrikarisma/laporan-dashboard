@@ -3,20 +3,17 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3>Laporan GPS</h3>
+            <h3>Laporan Kegiatan</h3>
         </div>
         <div class="card-body">
             <form action="" method="GET" class="form-horizontal">
                 {{-- @csrf --}}
                 <div class="form-group row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
-                    </div>
-                    <div class="col-md-2">
-                        {!! Form::select('hadir', $hadir, $request->hadir??'',array('class' => 'form-control', 'placeholder' => 'Filter Kehadiran')) !!}
                     </div>
                     <div class="col-md-4">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
@@ -39,48 +36,61 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+            
                     <div id="piechart" style="width: 100%; height: 500px;"></div>
+
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Tabel Laporan Presensi</h5>
+                    <h5>Tabel Laporan Kegiatan</h5>
                 </div>
                 <div class="card-body">
+        
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>
-                                    {{ _('Date')}}
+                                    {{ _('Judul')}}
                                 </th>
                                 <th>
-                                    {{ _('Nama')}}
+                                    {{ _('Deskripsi')}}
                                 </th>
                                 <th>
-                                    {{ _('Jumlah Aktifitas GPS')}}
+                                    {{ _('Lokasi')}}
                                 </th>
                                 <th>
-                                    {{ _('Nilai')}}
+                                    {{ _('Performa')}}
                                 </th>
-                                <th>{{ _('Action')}}</th>
+                                <th>
+                                    {{ _('Kategori')}}
+                                </th>
+                                <th>
+                                    {{ _('Tanggal Laporan')}}
+                                </th>
+                                <th>
+                                    {{ _('Pengirim')}}
+                                </th>
+                                <th>
+                                    {{ _('')}}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
-                                <td></td>
-                            </tr> --}}
-                            @foreach ($gpsReport['data']['data'] as $gps)
+                            @foreach ($kegiatans['data']['data'] as $kegiatan)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($gps['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
-                                <td>{{ $gps['name']??'' }}</td>
-                                <td>{{ $gps['gps_activity']??0 }}</td>
-                                <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>
+                                <td>{{ $kegiatan['laporan_title'] }}</td>
+                                <td>{{ strip_tags(Str::limit($kegiatan['laporan_description'],20) ) }}</td>
+                                <td>{{ $kegiatan['laporan_geolocation'] }}</td>
+                                <td>{{ $kegiatan['laporan_performance'] }}</td>
+                                <td>{{ $kegiatan['laporan_category'] }}</td>
+                                <td>{{ \Carbon\Carbon::parse($kegiatan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                                <td>{{ $kegiatan['user']['name'] }}</td>
                                 <td>
-                                    <div style="display: inline-block">
-                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('presensi.show', $gps['id']) }}">Detail</a>
-                                    </div>
+                                    <a class="btn btn-primary"
+                                    href="{{ route('laporan.kegiatan.show', $kegiatan['id']) }}">Detail</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -103,6 +113,7 @@
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
     
+
     function drawChart() {
 
         let param = {
@@ -110,10 +121,10 @@
         }
 
         let entry = [
-                ['Kategori Presensi', 'Jumlah Anggota'],
+                ['Kategori Kegiatan', 'Jumlah Anggota'],
             ];
 
-        let countJson = @json($gpsReport['count']);
+        let countJson = @json($kegiatans['count']);
 
         $.each(countJson, function(index, element) {
             entry.push([index, element ]);
@@ -122,7 +133,7 @@
         var data = google.visualization.arrayToDataTable(entry);
 
         var options = {
-            title: 'Grafik Kategori Presensi Anggota',
+            title: 'Grafik Kategori Kegiatan Anggota',
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));

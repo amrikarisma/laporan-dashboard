@@ -22,13 +22,15 @@ class GPSReportController extends Controller
 
         $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota.$filterHadir)??[];
 
+        $gpsReport = MyHelper::apiGet('gps-report')??[];
+
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
         $hadir = MyHelper::apiGet('kategori-presensi?pluck=1&group=0')['data']??[];
 
-        return view('gpsreport::index', compact('absents', 'anggota', 'jabatan','hadir', 'request'));
+        return view('gpsreport::index', compact('gpsReport', 'anggota', 'jabatan','hadir', 'request'));
     }
 
 }

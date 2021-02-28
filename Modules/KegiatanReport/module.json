@@ -1,0 +1,13 @@
+{
+    "name": "KegiatanReport",
+    "alias": "kegiatanreport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\KegiatanReport\\Providers\\KegiatanReportServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -16,5 +16,6 @@
     "PresensiReport": true,
     "Divisi": true,
     "KunjunganReport": true,
-    "GPSReport": true
+    "GPSReport": true,
+    "KegiatanReport": true
 }

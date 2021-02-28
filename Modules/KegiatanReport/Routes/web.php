@@ -13,6 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('laporan-kegiatan')->middleware('validate_session')->group(function () {
-    Route::get('/', 'KunjunganReportController@index');
+Route::prefix('laporan-kegiatan')->middleware('validate_session')->group(function() {
+    Route::get('/', 'KegiatanReportController@index')->name('laporan.kegiatan.index');
+    Route::get('/{id}', 'KegiatanReportController@show')->name('laporan.kegiatan.show');
 });
