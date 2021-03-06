@@ -30,8 +30,9 @@ class AnggotaController extends Controller
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
         $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
+        $roles = MyHelper::apiGet('role')['data'] ?? [];
 
-        return view('anggota::create',  compact('cabang', 'divisi', 'jabatan'));
+        return view('anggota::create',  compact('cabang', 'divisi', 'jabatan', 'roles'));
     }
 
     /**
@@ -57,7 +58,7 @@ class AnggotaController extends Controller
             'last_name'             => $request->last_name,
             'email'                 => $request->email,
             'password'              => 'harusdiganti',
-            'role'                  => $request->roles,
+            'roles'                  => $request->role,
             'nick_name'             => $request->nick_name,
             'place_of_birth'        => $request->place_of_birth,
             'birthday'              => $request->birthday,
@@ -110,8 +111,9 @@ class AnggotaController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
 
         $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
+        $roles = MyHelper::apiGet('role')['data'] ?? [];
 
-        return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota'));
+        return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota','roles'));
     }
 
     /**
@@ -142,7 +144,7 @@ class AnggotaController extends Controller
             'last_name'         => $request->last_name,
             'email'             => $request->email,
             'password'          => 'harusdiganti',
-            'role'              => $request->roles,
+            'roles'              => $request->role,
             'nick_name'         => $request->nick_name,
             'place_of_birth'    => $request->place_of_birth,
             'birthday'          => $request->birthday,

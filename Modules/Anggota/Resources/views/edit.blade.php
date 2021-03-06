@@ -130,7 +130,12 @@
                             {!! Form::email('email', $anggota['user']['email']??'', array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::select('role', $roles, $anggota['user']['role_array'], array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang') ) !!}
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
