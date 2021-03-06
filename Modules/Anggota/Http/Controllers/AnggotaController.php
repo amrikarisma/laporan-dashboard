@@ -57,7 +57,7 @@ class AnggotaController extends Controller
             'last_name'             => $request->last_name,
             'email'                 => $request->email,
             'password'              => 'harusdiganti',
-            'role'                  => 'users',
+            'role'                  => $request->roles,
             'nick_name'             => $request->nick_name,
             'place_of_birth'        => $request->place_of_birth,
             'birthday'              => $request->birthday,
@@ -142,7 +142,7 @@ class AnggotaController extends Controller
             'last_name'         => $request->last_name,
             'email'             => $request->email,
             'password'          => 'harusdiganti',
-            'role'              => 'users',
+            'role'              => $request->roles,
             'nick_name'         => $request->nick_name,
             'place_of_birth'    => $request->place_of_birth,
             'birthday'          => $request->birthday,
@@ -169,7 +169,7 @@ class AnggotaController extends Controller
         if(isset($newAnggota['status']) && $newAnggota['status'] == 'success') {
             return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
         }
-        return $newAnggota;
+
         return redirect()->back()->withErrors($newAnggota['error'])->withInput();
 
     }
