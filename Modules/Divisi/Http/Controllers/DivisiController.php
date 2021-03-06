@@ -6,6 +6,7 @@ use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class DivisiController extends Controller
 {
@@ -38,7 +39,30 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'parent_id' => ['nullable'],
+            'order' => ['nullable'],
+            'status' => ['required'],
+        ],[
+            'required' => 'Nama wajib diisi.'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'order' => $request->order,
+            'status' => $request->status,
+        ];
+        $divisi = MyHelper::apiPost('divisi', $input);
+        if(isset($divisi['status']) && $divisi['status'] == 'success'){
+            return redirect()->route('divisi.index')->with('message', $divisi['message']);
+        }
+        return redirect()->back()->withErrors($divisi['error'])->withInput();
     }
 
     /**
@@ -63,7 +87,7 @@ class DivisiController extends Controller
         $divisi_parent = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
 
         $divisi = MyHelper::apiGet('divisi/' . $id)['data'] ?? [];
-        // return $divisi;
+
         if (!$divisi) {
             return redirect()->route('divisi.index');
         }
@@ -79,7 +103,31 @@ class DivisiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'parent_id' => ['nullable'],
+            'order' => ['nullable'],
+            'status' => ['required'],
+        ],[
+            'required' => 'Nama wajib diisi.'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'order' => $request->order,
+            'status' => $request->status,
+        ];
+        $divisi = MyHelper::apiPost('divisi/'.$id.'?_method=put', $input);
+
+        if(isset($divisi['status']) && $divisi['status'] == 'success'){
+            return redirect()->route('divisi.index')->with('message', $divisi['message']);
+        }
+        return redirect()->back()->withErrors($divisi['error'])->withInput();
     }
 
     /**

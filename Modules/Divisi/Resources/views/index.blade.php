@@ -18,8 +18,10 @@
                         <th>
                             {{ _('Nama')}}
                         </th>
-
+                        <th>
+                            {{ _('Status')}}
                         </th>
+
                         <th>{{ _('')}}</th>
                     </tr>
                 </thead>
@@ -27,6 +29,7 @@
                     @foreach ($divisis['data'] as $divisi)
                     <tr>
                         <td>{{ $divisi['name']??'' }}</td>
+                        <td>{!! $divisi['status'] == 'Aktif' ? '<span class="badge badge-success">'. $divisi['status'] .'</span>' : '<span class="badge badge-danger">'. $divisi['status'] .'</span>'  !!}</td>
                         <td>
                             <div style="display: inline-block">
                                 <a class="btn btn-sm btn-outline-primary" href="{{ route('divisi.show', $divisi['id']) }}">Detail</a>
