@@ -24,7 +24,7 @@
             <div class="form-group row">
                 {!! Form::label('param', 'Parameter',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('param', '', array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
+                    {!! Form::time('param', \Carbon\Carbon::now()->isoFormat('HH:mm:ss'), array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
                 </div>
             </div>
             <div class="form-group row">
