@@ -66,7 +66,7 @@
                     <div class="form-group row">
                         <div class="col-sm-3 col-form-label"></div>
                         <div class="col-sm-9">
-                            <img id="profile_photo_preview" src="{{ $anggota['user']['userdata']['profile_photo'] ?? asset('image/avatar-no-image.png') }}"
+                            <img id="profile_photo_preview" src="{{ $anggota['user']['userdata']['profile_photo_url'] ?? asset('image/avatar-no-image.png') }}"
                             alt="preview image" style="max-height: 150px;">
                         </div>
                     </div>
