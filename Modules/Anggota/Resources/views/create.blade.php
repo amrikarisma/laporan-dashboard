@@ -136,7 +136,12 @@
                             {!! Form::email('email', old('email'), array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::select('role', $roles, old('role'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang') ) !!}
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-3 col-form-label"></label>

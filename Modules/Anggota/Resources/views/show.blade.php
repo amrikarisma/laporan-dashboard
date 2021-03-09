@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-3">
         <div class="img-thumbnail">
-        <img src="{{ $anggota['user']['userdata']['profile_photo'] ?? asset('image/avatar-no-image.png') }}"  class="img-fluid"/>
+        <img src="{{ $anggota['user']['userdata']['profile_photo_url'] ?? asset('image/avatar-no-image.png') }}"  class="img-fluid"/>
         </div>
     </div>
     <div class="col-9">

@@ -79,8 +79,11 @@ class CabangController extends Controller
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'anggota_id' => $request->anggota_id,
+            'phone_number' => $request->phone_number,
         ];
-        $cabang = MyHelper::apiPost('cabang', $input);
+
+        $cabang = MyHelper::apiPostWithFile('cabang', $input, $request);
+
         if(isset($cabang['status']) && $cabang['status'] == 'success'){
             return redirect()->route('cabang.index')->with('message', $cabang['message']);
         }
@@ -132,25 +135,23 @@ class CabangController extends Controller
             'name' => ['required'],
             'parent_id' => ['nullable'],
             'anggota_id' => ['required'],
-            'cabang_photo' => ['nullable'],
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        if ($request->hasFile('cabang_photo')) {
-            if ($request->file('cabang_photo')->isValid()) {
-                $input['cabang_photo'] = $request->cabang_photo;
-            }
-        }
+
 
         $input = [
             'branch_id' => $request->branch,
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'anggota_id' => $request->anggota_id,
+            'phone_number' => $request->phone_number,
+            'cabang_photo' => $request->cabang_photo,
         ];
-        $cabang = MyHelper::apiPost('cabang/'.$id.'?_method=put', $input);
+        $cabang = MyHelper::apiPostWithFile('cabang/'.$id.'./update', $input, $request);
+
         if(isset($cabang['status']) && $cabang['status'] == 'success'){
             return redirect()->route('cabang.index')->with('message', $cabang['message']);
         }
