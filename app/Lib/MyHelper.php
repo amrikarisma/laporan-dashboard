@@ -150,7 +150,6 @@ class MyHelper{
             $data[] = [
                 'name'      => $key,
                 'contents'  => $request->hasFile($key) ? fopen( $value->getPathname(), 'r' ) : $value
-                // 'contents'  => ''
             ];
         }
         $content = array(
