@@ -58,7 +58,7 @@ class AnggotaController extends Controller
             'last_name'             => $request->last_name,
             'email'                 => $request->email,
             'password'              => 'harusdiganti',
-            'roles'                  => $request->role,
+            'roles'                 => $request->role,
             'nick_name'             => $request->nick_name,
             'place_of_birth'        => $request->place_of_birth,
             'birthday'              => $request->birthday,
@@ -66,7 +66,7 @@ class AnggotaController extends Controller
             'national_id'           => $request->national_id,
             'license_id'            => $request->license_id,
             'marriage'              => $request->marriage,
-            'profile_photo'         => $request->file('profile_photo'),
+            'profile_photo'         => $request->profile_photo,
             'divisi'                => $request->divisi,
             'cabang'                => $request->cabang,
             'jabatan'               => $request->jabatan,
@@ -78,10 +78,14 @@ class AnggotaController extends Controller
             'nik'                   => $request->nik,
         ];
 
-        $newAnggota = MyHelper::apiPost('anggota', $anggota);
+        $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
 
-        if(isset($newAnggota['status']) && $newAnggota['status'] == 'success') {
-            return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
+        if(isset($newAnggota['status']) ) {
+            if($newAnggota['status'] == 'success') {
+                return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
+            } elseif($newAnggota['status'] == 'failed'){
+                return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
+            }
         }
         return redirect()->back()->withErrors($newAnggota['error'])->withInput();
 
@@ -128,6 +132,8 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
+            'profile_photo' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
         
         if ($validator->fails()) {
@@ -152,7 +158,7 @@ class AnggotaController extends Controller
             'national_id'       => $request->national_id,
             'license_id'        => $request->license_id,
             'marriage'          => $request->marriage,
-            'profile_photo'     => $request->file('profile_photo'),
+            'profile_photo'     => $request->profile_photo,
             'divisi'            => $request->divisi,
             'cabang'            => $request->cabang,
             'jabatan'           => $request->jabatan,
@@ -164,14 +170,15 @@ class AnggotaController extends Controller
             'nik'               => $request->nik,
         ];
 
+        $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
 
-        
-        $newAnggota = MyHelper::apiPost('anggota/'.$id.'?_method=PUT', $anggota);
-        // return $newAnggota;
-        if(isset($newAnggota['status']) && $newAnggota['status'] == 'success') {
-            return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
+        if(isset($newAnggota['status']) ) {
+            if($newAnggota['status'] == 'success') {
+                return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
+            } elseif($newAnggota['status'] == 'failed'){
+                return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
+            }
         }
-
         return redirect()->back()->withErrors($newAnggota['error'])->withInput();
 
     }

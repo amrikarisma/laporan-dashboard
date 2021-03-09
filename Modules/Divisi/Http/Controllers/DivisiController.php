@@ -59,8 +59,12 @@ class DivisiController extends Controller
             'status' => $request->status,
         ];
         $divisi = MyHelper::apiPost('divisi', $input);
-        if(isset($divisi['status']) && $divisi['status'] == 'success'){
-            return redirect()->route('divisi.index')->with('message', $divisi['message']);
+        if(isset($divisi['status']) ) {
+            if($divisi['status'] == 'success') {
+                return redirect()->route('divisi.index')->with('message', $divisi['message']);
+            } elseif($divisi['status'] == 'failed'){
+                return redirect()->route('divisi.index')->with('error', $divisi['message']);
+            }
         }
         return redirect()->back()->withErrors($divisi['error'])->withInput();
     }
@@ -124,8 +128,12 @@ class DivisiController extends Controller
         ];
         $divisi = MyHelper::apiPost('divisi/'.$id.'?_method=put', $input);
 
-        if(isset($divisi['status']) && $divisi['status'] == 'success'){
-            return redirect()->route('divisi.index')->with('message', $divisi['message']);
+        if(isset($divisi['status']) ) {
+            if($divisi['status'] == 'success') {
+                return redirect()->route('divisi.index')->with('message', $divisi['message']);
+            } elseif($divisi['status'] == 'failed'){
+                return redirect()->route('divisi.index')->with('error', $divisi['message']);
+            }
         }
         return redirect()->back()->withErrors($divisi['error'])->withInput();
     }
