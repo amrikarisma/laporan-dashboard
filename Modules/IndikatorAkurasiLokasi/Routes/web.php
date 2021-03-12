@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('indikator/akurasi-lokasi')->middleware('validate_session')->group(function() {
     Route::get('/', 'IndikatorAkurasiLokasiController@index')->name('akurasilokasi.index');
     Route::get('/create', 'IndikatorAkurasiLokasiController@create')->name('akurasilokasi.create');
