@@ -15,7 +15,7 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        $absents = MyHelper::apiGet('presensi')['data']??[];
+        $absents = MyHelper::apiGet('presensi')['data']['data']??[];
 
         return view('presensi::index', compact('absents'));
     }
