@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('indikator/kedisiplinan')->group(function() {
+Route::prefix('indikator/kedisiplinan')->middleware('validate_session')->group(function() {
     Route::get('/', 'IndikatorKedisiplinanController@index')->name('kedisiplinan.index');
     Route::get('/create', 'IndikatorKedisiplinanController@create')->name('kedisiplinan.create');
     Route::post('/store', 'IndikatorKedisiplinanController@store')->name('kedisiplinan.store');
