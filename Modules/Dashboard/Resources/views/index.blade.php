@@ -1,9 +1,18 @@
 @extends('adminlte::page')
 
 @section('content')
-    <h1>Hello World</h1>
-
-    <p>
-        This view is loaded from module: {!! config('dashboard.name') !!}
-    </p>
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <div style="display:flex; justify-content:center; align-self:center; align-items:center; flex-wrap: wrap;">
+                    <h1 style="text-align:center; margin-bottom: 40px">Sistem Informasi & Komunikasi Kesatuan Bangsa (SIKUMBANG)</h1>
+                    <div class="box-logo my-4">
+                        <img class="img-fluid" src="{{asset('image/logo-sikumbang.png') }}" alt="Logo SiKumbang">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

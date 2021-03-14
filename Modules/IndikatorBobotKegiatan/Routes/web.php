@@ -11,7 +11,9 @@
 |
 */
 
-Route::prefix('indikator/bobot-kegiatan')->group(function() {
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('indikator/bobot-kegiatan')->middleware('validate_session')->group(function() {
     Route::get('/', 'IndikatorBobotKegiatanController@index')->name('bobotkegiatan.index');
     Route::get('/create', 'IndikatorBobotKegiatanController@create')->name('bobotkegiatan.create');
     Route::post('/store', 'IndikatorBobotKegiatanController@store')->name('bobotkegiatan.store');

@@ -10,6 +10,7 @@
             <h3>Tambah Cabang</h3>
         </div>
         <div class="card-body">
+            @include('layouts.notification')
             <div class="form-group row">
                 {!! Form::label('parent_id', 'Cabang Diatasnya',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
@@ -20,6 +21,12 @@
                 {!! Form::label('name', 'Nama Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
                     {!! Form::text('name', $cabang['name']??'', array( 'class' => 'form-control', 'placeholder' => 'Nama', 'required') ) !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                {!! Form::label('branch', 'Tingkat Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                <div class="col-sm-9">
+                    {!! Form::select('branch', $branch , $cabang['branch']['id']??'', array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Tingkat Cabang',) ) !!}
                 </div>
             </div>
             <div class="form-group row">

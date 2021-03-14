@@ -6,6 +6,7 @@ use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class JabatanController extends Controller
 {
@@ -38,6 +39,21 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required','string'],
+            'time_in' => ['date_format:H:i:s'],
+            'time_out' => ['date_format:H:i:s'],
+            'work_time' => ['nullable','max:3'],
+            'daily_report' => ['required','max:3'],
+            'daily_visit_report' => ['required','max:3'],
+            'absent_without_note' => ['required','max:3'],
+            'absent_with_note' => ['required','max:3'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        
         $form = $request->except(['_token']);
         $jabatan = MyHelper::apiRequest('post', 'jabatan', $form) ?? [];
         // return $jabatan;
@@ -70,7 +86,7 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        $jabatan_parent = MyHelper::apiGet('jabatan?pluck=1')['data'] ?? [];
+        $jabatan_parent = MyHelper::apiGet('jabatan?pluck=1&notme='.$id)['data'] ?? [];
 
         $jabatan = MyHelper::apiGet('jabatan/' . $id)['data'] ?? [];
 
@@ -89,6 +105,21 @@ class JabatanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required','string'],
+            'time_in' => ['date_format:H:i:s'],
+            'time_out' => ['date_format:H:i:s'],
+            'work_time' => ['nullable','max:3'],
+            'daily_report' => ['required','max:3'],
+            'daily_visit_report' => ['required','max:3'],
+            'absent_without_note' => ['required','max:3'],
+            'absent_with_note' => ['required','max:3'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
         $form = $request->except(['_token']);
         $jabatan = MyHelper::apiRequest('put', 'jabatan/' . $id, $form) ?? [];
 

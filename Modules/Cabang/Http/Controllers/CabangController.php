@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class CabangController extends Controller
@@ -41,10 +42,11 @@ class CabangController extends Controller
      */
     public function create()
     {
-        $anggotas = MyHelper::apiRequest('get', 'anggota?pluck=1')['data']??[];
+        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available')['data']??[];
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
+        $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
 
-        return view('cabang::create', compact('parent','anggotas'));
+        return view('cabang::create', compact('parent','branch','anggotas'));
     }
 
     /**
@@ -54,6 +56,39 @@ class CabangController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'branch' => ['required'],
+            'name' => ['required'],
+            'parent_id' => ['nullable'],
+            'anggota_id' => ['required'],
+            'cabang_photo' => ['nullable'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        
+        if ($request->hasFile('cabang_photo')) {
+            if ($request->file('cabang_photo')->isValid()) {
+                $input['cabang_photo'] = $request->cabang_photo;
+            }
+        }
+
+        $input = [
+            'branch_id' => $request->branch,
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'anggota_id' => $request->anggota_id,
+            'phone_number' => $request->phone_number,
+        ];
+
+        $cabang = MyHelper::apiPostWithFile('cabang', $input, $request);
+
+        if(isset($cabang['status']) && $cabang['status'] == 'success'){
+            return redirect()->route('cabang.index')->with('message', $cabang['message']);
+        }
+
+        return redirect()->back()->withErrors($cabang['error'])->withInput();
         //
     }
 
@@ -76,12 +111,15 @@ class CabangController extends Controller
      */
     public function edit($id)
     {
-        $anggotas = MyHelper::apiRequest('get', 'anggota?pluck=1')['data']??[];
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
 
         $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
+        $anggotaAvail = isset($cabang['anggota']['id']) ? 'current='.$cabang['anggota']['id'] :'';
+        
+        $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
+        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available/?'.$anggotaAvail)['data']??[];
 
-        return view('cabang::edit', compact('cabang', 'parent','anggotas'));
+        return view('cabang::edit', compact('cabang','branch', 'parent','anggotas'));
     }
 
     /**
@@ -92,7 +130,32 @@ class CabangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'branch' => ['required'],
+            'name' => ['required'],
+            'parent_id' => ['nullable'],
+            'anggota_id' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+
+        $input = [
+            'branch_id' => $request->branch,
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'anggota_id' => $request->anggota_id,
+            'phone_number' => $request->phone_number,
+            'cabang_photo' => $request->cabang_photo,
+        ];
+        $cabang = MyHelper::apiPostWithFile('cabang/'.$id.'./update', $input, $request);
+
+        if(isset($cabang['status']) && $cabang['status'] == 'success'){
+            return redirect()->route('cabang.index')->with('message', $cabang['message']);
+        }
+        return redirect()->back()->withErrors($cabang['error'])->withInput();
     }
 
     /**

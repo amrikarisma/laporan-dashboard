@@ -1,0 +1,13 @@
+{
+    "name": "SuperFeature",
+    "alias": "superfeature",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\SuperFeature\\Providers\\SuperFeatureServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

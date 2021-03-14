@@ -40,12 +40,12 @@ class MyHelper{
                     return json_decode($response, true);
                 }
                 else{
-                    return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                    return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
                 }
 
             }
             catch(Exception $e){
-                return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
             }
         }
     }
@@ -94,11 +94,11 @@ class MyHelper{
                         return $error;
                     }
                 }
-                else return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                else return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
 
             }
             catch(Exception $e){
-                return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
             }
         }
     }
@@ -107,14 +107,13 @@ class MyHelper{
         $api = env('API_URL');
         $client = new Client;
         $ses = session('token');
-
+        
         $content = array(
             'headers' => [
-                'Authorization' => $ses,
-                'Accept'        => 'application/json',
-                'Content-Type'  => 'application/json',
-                'ip-address-view' => Request::ip(),
-                'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
+                'Authorization'     => $ses,
+                'Accept'            => 'application/json',
+                'ip-address-view'   => Request::ip(),
+                'user-agent-view'   => $_SERVER['HTTP_USER_AGENT'],
             ],
             'json' => (array) $post,
             'connect_timeout' => 30
@@ -132,11 +131,56 @@ class MyHelper{
                     if(!is_array($response));
                     return json_decode($response, true);
                 }
-                else  return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                else  return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
 
             }
             catch(Exception $e){
-                return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
+            }
+        }
+    }
+
+    public static function apiPostWithFile($url,$post, $request){
+        $api = env('API_URL');
+        $client = new Client;
+        $ses = session('token');
+
+        $data = [];
+        foreach ($post as $key => $value) {
+            $data[] = [
+                'name'      => $key,
+                'contents'  => $request->hasFile($key) ? fopen( $value->getPathname(), 'r' ) : $value
+            ];
+        }
+        $content = array(
+            'headers' => [
+                'Authorization'     => $ses,
+                'ip-address-view'   => Request::ip(),
+                'user-agent-view'   => $_SERVER['HTTP_USER_AGENT'],
+            ],
+            'multipart' => $data,
+            'connect_timeout' => 30
+
+        );
+        // $response = $client->post($api.'/api/'.$url,$content);
+        // return $response;
+        try {
+            $response = $client->post($api.'/api/'.$url,$content);
+
+            if(!is_array(json_decode($response->getBody(), true)));
+            return json_decode($response->getBody(), true);
+        }catch (\GuzzleHttp\Exception\RequestException $e) {
+            try{
+                if($e->getResponse()){
+                    $response = $e->getResponse()->getBody()->getContents();
+                    if(!is_array($response));
+                    return json_decode($response, true);
+                }
+                else  return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
+
+            }
+            catch(Exception $e){
+                return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
             }
         }
     }
@@ -152,7 +196,6 @@ class MyHelper{
             'headers' => [
                 'Authorization' => $ses,
                 'Accept'        => 'application/json',
-                'Content-Type'  => 'application/json',
                 'ip-address-view' => Request::ip(),
                 'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
             ],
@@ -183,11 +226,11 @@ class MyHelper{
                     if(!is_array($response));
                     return json_decode($response, true);
                 }
-                else  return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                else  return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
 
             }
             catch(Exception $e){
-                return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+                return ['status' => 'fail', 'message' => [0 => 'Check your internet connection.']];
             }
         }
     }

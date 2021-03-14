@@ -66,7 +66,7 @@
                     <div class="form-group row">
                         <div class="col-sm-3 col-form-label"></div>
                         <div class="col-sm-9">
-                            <img id="profile_photo_preview" src="{{ $anggota['user']['userdata']['profile_photo'] ?? asset('image/avatar-no-image.png') }}"
+                            <img id="profile_photo_preview" src="{{ $anggota['user']['userdata']['profile_photo_url'] ?? asset('image/avatar-no-image.png') }}"
                             alt="preview image" style="max-height: 150px;">
                         </div>
                     </div>
@@ -130,7 +130,12 @@
                             {!! Form::email('email', $anggota['user']['email']??'', array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::select('role', $roles, $anggota['user']['role_array'], array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang') ) !!}
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-3 col-form-label"></label>

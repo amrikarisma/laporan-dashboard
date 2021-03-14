@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('news')->group(function() {
+Route::prefix('news')->middleware('validate_session')->group(function() {
     Route::get('/', 'NewsController@index')->name('news.index');
     Route::get('/create', 'NewsController@create')->name('news.create');
     Route::post('/store', 'NewsController@store')->name('news.store');

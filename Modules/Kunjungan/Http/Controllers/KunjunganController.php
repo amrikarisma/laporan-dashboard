@@ -13,11 +13,21 @@ class KunjunganController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kunjungans = MyHelper::apiGet('laporan')['data']??[];
-        
-        return view('kunjungan::index', compact('kunjungans'));
+        $filterDate     = ($request->start && $request->end) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+
+        // $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)??[];
+
+        $kunjungans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota)??[];
+        // return $kunjungans;
+        $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
+
+        $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
+
+        return view('kunjungan::index', compact('kunjungans', 'anggota', 'jabatan', 'request'));
     }
 
     /**

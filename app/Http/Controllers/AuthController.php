@@ -56,23 +56,14 @@ class AuthController extends Controller
 
             $user_data = $post_login['data']??[];
 
-            if (!in_array($user_data['role'], ['users', 'admin'])) {
-                session()->flush();
-                return redirect('login')->withErrors([
-                    'Invalid email / password'
-                ]);
-            }
-
             if(!$user_data) {
-                $this->logout();
+                session()->flush();
                 return redirect('login')->withErrors(['Failed get user data'])->withInput();
             }
 
             $data_to_save = [
                 'id_user'          => $user_data['id'],
                 'name'             => $user_data['name'],
-                'email'            => $user_data['email'],
-                'role'             => $user_data['role'],
             ];
 
             session($data_to_save);

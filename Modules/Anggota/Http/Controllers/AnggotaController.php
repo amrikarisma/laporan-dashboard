@@ -30,8 +30,9 @@ class AnggotaController extends Controller
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
         $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
+        $roles = MyHelper::apiGet('role')['data'] ?? [];
 
-        return view('anggota::create',  compact('cabang', 'divisi', 'jabatan'));
+        return view('anggota::create',  compact('cabang', 'divisi', 'jabatan', 'roles'));
     }
 
     /**
@@ -52,47 +53,43 @@ class AnggotaController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $user = [
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email'=> $request->email,
-            'password' => 'harusdiganti',
-            'role' => 'users',
-            'nick_name' => $request->nick_name,
-            'place_of_birth' => $request->place_of_birth,
-            'birthday' => $request->birthday,
-            'address' => $request->address,
-            'national_id' => $request->national_id,
-            'license_id' => $request->license_id,
-            'marriage' => $request->marriage,
-            'profile_photo' => $request->file('profile_photo'),
-            'divisi'     => $request->divisi,
-            'cabang'     => $request->cabang,
-            'jabatan'     => $request->jabatan,
+        $anggota = [
+            'first_name'            => $request->first_name,
+            'last_name'             => $request->last_name,
+            'email'                 => $request->email,
+            'password'              => 'harusdiganti',
+            'roles'                 => $request->role,
+            'nick_name'             => $request->nick_name,
+            'place_of_birth'        => $request->place_of_birth,
+            'birthday'              => $request->birthday,
+            'address'               => $request->address,
+            'national_id'           => $request->national_id,
+            'license_id'            => $request->license_id,
+            'marriage'              => $request->marriage,
+            'profile_photo'         => $request->profile_photo,
+            'divisi'                => $request->divisi,
+            'cabang'                => $request->cabang,
+            'jabatan'               => $request->jabatan,
+            'divisi'                => $request->divisi,
+            'cabang'                => $request->cabang,
+            'jabatan'               => $request->jabatan,
+            'join_date'             => $request->join_date,
+            'sk_pengangkatan'       => $request->sk_pengangkatan,
+            'nik'                   => $request->nik,
+            'password'              => $request->password,
         ];
 
-        $newuser = MyHelper::apiPost('register', $user);
-        // return $newuser;
-        if(isset($newuser['status']) && $newuser['status'] == 'success'){
-            $anggota = [
-                'user_id'       => $newuser['data']['id'],
-                'divisi'     => $request->divisi,
-                'cabang'     => $request->cabang,
-                'jabatan'     => $request->jabatan,
-                'join_date'     => $request->join_date,
-                'sk_pengangkatan'     => $request->sk_pengangkatan,
-                'nik'     => $request->nik,
-            ];
+        $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
 
-            $newAnggota = MyHelper::apiPost('anggota', $anggota);
-
-            return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
-
+        if(isset($newAnggota['status']) ) {
+            if($newAnggota['status'] == 'success') {
+                return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
+            } elseif($newAnggota['status'] == 'failed'){
+                return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
+            }
         }
-        // return $newuser;
-        return redirect()->back()->withErrors($newuser['error'])->withInput();
+        return redirect()->back()->withErrors($newAnggota['error'])->withInput();
 
-        //
     }
 
     /**
@@ -119,8 +116,9 @@ class AnggotaController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
 
         $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
+        $roles = MyHelper::apiGet('role')['data'] ?? [];
 
-        return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota'));
+        return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota','roles'));
     }
 
     /**
@@ -135,55 +133,56 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
+            'profile_photo' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
         
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        $anggota = MyHelper::apiGet('anggota/'.$id)['data']??[];
+        $checkAnggota = MyHelper::apiGet('anggota/'.$id)['data']??[];
 
-        if(!$anggota) {
+        if(!$checkAnggota) {
             return redirect()->route('anggota.index');
         }
 
-        $user = [
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email'=> $request->email,
-            'password' => 'harusdiganti',
-            'role' => 'users',
-            'nick_name' => $request->nick_name,
-            'place_of_birth' => $request->place_of_birth,
-            'birthday' => $request->birthday,
-            'address' => $request->address,
-            'national_id' => $request->national_id,
-            'license_id' => $request->license_id,
-            'marriage' => $request->marriage,
-            'profile_photo' => $request->file('profile_photo'),
-            'divisi'     => $request->divisi,
-            'cabang'     => $request->cabang,
-            'jabatan'     => $request->jabatan,
+        $anggota = [
+            'first_name'        => $request->first_name,
+            'last_name'         => $request->last_name,
+            'email'             => $request->email,
+            'password'          => 'harusdiganti',
+            'roles'             => $request->role,
+            'nick_name'         => $request->nick_name,
+            'place_of_birth'    => $request->place_of_birth,
+            'birthday'          => $request->birthday,
+            'address'           => $request->address,
+            'national_id'       => $request->national_id,
+            'license_id'        => $request->license_id,
+            'marriage'          => $request->marriage,
+            'profile_photo'     => $request->profile_photo,
+            'divisi'            => $request->divisi,
+            'cabang'            => $request->cabang,
+            'jabatan'           => $request->jabatan,
+            'divisi'            => $request->divisi,
+            'cabang'            => $request->cabang,
+            'jabatan'           => $request->jabatan,
+            'join_date'         => $request->join_date,
+            'sk_pengangkatan'   => $request->sk_pengangkatan,
+            'nik'               => $request->nik,
+            'password'          => $request->password,
         ];
-        $updateUser = MyHelper::apiPost('user/'.$anggota['user']['id'].'?_method=put', $user);
 
-        if(isset($updateUser['status']) && $updateUser['status'] == 'success'){
-            $anggota = [
-                'user_id'           => $updateUser['data']['id'],
-                'divisi'            => $request->divisi,
-                'cabang'            => $request->cabang,
-                'jabatan'           => $request->jabatan,
-                'join_date'         => $request->join_date,
-                'sk_pengangkatan'   => $request->sk_pengangkatan,
-                'nik'               => $request->nik,
-            ];
+        $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
 
-            $newAnggota = MyHelper::apiRequest('PUT','anggota', $anggota);
-
-            return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
-
+        if(isset($newAnggota['status']) ) {
+            if($newAnggota['status'] == 'success') {
+                return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
+            } elseif($newAnggota['status'] == 'failed'){
+                return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
+            }
         }
-        // return $updateUser;
-        return redirect()->back()->withErrors($updateUser['error'])->withInput();
+        return redirect()->back()->withErrors($newAnggota['error'])->withInput();
+
     }
 
     /**
