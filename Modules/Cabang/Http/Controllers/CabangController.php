@@ -15,7 +15,6 @@ class CabangController extends Controller
     public function getCabang(Request $request)
     {
         $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-
         $data = new Collection($cabangs);
         return DataTables::of($data)
         ->addIndexColumn()
@@ -31,8 +30,9 @@ class CabangController extends Controller
      */
     public function index()
     {
-        $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-
+        $cabangs = MyHelper::apiRequest('get', 'cabang?tree=1')['data']??[];
+        // $cabangs = MyHelper::apiRequest('get', 'cabang');
+        // return $cabangs;
         return view('cabang::index', compact('cabangs'));
     }
 
@@ -42,7 +42,11 @@ class CabangController extends Controller
      */
     public function create()
     {
-        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available')['data']??[];
+        $avail = [
+            'current' => isset($cabang['anggota']['id']) ? $cabang['anggota']['id'] : '',
+        ];
+
+        $anggotas = MyHelper::apiRequest('post', 'cabang/anggota-available/', $avail)['data']??[];
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
         $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
 
@@ -60,7 +64,6 @@ class CabangController extends Controller
             'branch' => ['required'],
             'name' => ['required'],
             'parent_id' => ['nullable'],
-            'anggota_id' => ['required'],
             'cabang_photo' => ['nullable'],
         ]);
 
@@ -114,10 +117,15 @@ class CabangController extends Controller
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
 
         $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
-        $anggotaAvail = isset($cabang['anggota']['id']) ? 'current='.$cabang['anggota']['id'] :'';
-        
+
         $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
-        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available/?'.$anggotaAvail)['data']??[];
+        
+        $avail = [
+            'current' => isset($cabang['anggota']['id']) ? $cabang['anggota']['id'] : '',
+            'cabang'  => $id
+        ];
+
+        $anggotas = MyHelper::apiRequest('post', 'cabang/anggota-available/', $avail)['data']??[];
 
         return view('cabang::edit', compact('cabang','branch', 'parent','anggotas'));
     }

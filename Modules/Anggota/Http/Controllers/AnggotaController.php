@@ -76,7 +76,7 @@ class AnggotaController extends Controller
             'join_date'             => $request->join_date,
             'sk_pengangkatan'       => $request->sk_pengangkatan,
             'nik'                   => $request->nik,
-            'password'              => $request->password,
+            'password'              => $request->password??'12345678',
         ];
 
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
@@ -85,9 +85,10 @@ class AnggotaController extends Controller
             if($newAnggota['status'] == 'success') {
                 return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
             } elseif($newAnggota['status'] == 'failed'){
-                return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
+                return redirect()->back()->with('error', $newAnggota['message'])->withInput();
             }
         }
+
         return redirect()->back()->withErrors($newAnggota['error'])->withInput();
 
     }
@@ -100,7 +101,9 @@ class AnggotaController extends Controller
     public function show($id)
     {
         $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
-        // return $anggota;
+        if(!$anggota) {
+            return redirect()->back();
+        }
         return view('anggota::show', compact('anggota'));
     }
 
@@ -114,10 +117,11 @@ class AnggotaController extends Controller
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
         $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
-
-        $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
         $roles = MyHelper::apiGet('role')['data'] ?? [];
-
+        $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
+        if(!$anggota) {
+            return redirect()->back();
+        }
         return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota','roles'));
     }
 
@@ -133,7 +137,7 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'profile_photo' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+            'profile_photo' => 'image:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
         
