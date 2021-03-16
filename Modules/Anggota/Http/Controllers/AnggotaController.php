@@ -47,6 +47,7 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
+            'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
         ]);
         
         if ($validator->fails()) {
@@ -101,7 +102,7 @@ class AnggotaController extends Controller
     public function show($id)
     {
         $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
-        if(!$anggota) {
+                if(!$anggota) {
             return redirect()->back();
         }
         return view('anggota::show', compact('anggota'));
@@ -137,8 +138,7 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'profile_photo' => 'image:jpeg,png,jpg,gif,svg|max:2048',
-
+            'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
         ]);
         
         if ($validator->fails()) {

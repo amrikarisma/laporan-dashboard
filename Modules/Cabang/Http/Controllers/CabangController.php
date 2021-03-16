@@ -64,8 +64,8 @@ class CabangController extends Controller
             'branch' => ['required'],
             'name' => ['required'],
             'parent_id' => ['nullable'],
-            'cabang_photo' => ['nullable'],
-        ]);
+            'cabang_photo'      => ['nullable', 'image','mimes:jpg,png,jpeg,gif,svg','max:2048'],
+            ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
