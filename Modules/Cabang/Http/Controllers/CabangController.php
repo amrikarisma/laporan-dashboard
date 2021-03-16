@@ -30,7 +30,7 @@ class CabangController extends Controller
      */
     public function index()
     {
-        $cabangs = MyHelper::apiRequest('get', 'cabang?tree=1')['data']??[];
+        $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
         // $cabangs = MyHelper::apiRequest('get', 'cabang');
         // return $cabangs;
         return view('cabang::index', compact('cabangs'));
