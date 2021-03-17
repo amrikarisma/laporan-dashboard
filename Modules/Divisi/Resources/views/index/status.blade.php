@@ -1,0 +1,1 @@
+{!! $status == 'Aktif' ? '<span class="badge badge-success">'. $status .'</span>' : '<span class="badge badge-danger">'. $status .'</span>'  !!}

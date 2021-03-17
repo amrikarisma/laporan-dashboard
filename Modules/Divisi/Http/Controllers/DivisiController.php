@@ -7,18 +7,26 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class DivisiController extends Controller
 {
+    public function ajaxlist()
+    {
+        $divisis = MyHelper::apiGet('divisi')['data'] ?? [];
+        return DataTables::of($divisis)
+        ->editColumn('status', "divisi::index.status") 
+        ->addColumn('actions', "divisi::index.action") 
+        ->rawColumns(['actions','status'])
+        ->make();
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $divisis = MyHelper::apiGet('divisi')['data'] ?? [];
-        
-        return view('divisi::index', compact('divisis'));
+        return view('divisi::index');
     }
 
     /**
@@ -145,6 +153,7 @@ class DivisiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $divisi = MyHelper::apiRequest('delete', 'divisi/' . $id) ?? [];
+        return redirect()->route('divisi.index')->with('message', $divisi['message']);
     }
 }

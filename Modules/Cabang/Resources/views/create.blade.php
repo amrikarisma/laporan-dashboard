@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('cabang.create' ) }}" method="POST" class="form-horizontal needs-validation" novalidate >
+<form action="{{ route('cabang.create' ) }}" method="POST" enctype="multipart/form-data" class="form-horizontal needs-validation" novalidate >
     {{-- {!! Form::open(['action' => ['cabang.update', $cabang['id'], 'method' => 'PUT', 'files' => true ]]) !!} --}}
 
     @csrf

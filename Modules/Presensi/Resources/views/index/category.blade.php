@@ -1,0 +1,1 @@
+{!! $category['group'] == '1' ? '<span class="badge badge-success">'. $category['name'] .'</span>' : '<span class="badge badge-warning">'. $category['name'] .'</span>'  !!}

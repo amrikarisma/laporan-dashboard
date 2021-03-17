@@ -1,0 +1,1 @@
+{{ \Carbon\Carbon::parse($schedule)->locale('id_ID')->isoFormat('dddd, D MMMM Y, HH:ss')??'' }}

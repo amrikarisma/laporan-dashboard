@@ -1,7 +1,8 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('anggota.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    {{ Form::open(['route' => 'anggota.store',  'method' => 'post', 'files' => true, 'class' => 'form-horizontal needs-validation', 'novalidate']) }}
+
     @csrf
     <div class="row">
         <div class="col-md-6 col-lg-6">
@@ -14,45 +15,45 @@
                     <div class="form-group row">
                         {!! Form::label('cabang', 'Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('cabang', $cabang, old('cabang'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Cabang') ) !!}
+                            {!! Form::select('cabang', $cabang, old('cabang'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Cabang' , 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('divisi', 'Divisi',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('divisi', $divisi, old('divisi'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Divisi') ) !!}
+                            {!! Form::select('divisi', $divisi, old('divisi'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Divisi', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('jabatan', 'Jabatan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('jabatan', $jabatan, old('jabatan'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Jabatan') ) !!}
+                            {!! Form::select('jabatan', $jabatan, old('jabatan'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Jabatan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('join_date', 'Tanggal Bergabung',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('join_date', old('join_date'), array( 'class' => 'form-control', 'placeholder' => 'Tanggal Bergabung') ) !!}
+                            {!! Form::text('join_date', old('join_date'), array( 'class' => 'form-control', 'placeholder' => 'Tanggal Bergabung', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('sk_pengangkatan', 'SK Pengangkatan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('sk_pengangkatan', old('sk_pengangkatan'), array( 'class' => 'form-control', 'placeholder' => 'SK Pengangkatan') ) !!}
+                            {!! Form::text('sk_pengangkatan', old('sk_pengangkatan'), array( 'class' => 'form-control', 'placeholder' => 'SK Pengangkatan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('nik', 'NIK',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('nik', old('nik'), array( 'class' => 'form-control', 'placeholder' => 'NIK') ) !!}
+                            {!! Form::text('nik', old('nik'), array( 'class' => 'form-control', 'placeholder' => 'NIK', 'required') ) !!}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
                             <button type="submit" class="btn btn-primary"> Submit</button>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -79,67 +80,67 @@
                     <div class="form-group row">
                         {!! Form::label('first_name', 'Nama Depan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('first_name', old('first_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Depan') ) !!}
+                            {!! Form::text('first_name', old('first_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Depan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('last_name', 'Nama Belakang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('last_name', old('last_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Belakang') ) !!}
+                            {!! Form::text('last_name', old('last_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Belakang', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('nick_name', 'Nama Panggilan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('nick_name', old('nick_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Panggilan') ) !!}
+                            {!! Form::text('nick_name', old('nick_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Panggilan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('place_of_birth', 'Tempat Lahir',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('place_of_birth', old('place_of_birth'), array( 'class' => 'form-control', 'placeholder' => 'Tempat Lahir') ) !!}
+                            {!! Form::text('place_of_birth', old('place_of_birth'), array( 'class' => 'form-control', 'placeholder' => 'Tempat Lahir', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('birthday', 'Tanggal Lahir',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('birthday', old('birthday'), array( 'class' => 'form-control', 'placeholder' => 'Tanggal Lahir') ) !!}
+                            {!! Form::text('birthday', old('birthday'), array( 'class' => 'form-control', 'placeholder' => 'Tanggal Lahir', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('address', 'Alamat',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::textarea('address', old('address'), array( 'class' => 'form-control', 'placeholder' => 'Alamat') ) !!}
+                            {!! Form::textarea('address', old('address'), array( 'class' => 'form-control', 'placeholder' => 'Alamat', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('national_id', 'KTP',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('national_id', old('national_id'), array( 'class' => 'form-control', 'placeholder' => 'No. KTP') ) !!}
+                            {!! Form::text('national_id', old('national_id'), array( 'class' => 'form-control', 'placeholder' => 'No. KTP', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('license_id', 'SIM',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('license_id', old('license_id'), array( 'class' => 'form-control', 'placeholder' => 'No. SIM') ) !!}
+                            {!! Form::text('license_id', old('license_id'), array( 'class' => 'form-control', 'placeholder' => 'No. SIM', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('marriage', 'Status',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('marriage', array('Menikah' => 'Menikah','Belum Menikah' => 'Belum Menikah') ,old('marriage'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Status') ) !!}
+                            {!! Form::select('marriage', array('Menikah' => 'Menikah','Belum Menikah' => 'Belum Menikah') ,old('marriage'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Status', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('email', 'Email',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::email('email', old('email'), array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
+                            {!! Form::email('email', old('email'), array( 'class' => 'form-control', 'placeholder' => 'Email', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('role', $roles, old('role'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang') ) !!}
+                            {!! Form::select('role', $roles, old('role'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang', 'required') ) !!}
                         </div>
                     </div>
 
@@ -153,20 +154,36 @@
             </div>
         </div>
     </div>
-</form>
+    {!! Form::close() !!}
 @endsection
 @section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
     <script>
-        $('#profile_photo').on('change', function () {
-            let reader = new FileReader();
-            console.log(reader);
+        $(function() {
+            $('#profile_photo').on('change', function () {
+                let reader = new FileReader();
+                console.log(reader);
 
-            reader.onload = (e) => { 
-                console.log('e');
-                $('#profile_photo_preview').attr('src', e.target.result); 
-            }
-            reader.readAsDataURL(this.files[0]); 
+                reader.onload = (e) => { 
+                    console.log('e');
+                    $('#profile_photo_preview').attr('src', e.target.result); 
+                }
+                reader.readAsDataURL(this.files[0]); 
 
+            });
+            $('input[name="birthday"], input[name="join_date"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'),10),
+                locale: {
+                format: 'YYYY-MM-DD'
+                }
+            }, function(start, end, label) {
+                var years = moment().diff(start, 'years');
+                console.log("You are " + years + " years old!");
+            });
         });
     </script>
 @endsection

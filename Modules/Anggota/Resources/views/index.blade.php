@@ -14,9 +14,12 @@
         <div class="card-body">
             @include('layouts.notification')
 
-            <table class="table">
+            <table id="anggota-table" class="table">
                 <thead>
                     <tr>
+                        <th>
+                            {{ _('Foto')}}
+                        </th>
                         <th>
                             {{ _('Nama')}}
                         </th>
@@ -38,10 +41,13 @@
                         <th>
                             {{ _('NIK')}}
                         </th>
+                        <th>
+                            {{ _('Aksi')}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($anggotas as $anggota)
+                    {{-- @foreach ($anggotas as $anggota)
                     <tr>
                         <td>{{ $anggota['user']['name'] }}</td>
                         <td>{{ $anggota['jabatan']['name'] }}</td>
@@ -60,9 +66,38 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>
     </div>
+@endsection
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+@endsection
+@section('js')
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#anggota-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('anggota.listanggota') }}',
+        columns: [
+        { data: 'user.userdata.profile_photo_url' },
+        { data: 'user.name' },
+        { data: 'jabatan.name' },
+        { data: 'divisi.name' },
+        { data: 'cabang.name' },
+        { data: 'join_date'},
+        { data: 'sk_pengangkatan'},
+        { data: 'nik'},
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection

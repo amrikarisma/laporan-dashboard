@@ -32,3 +32,5 @@ window.$ = window.jQuery = $;
 
 require('overlayscrollbars');
 require('../../vendor/almasaeed2010/adminlte/dist/js/adminlte');
+require('datatables.net-bs4');
+require('datatables.net-buttons-bs4');

@@ -1,0 +1,1 @@
+{{ \Illuminate\Support\Str::limit($note, 150, '...') }}

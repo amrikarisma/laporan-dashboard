@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table id="table" class="table">
                 <thead>
                     <tr>
                         <th>
@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($divisis['data'] as $divisi)
+                    {{-- @foreach ($divisis['data'] as $divisi)
                     <tr>
                         <td>{{ $divisi['name']??'' }}</td>
                         <td>{!! $divisi['status'] == 'Aktif' ? '<span class="badge badge-success">'. $divisi['status'] .'</span>' : '<span class="badge badge-danger">'. $divisi['status'] .'</span>'  !!}</td>
@@ -47,9 +47,32 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>
     </div>
+@endsection
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+@endsection
+@section('js')
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: `{{ route('divisi.ajaxlist') }}`,
+        columns: [
+        { data: 'name' },
+        { data: 'status' },
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection

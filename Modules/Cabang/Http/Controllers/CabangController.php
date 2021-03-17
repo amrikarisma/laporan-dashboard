@@ -86,7 +86,6 @@ class CabangController extends Controller
         ];
 
         $cabang = MyHelper::apiPostWithFile('cabang', $input, $request);
-
         if(isset($cabang['status']) && $cabang['status'] == 'success'){
             return redirect()->route('cabang.index')->with('message', $cabang['message']);
         }
@@ -143,12 +142,13 @@ class CabangController extends Controller
             'name' => ['required'],
             'parent_id' => ['nullable'],
             'anggota_id' => ['required'],
+            'cabang_photo'      => ['nullable', 'image','mimes:jpg,png,jpeg,gif,svg','max:2048'],
+
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-
 
         $input = [
             'branch_id' => $request->branch,
@@ -173,6 +173,11 @@ class CabangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cabang = MyHelper::apiRequest('delete', 'cabang/' . $id) ?? [];
+        // return $cabang;
+        if($cabang['status'] == 'failed') {
+            return redirect()->route('cabang.index')->with('error', $cabang['message']);
+        }
+        return redirect()->route('cabang.index')->with('message', $cabang['message']);
     }
 }

@@ -12,6 +12,7 @@
 */
 
 Route::prefix('presensi')->middleware('validate_session')->group(function() {
+    Route::get('/list', 'PresensiController@ajaxlist')->name('presensi.ajaxlist');
     Route::get('/', 'PresensiController@index')->name('presensi.index');
     Route::get('/{id}', 'PresensiController@show')->name('presensi.show');
 });

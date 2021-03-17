@@ -1,9 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('cabang.update', $cabang['id'] ) }}" method="POST" class="form-horizontal">
-    {{-- {!! Form::open(['action' => ['cabang.update', $cabang['id'], 'method' => 'PUT', 'files' => true ]]) !!} --}}
-
+{{ Form::open(['route' => ['cabang.update', $cabang['id']],  'method' => 'post', 'files' => true, 'class' => 'form-horizontal needs-validation', 'novalidate']) }}
     @csrf
     <div class="card">
         <div class="card-header">
@@ -63,7 +61,7 @@
             </div>
         </div>
     </div>
-</form>
+    {!! Form::close() !!}
 @endsection
 @section('js')
     <script>

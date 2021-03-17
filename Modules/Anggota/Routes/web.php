@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('anggota')->middleware('validate_session')->group(function () {
+    Route::get('/list', 'AnggotaController@getListAnggota')->name('anggota.listanggota');
     Route::get('/', 'AnggotaController@index')->name('anggota.index');
     Route::get('/create', 'AnggotaController@create')->name('anggota.create');
     Route::post('/create', 'AnggotaController@store')->name('anggota.store');

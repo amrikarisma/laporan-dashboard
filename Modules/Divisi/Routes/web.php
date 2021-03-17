@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['validate_session']], function () {
     Route::prefix('divisi')->group(function() {
+        Route::get('/list', 'DivisiController@ajaxlist')->name('divisi.ajaxlist');
         Route::get('/', 'DivisiController@index')->name('divisi.index');
         Route::get('/create', 'DivisiController@create')->name('divisi.create');
         Route::post('/create', 'DivisiController@store')->name('divisi.store');
