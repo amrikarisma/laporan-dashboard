@@ -18,6 +18,9 @@
                 <thead>
                     <tr>
                         <th>
+                            {{ _('Foto')}}
+                        </th>
+                        <th>
                             {{ _('Nama')}}
                         </th>
                         <th>
@@ -85,6 +88,7 @@
         serverSide: true,
         ajax: '{{ route('anggota.listanggota') }}',
         columns: [
+        { data: 'user.userdata.profile_photo_url' },
         { data: 'user.name' },
         { data: 'jabatan.name' },
         { data: 'divisi.name' },

@@ -15,8 +15,9 @@ class AnggotaController extends Controller
     {
         $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
         return DataTables::of($anggotas)
+        ->editColumn('user.userdata.profile_photo_url', "anggota::index.thumb") 
         ->addColumn('actions', "anggota::index.action") 
-        ->rawColumns(['actions'])
+        ->rawColumns(['user.userdata.profile_photo_url','actions'])
         ->make();
     }
     /**
