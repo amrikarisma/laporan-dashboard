@@ -66,7 +66,7 @@
                     <div class="form-group row">
                         {!! Form::label('profile_photo', 'Upload Foto',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::file('profile_photo' ) !!}
+                            {!! Form::file('profile_photo', array('accept' => 'image/*')) !!}
                         </div>
                     </div>
                     <div class="form-group row">
