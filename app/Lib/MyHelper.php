@@ -142,8 +142,8 @@ class MyHelper{
 
     public static function apiPostWithFile($url,$post, $request){
         $api = env('API_URL');
-        $client = new Client;
         $ses = session('token');
+        $client = new \GuzzleHttp\Client();
 
         $data = [];
         foreach ($post as $key => $value) {
@@ -158,12 +158,9 @@ class MyHelper{
                 'ip-address-view'   => Request::ip(),
                 'user-agent-view'   => $_SERVER['HTTP_USER_AGENT'],
             ],
-            'multipart' => $data,
-            'connect_timeout' => 30
-
         );
-        // $response = $client->post($api.'/api/'.$url,$content);
-        // return $response;
+        $content['multipart'] = $data;
+        // return $content;
         try {
             $response = $client->post($api.'/api/'.$url,$content);
 

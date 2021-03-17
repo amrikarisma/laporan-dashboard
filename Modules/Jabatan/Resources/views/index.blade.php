@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table id="table" class="table table-hover dataTable dtr-inline">
                 <thead>
                     <tr>
                         <th>
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($jabatans['data'] as $jabatan)
+                    {{-- @foreach ($jabatans['data'] as $jabatan)
                     <tr>
                         <td>{{ $jabatan['name']??'' }}</td>
                         <td>{{ $jabatan['time_in']??'' }}</td>
@@ -70,9 +70,38 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>
     </div>
+@endsection
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+@endsection
+@section('js')
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: `{{ route('jabatan.ajaxlist') }}`,
+        columns: [
+        { data: 'name' },
+        { data: 'time_in' },
+        { data: 'time_out' },
+        { data: 'work_time' },
+        { data: 'daily_report'},
+        { data: 'daily_visit_report'},
+        { data: 'absent_without_note'},
+        { data: 'absent_with_note'},
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection

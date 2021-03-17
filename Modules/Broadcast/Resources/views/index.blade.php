@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table id="table" class="table">
                 <thead>
                     <tr>
                         <th>
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($broadcasts['data'] as $broadcast)
+                    {{-- @forelse ($broadcasts['data'] as $broadcast)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($broadcast['created_at'])->isoFormat('DD MMM YYYY') }}</td>
                             <td>{{ $broadcast['user']['name'] }}</td>
@@ -45,31 +45,53 @@
                                 <div style="display: inline-block">
                                     <a class="btn btn-sm btn-outline-primary" href="{{ route('broadcast.show', $broadcast['slug']) }}">Detail</a>
                                 </div>
-                                {{-- <div style="display: inline-block">
+                                <div style="display: inline-block">
                                         <a class="btn btn-sm btn-outline-primary"
                                         href="{{ route('broadcast.edit', $broadcast['slug']) }}">Edit</a>
-                                </div> --}}
-                                {{-- @if (\App\MyHelper::hasAccess()) --}}
-                                    {{-- <div style="display: inline-block">
+                                </div>
+                                @if (\App\MyHelper::hasAccess())
+                                    <div style="display: inline-block">
                                         <form action="{{ route('broadcast.destroy', $broadcast['slug']) }}" method="post">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-sm btn-outline-danger">Hapus</button>
                                         </form>
-                                    </div> --}}
-                                {{-- @endif --}}
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @empty
 
-                    @endforelse
+                    @endforelse --}}
             
                 </tbody>
             </table>
         </div>
     </div>
 @endsection
-
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+@endsection
 @section('js')
-
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: `{{ route('broadcast.ajaxlist') }}`,
+        columns: [
+        { data: 'created_at' },
+        { data: 'user.name' },
+        { data: 'title'},
+        { data: 'schedule'},
+        { data: 'status'},
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection

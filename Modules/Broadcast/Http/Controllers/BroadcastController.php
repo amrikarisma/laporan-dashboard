@@ -7,18 +7,28 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class BroadcastController extends Controller
 {
+    public function ajaxlist()
+    {
+        $broadcasts = MyHelper::apiGet('broadcast')['data'] ?? [];
+        return DataTables::of($broadcasts)
+        ->editColumn('created_at', "broadcast::index.date") 
+        ->editColumn('schedule', "broadcast::index.schedule") 
+        ->editColumn('status', "broadcast::index.status") 
+        ->addColumn('actions', "broadcast::index.action") 
+        ->rawColumns(['actions','status', 'created_at', 'schedule'])
+        ->make();
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $broadcasts = MyHelper::apiGet('broadcast')['data']??[];
-
-        return view('broadcast::index', compact('broadcasts'));
+        return view('broadcast::index');
     }
 
     /**
@@ -70,9 +80,8 @@ class BroadcastController extends Controller
     public function show($id)
     {
         $broadcast = MyHelper::apiGet('broadcast/'.$id)['data']??[];
-
         if(!$broadcast) {
-            return redirect(route('broadcast.index'));
+            return redirect(route('broadcast.index'))->with('error', 'Pengumuman tidak ditemukan');
         }
 
         return view('broadcast::show', compact('broadcast'));

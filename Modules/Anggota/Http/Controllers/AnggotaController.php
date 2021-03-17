@@ -7,18 +7,26 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class AnggotaController extends Controller
 {
+    public function getListAnggota()
+    {
+        $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
+        return DataTables::of($anggotas)
+        ->addColumn('actions', "anggota::index.action") 
+        ->rawColumns(['actions'])
+        ->make();
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
 
-        return view('anggota::index', compact('anggotas'));
+        return view('anggota::index');
     }
 
     /**
@@ -47,7 +55,7 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
+            'profile_photo' => ['nullable','image:jpeg,png,jpg','max:2048'],
         ]);
         
         if ($validator->fails()) {
@@ -58,7 +66,6 @@ class AnggotaController extends Controller
             'first_name'            => $request->first_name,
             'last_name'             => $request->last_name,
             'email'                 => $request->email,
-            'password'              => 'harusdiganti',
             'roles'                 => $request->role,
             'nick_name'             => $request->nick_name,
             'place_of_birth'        => $request->place_of_birth,
@@ -79,9 +86,9 @@ class AnggotaController extends Controller
             'nik'                   => $request->nik,
             'password'              => $request->password??'12345678',
         ];
-
+        // return $anggota;
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
-
+        // return $newAnggota;
         if(isset($newAnggota['status']) ) {
             if($newAnggota['status'] == 'success') {
                 return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
