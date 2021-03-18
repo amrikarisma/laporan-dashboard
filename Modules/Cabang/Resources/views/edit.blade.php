@@ -49,7 +49,7 @@
             <div class="form-group row">
                 <div class="col-sm-3 col-form-label"></div>
                 <div class="col-sm-9">
-                    <img id="cabang_photo_preview" src="{{ $cabang['cabang_photo'] ?? asset('image/avatar-no-image.png') }}"
+                    <img id="cabang_photo_preview" src="{{ $cabang['cabang_photo_url'] ?? asset('image/avatar-no-image.png') }}"
                     alt="preview image" style="max-height: 150px;">
                 </div>
             </div>
