@@ -160,7 +160,7 @@ class MyHelper{
             ],
         );
         $content['multipart'] = $data;
-        // return $content;
+
         try {
             $response = $client->post($api.'/api/'.$url,$content);
 

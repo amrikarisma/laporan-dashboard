@@ -141,7 +141,7 @@ class CabangController extends Controller
             'branch' => ['required'],
             'name' => ['required'],
             'parent_id' => ['nullable'],
-            'anggota_id' => ['required'],
+            'anggota_id' => ['nullable'],
             'cabang_photo'      => ['nullable', 'image','mimes:jpg,png,jpeg,gif,svg','max:2048'],
 
         ]);
