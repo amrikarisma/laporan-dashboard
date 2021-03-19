@@ -42,25 +42,25 @@
             <div class="form-group row">
                 {!! Form::label('daily_report', 'Laporan Harian Wajib',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('daily_report', old('daily_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Harian Wajib') ) !!}
+                    {!! Form::number('daily_report', old('daily_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Harian Wajib') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('daily_visit_report', 'Laporan Kunjungan Harian Wajib',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('daily_visit_report', old('daily_visit_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Kunjungan Harian Wajib') ) !!}
+                    {!! Form::number('daily_visit_report', old('daily_visit_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Kunjungan Harian Wajib') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('absent_without_note', 'Toleransi Presensi Tanpa Keterangan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('absent_without_note', old('absent_without_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Tanpa Keterangan') ) !!}
+                    {!! Form::number('absent_without_note', old('absent_without_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Tanpa Keterangan') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('absent_with_note', 'Toleransi Presensi Dengan Keterangan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('absent_with_note', old('absent_with_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Dengan Keterangan') ) !!}
+                    {!! Form::number('absent_with_note', old('absent_with_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Dengan Keterangan') ) !!}
                 </div>
             </div>
 
@@ -73,4 +73,30 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+<script>
+    $(function() {
+        $('input[name="time_in"], input[name="time_out"], input[name="work_time"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                datePicker:false,
+                locale: {
+                    format: 'hh:MM:ss',
+
+                },
+                timePicker :true,
+                timePicker24Hour:true,
+                timePickerSeconds:true
+            }, function (start, end, label) { //callback
+                start_time = start.format('HH:mm');
+                end_time = end.format('HH:mm');
+                console.log(start_time, end_time);
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
+    });
+    </script>
 @endsection
