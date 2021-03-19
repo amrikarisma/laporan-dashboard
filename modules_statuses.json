@@ -18,5 +18,6 @@
     "KunjunganReport": true,
     "GPSReport": true,
     "KegiatanReport": true,
-    "SuperFeature": true
+    "SuperFeature": true,
+    "Settings": true
 }

@@ -16,7 +16,7 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function index()
     {
-        $bobotkegiatans = MyHelper::apiGet('indikatorbobotkegiatan')['data'] ?? [];
+        $bobotkegiatans = MyHelper::apiGet('indikatorkegiatan')['data'] ?? [];
         return view('indikatorbobotkegiatan::index', compact('bobotkegiatans'));
     }
 
@@ -52,7 +52,7 @@ class IndikatorBobotKegiatanController extends Controller
             'note' => ['nullable'],
             'status' => ['required'],
         ]);
-        
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
@@ -66,7 +66,7 @@ class IndikatorBobotKegiatanController extends Controller
             'status'    => $request->status
         ];
 
-        $bobotkegiatan = MyHelper::apiPost('indikatorbobotkegiatan', $input);
+        $bobotkegiatan = MyHelper::apiPost('indikatorkegiatan', $input);
         if(isset($bobotkegiatan['status']) && $bobotkegiatan['status'] == 'success'){
             return redirect()->route('bobotkegiatan.index')->with('message', $bobotkegiatan['message']);
         }
@@ -91,7 +91,7 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function edit($id)
     {
-        $bobotkegiatan  = MyHelper::apiGet('indikatorbobotkegiatan/'.$id)['data'] ?? [];
+        $bobotkegiatan  = MyHelper::apiGet('indikatorkegiatan/'.$id)['data'] ?? [];
 
         $list_logic = [
             '<'     => 'Kurang Dari',
@@ -134,7 +134,7 @@ class IndikatorBobotKegiatanController extends Controller
             'status'    => $request->status
         ];
 
-        $bobotkegiatan = MyHelper::apiRequest('PUT','indikatorbobotkegiatan/'.$id, $input);
+        $bobotkegiatan = MyHelper::apiRequest('PUT','indikatorkegiatan/'.$id, $input);
         if(isset($bobotkegiatan['status']) && $bobotkegiatan['status'] == 'success'){
             return redirect()->route('bobotkegiatan.index')->with('message', $bobotkegiatan['message']);
         }
@@ -149,7 +149,7 @@ class IndikatorBobotKegiatanController extends Controller
      */
     public function destroy($id)
     {
-        $bobotkegiatan = MyHelper::apiRequest('DELETE','indikatorbobotkegiatan/'.$id);
+        $bobotkegiatan = MyHelper::apiRequest('DELETE','indikatorkegiatan/'.$id);
         if(isset($bobotkegiatan['status']) && $bobotkegiatan['status'] == 'success'){
             return redirect()->route('bobotkegiatan.index')->with('message', $bobotkegiatan['message']);
         }
