@@ -7,18 +7,27 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class AnggotaController extends Controller
 {
+    public function getListAnggota()
+    {
+        $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
+        return DataTables::of($anggotas)
+        ->editColumn('user.userdata.profile_photo_url', "anggota::index.thumb") 
+        ->addColumn('actions', "anggota::index.action") 
+        ->rawColumns(['user.userdata.profile_photo_url','actions'])
+        ->make();
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
 
-        return view('anggota::index', compact('anggotas'));
+        return view('anggota::index');
     }
 
     /**
@@ -47,6 +56,7 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
+            'profile_photo' => ['nullable','image:jpeg,png,jpg','max:2048'],
         ]);
         
         if ($validator->fails()) {
@@ -57,7 +67,6 @@ class AnggotaController extends Controller
             'first_name'            => $request->first_name,
             'last_name'             => $request->last_name,
             'email'                 => $request->email,
-            'password'              => 'harusdiganti',
             'roles'                 => $request->role,
             'nick_name'             => $request->nick_name,
             'place_of_birth'        => $request->place_of_birth,
@@ -76,18 +85,19 @@ class AnggotaController extends Controller
             'join_date'             => $request->join_date,
             'sk_pengangkatan'       => $request->sk_pengangkatan,
             'nik'                   => $request->nik,
-            'password'              => $request->password,
+            'password'              => $request->password??'12345678',
         ];
-
+        // return $anggota;
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
-
+        // return $newAnggota;
         if(isset($newAnggota['status']) ) {
             if($newAnggota['status'] == 'success') {
                 return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
             } elseif($newAnggota['status'] == 'failed'){
-                return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
+                return redirect()->back()->with('error', $newAnggota['message'])->withInput();
             }
         }
+
         return redirect()->back()->withErrors($newAnggota['error'])->withInput();
 
     }
@@ -100,7 +110,9 @@ class AnggotaController extends Controller
     public function show($id)
     {
         $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
-        // return $anggota;
+                if(!$anggota) {
+            return redirect()->back();
+        }
         return view('anggota::show', compact('anggota'));
     }
 
@@ -114,10 +126,11 @@ class AnggotaController extends Controller
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
         $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
-
-        $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
         $roles = MyHelper::apiGet('role')['data'] ?? [];
-
+        $anggota = MyHelper::apiGet('anggota/' . $id)['data'] ?? [];
+        if(!$anggota) {
+            return redirect()->back();
+        }
         return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota','roles'));
     }
 
@@ -133,8 +146,7 @@ class AnggotaController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'profile_photo' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
-
+            'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
         ]);
         
         if ($validator->fails()) {

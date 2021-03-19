@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('unit-cabang')->group(function() {
+Route::prefix('unit-cabang')->middleware('validate_session')->group(function() {
     Route::get('/data', 'CabangController@getCabang')->name('cabang.data');
     Route::get('/', 'CabangController@index')->name('cabang.index');
     Route::get('/create', 'CabangController@create')->name('cabang.create');

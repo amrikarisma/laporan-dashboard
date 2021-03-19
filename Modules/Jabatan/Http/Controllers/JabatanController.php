@@ -7,18 +7,26 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class JabatanController extends Controller
 {
+    public function ajaxlist()
+    {
+        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
+        return DataTables::of($jabatans)
+        ->addColumn('actions', "jabatan::index.action") 
+        ->rawColumns(['actions'])
+        ->make();
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $jabatans = MyHelper::apiGet('jabatan')['data'] ?? [];
         
-        return view('jabatan::index', compact('jabatans'));
+        return view('jabatan::index');
     }
 
     /**
@@ -43,7 +51,7 @@ class JabatanController extends Controller
             'name' => ['required','string'],
             'time_in' => ['date_format:H:i:s'],
             'time_out' => ['date_format:H:i:s'],
-            'work_time' => ['nullable','max:3'],
+            'work_time' => ['nullable','date_format:H:i:s'],
             'daily_report' => ['required','max:3'],
             'daily_visit_report' => ['required','max:3'],
             'absent_without_note' => ['required','max:3'],
@@ -109,7 +117,7 @@ class JabatanController extends Controller
             'name' => ['required','string'],
             'time_in' => ['date_format:H:i:s'],
             'time_out' => ['date_format:H:i:s'],
-            'work_time' => ['nullable','max:3'],
+            'work_time' => ['nullable','date_format:H:i:s'],
             'daily_report' => ['required','max:3'],
             'daily_visit_report' => ['required','max:3'],
             'absent_without_note' => ['required','max:3'],

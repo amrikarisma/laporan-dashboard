@@ -1,0 +1,1 @@
+<img src="{{ $user['userdata']['profile_photo_url']??'' }}" alt="{{ $user['name'] }}" width="50">

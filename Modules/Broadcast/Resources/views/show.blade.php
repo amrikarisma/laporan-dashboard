@@ -27,7 +27,7 @@
                     </tr>
                     <tr>
                         <td>{{ 'Jadwal Kirim' }}</td>
-                        <td>{{ $broadcast['schedule']??'' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($broadcast['schedule'])->locale('id_ID')->isoFormat('dddd, D MMMM Y, HH:ss')??'' }}</td>
                     </tr>
                     <tr>
                         <td>{{ 'Status' }}</td>

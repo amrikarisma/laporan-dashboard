@@ -15,7 +15,6 @@ class CabangController extends Controller
     public function getCabang(Request $request)
     {
         $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-
         $data = new Collection($cabangs);
         return DataTables::of($data)
         ->addIndexColumn()
@@ -32,7 +31,8 @@ class CabangController extends Controller
     public function index()
     {
         $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-
+        // $cabangs = MyHelper::apiRequest('get', 'cabang');
+        // return $cabangs;
         return view('cabang::index', compact('cabangs'));
     }
 
@@ -42,7 +42,11 @@ class CabangController extends Controller
      */
     public function create()
     {
-        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available')['data']??[];
+        $avail = [
+            'current' => isset($cabang['anggota']['id']) ? $cabang['anggota']['id'] : '',
+        ];
+
+        $anggotas = MyHelper::apiRequest('post', 'cabang/anggota-available/', $avail)['data']??[];
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
         $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
 
@@ -60,9 +64,8 @@ class CabangController extends Controller
             'branch' => ['required'],
             'name' => ['required'],
             'parent_id' => ['nullable'],
-            'anggota_id' => ['required'],
-            'cabang_photo' => ['nullable'],
-        ]);
+            'cabang_photo'      => ['nullable', 'image','mimes:jpg,png,jpeg,gif,svg','max:2048'],
+            ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
@@ -83,7 +86,6 @@ class CabangController extends Controller
         ];
 
         $cabang = MyHelper::apiPostWithFile('cabang', $input, $request);
-
         if(isset($cabang['status']) && $cabang['status'] == 'success'){
             return redirect()->route('cabang.index')->with('message', $cabang['message']);
         }
@@ -114,10 +116,15 @@ class CabangController extends Controller
         $parent = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
 
         $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
-        $anggotaAvail = isset($cabang['anggota']['id']) ? 'current='.$cabang['anggota']['id'] :'';
-        
+
         $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
-        $anggotas = MyHelper::apiRequest('get', 'cabang/anggota-available/?'.$anggotaAvail)['data']??[];
+        
+        $avail = [
+            'current' => isset($cabang['anggota']['id']) ? $cabang['anggota']['id'] : '',
+            'cabang'  => $id
+        ];
+
+        $anggotas = MyHelper::apiRequest('post', 'cabang/anggota-available/', $avail)['data']??[];
 
         return view('cabang::edit', compact('cabang','branch', 'parent','anggotas'));
     }
@@ -134,13 +141,14 @@ class CabangController extends Controller
             'branch' => ['required'],
             'name' => ['required'],
             'parent_id' => ['nullable'],
-            'anggota_id' => ['required'],
+            'anggota_id' => ['nullable'],
+            'cabang_photo'      => ['nullable', 'image','mimes:jpg,png,jpeg,gif,svg','max:2048'],
+
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-
 
         $input = [
             'branch_id' => $request->branch,
@@ -165,6 +173,11 @@ class CabangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cabang = MyHelper::apiRequest('delete', 'cabang/' . $id) ?? [];
+        // return $cabang;
+        if($cabang['status'] == 'failed') {
+            return redirect()->route('cabang.index')->with('error', $cabang['message']);
+        }
+        return redirect()->route('cabang.index')->with('message', $cabang['message']);
     }
 }

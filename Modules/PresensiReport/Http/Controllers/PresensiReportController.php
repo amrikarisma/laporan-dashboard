@@ -27,7 +27,7 @@ class PresensiReportController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
         $hadir = MyHelper::apiGet('kategori-presensi?pluck=1&group=0')['data']??[];
-
+        // return $absents;
         return view('presensireport::index', compact('absents', 'anggota', 'jabatan','hadir', 'request'));
     }
 }
