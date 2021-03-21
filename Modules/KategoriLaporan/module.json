@@ -1,0 +1,13 @@
+{
+    "name": "KategoriLaporan",
+    "alias": "kategorilaporan",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\KategoriLaporan\\Providers\\KategoriLaporanServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

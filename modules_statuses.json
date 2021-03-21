@@ -20,5 +20,6 @@
     "KegiatanReport": true,
     "SuperFeature": true,
     "Settings": true,
-    "ImportAnggota": true
+    "ImportAnggota": true,
+    "KategoriLaporan": true
 }
