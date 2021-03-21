@@ -59,9 +59,8 @@ class JabatanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        
         $form = $request->except(['_token']);
         $jabatan = MyHelper::apiRequest('post', 'jabatan', $form) ?? [];
         // return $jabatan;
@@ -125,7 +124,7 @@ class JabatanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $form = $request->except(['_token']);
