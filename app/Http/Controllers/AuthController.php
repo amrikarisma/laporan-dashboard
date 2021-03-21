@@ -34,13 +34,9 @@ class AuthController extends Controller
         if (session('token')) {
             return redirect(url('/'));
         }
-        if($request->email == 'superadmin@gmail.com' ) {
-            dump($request);
-        }
+
         $post_login = MyHelper::postLogin($request);
-        if($request->email == 'superadmin@gmail.com' ) {
-            dd($post_login);
-        }
+
         if (isset($post_login['errors']) ) {
 
             return redirect('login')->withErrors($post_login['errors'])->withInput();
