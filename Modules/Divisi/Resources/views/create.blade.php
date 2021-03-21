@@ -30,7 +30,7 @@
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
-                    <button type="submit" class="btn btn-primary"> Submit</button>
+                    <button type="submit" class="btn btn-primary"> Kirim</button>
                 </div>
             </div>
         </div>
