@@ -1,0 +1,13 @@
+{
+    "name": "ImportAnggota",
+    "alias": "importanggota",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ImportAnggota\\Providers\\ImportAnggotaServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
