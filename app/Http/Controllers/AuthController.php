@@ -31,8 +31,6 @@ class AuthController extends Controller
      */
     public function processLogin(Request $request)
     {
-
-
         if (session('token')) {
             return redirect(url('/'));
         }
@@ -48,12 +46,7 @@ class AuthController extends Controller
             return redirect('login')->withErrors($post_login['messages'])->withInput();
 
         } else if (!($post_login['token'] ?? false) || isset($post_login['errors'])) {
-            $message = [
-                'request' => $request->all(),
-                'response' => $post_login,
-                'from'      => 'dashboard'
-            ];
-            Log::debug($message);
+
             return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
 
         } else {
