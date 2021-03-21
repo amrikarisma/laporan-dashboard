@@ -27,10 +27,3 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 });
-
-Route::get('/pull', function () {
-    // if ( $_POST['payload'] ) {
-        shell_exec( 'cd /Users/amri/Documents/Project/Dev/laporan-dashboard/ && git reset –hard HEAD && git pull' );
-        return 'ok';
-    // }
-});
