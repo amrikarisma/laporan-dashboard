@@ -16,10 +16,9 @@ class BroadcastController extends Controller
         $broadcasts = MyHelper::apiGet('broadcast')['data'] ?? [];
         return DataTables::of($broadcasts)
         ->editColumn('created_at', "broadcast::index.date") 
-        ->editColumn('schedule', "broadcast::index.schedule") 
         ->editColumn('status', "broadcast::index.status") 
         ->addColumn('actions', "broadcast::index.action") 
-        ->rawColumns(['actions','status', 'created_at', 'schedule'])
+        ->rawColumns(['actions','status', 'created_at'])
         ->make();
     }
     /**
@@ -37,7 +36,9 @@ class BroadcastController extends Controller
      */
     public function create()
     {
-        return view('broadcast::create');
+        $targetSend = MyHelper::apiRequest('get', 'cabang?pluck=1')['data']??[];
+
+        return view('broadcast::create',compact('targetSend'));
     }
 
     /**
@@ -62,13 +63,14 @@ class BroadcastController extends Controller
             'title'         => $request->title,
             'description'   => $request->description,
             'image'         => $request->image,
+            'target_send'   => $request->target_send
         ];
 
         $broadcast = MyHelper::apiPost('broadcast', $input);
         if(isset($broadcast['status']) && $broadcast['status'] == 'success'){
             return redirect()->route('broadcast.index')->with('message', $broadcast['message']);
         }
-        // return $broadcast;
+
         return redirect()->back()->withErrors($broadcast['error'])->withInput();
     }
 

@@ -150,17 +150,33 @@
 </form>
 @endsection
 @section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
     <script>
-        $('#profile_photo').on('change', function () {
-            let reader = new FileReader();
-            console.log(reader);
+        $(function() {
+            $('#profile_photo').on('change', function () {
+                let reader = new FileReader();
+                console.log(reader);
 
-            reader.onload = (e) => { 
-                console.log('e');
-                $('#profile_photo_preview').attr('src', e.target.result); 
-            }
-            reader.readAsDataURL(this.files[0]); 
+                reader.onload = (e) => { 
+                    console.log('e');
+                    $('#profile_photo_preview').attr('src', e.target.result); 
+                }
+                reader.readAsDataURL(this.files[0]); 
 
+            });
+            $('input[name="birthday"], input[name="join_date"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'),10),
+                locale: {
+                format: 'YYYY-MM-DD'
+                }
+            }, function(start, end, label) {
+                var years = moment().diff(start, 'years');
+                console.log("You are " + years + " years old!");
+            });
         });
     </script>
 @endsection

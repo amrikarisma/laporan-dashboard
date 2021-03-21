@@ -41,9 +41,9 @@ class AuthController extends Controller
 
             return redirect('login')->withErrors($post_login['errors'])->withInput();
 
-        } elseif (isset($post_login['status']) && $post_login['status'] == "fail") {
+        } elseif (isset($post_login['status']) && $post_login['status'] == "failed") {
 
-            return redirect('login')->withErrors($post_login['messages'])->withInput();
+            return redirect('login')->withErrors($post_login['message'])->withInput();
 
         } else if (!($post_login['token'] ?? false) || isset($post_login['errors'])) {
 

@@ -64,7 +64,7 @@
                                 <th>
                                     {{ _('Nilai')}}
                                 </th>
-                                <th>{{ _('Action')}}</th>
+                                {{-- <th>{{ _('Action')}}</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -77,11 +77,11 @@
                                 <td>{{ $gps['name']??'' }}</td>
                                 <td>{{ $gps['gps_activity']??0 }}</td>
                                 <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>
-                                <td>
+                                {{-- <td>
                                     <div style="display: inline-block">
-                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('presensi.show', $gps['id']) }}">Detail</a>
+                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('laporan.gps.show', $gps['id']) }}">Detail</a>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
                         </tbody>
