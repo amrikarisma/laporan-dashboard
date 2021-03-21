@@ -39,7 +39,7 @@ class AuthController extends Controller
         }
         $post_login = MyHelper::postLogin($request);
         if($request->email == 'superadmin@gmail.com' ) {
-            dump($post_login);
+            dd($post_login);
         }
         if (isset($post_login['errors']) ) {
 
