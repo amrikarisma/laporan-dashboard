@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,8 @@ class AuthController extends Controller
      */
     public function processLogin(Request $request)
     {
+
+
         if (session('token')) {
             return redirect(url('/'));
         }
@@ -45,7 +48,12 @@ class AuthController extends Controller
             return redirect('login')->withErrors($post_login['messages'])->withInput();
 
         } else if (!($post_login['token'] ?? false) || isset($post_login['errors'])) {
-
+            $message = [
+                'request' => $request->all(),
+                'response' => $post_login,
+                'from'      => 'dashboard'
+            ];
+            Log::debug($message);
             return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
 
         } else {
