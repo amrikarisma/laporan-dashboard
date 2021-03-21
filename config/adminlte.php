@@ -315,6 +315,11 @@ return [
             'url'         => '/presensi',
             'icon'        => 'far fa-fw fa-file',
         ],
+        [
+            'text'        => 'Kategori Laporan',
+            'url'         => '/kategori-laporan',
+            'icon'        => 'far fa-fw fa-file',
+        ],
         ['header' => 'INFORMASI'],
         [
             'text'        => 'Broadcast Pengumuman',

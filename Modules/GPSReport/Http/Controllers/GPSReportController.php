@@ -32,5 +32,15 @@ class GPSReportController extends Controller
 
         return view('gpsreport::index', compact('gpsReport', 'anggota', 'jabatan','hadir', 'request'));
     }
-
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    // public function show($id)
+    // {
+    //     $absent = MyHelper::apiGet('gps-report/'.$id)['data'][0]??[];
+    //     // return $absent;
+    //     return view('gpsreport::show', compact('absent'));
+    // }
 }
