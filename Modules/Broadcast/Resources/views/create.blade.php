@@ -28,13 +28,18 @@
                     {!! Form::textarea('description','', array( 'class' => 'form-control', 'rows' => '4','placeholder' => 'Deskripsi') ) !!}
                 </div>
             </div>
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 {!! Form::label('schedule', 'Jadwal Kirim',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('schedule','', array( 'class' => 'form-control','placeholder' => 'Jadwal Kirim') ) !!}
+                    {!! Form::select('schedule','', array( 'class' => 'form-control','placeholder' => 'Jadwal Kirim') ) !!}
+                </div>
+            </div> --}}
+            <div class="form-group row">
+                {!! Form::label('target_send', 'Tujuan Broadcast',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                <div class="col-sm-9">
+                    {!! Form::select('target_send', $targetSend , null, array( 'class' => 'form-control', 'placeholder' => 'Pilih Tujuan') ) !!}
                 </div>
             </div>
-
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
@@ -44,4 +49,24 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+    <script>
+        $(function() {
+            $('input[name="birthday"], input[name="schedule"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'),10),
+                locale: {
+                format: 'YYYY-MM-DD'
+                }
+            }, function(start, end, label) {
+                var years = moment().diff(start, 'years');
+                console.log("You are " + years + " years old!");
+            });
+        });
+    </script>
 @endsection

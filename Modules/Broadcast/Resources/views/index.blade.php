@@ -25,7 +25,7 @@
                             {{ _('Judul')}}
                         </th>
                         <th>
-                            {{ _('Terjadwal')}}
+                            {{ _('Tujuan')}}
                         </th>
                         <th>
                             {{ _('Status')}}
@@ -88,10 +88,11 @@
         { data: 'created_at' },
         { data: 'user.name' },
         { data: 'title'},
-        { data: 'schedule'},
+        { data: 'target_send'},
         { data: 'status'},
         { data: 'actions'},
     ]
     });
     </script>
+
 @endsection

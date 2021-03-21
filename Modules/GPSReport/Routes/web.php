@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('laporan-gps')->middleware('validate_session')->group(function () {
     Route::get('/', 'GPSReportController@index')->name('laporan.gps.index');
+    Route::get('/{id}', 'GPSReportController@show')->name('laporan.gps.show');
 });
