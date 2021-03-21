@@ -19,5 +19,6 @@
     "GPSReport": true,
     "KegiatanReport": true,
     "SuperFeature": true,
-    "Settings": true
+    "Settings": true,
+    "ImportAnggota": true
 }
