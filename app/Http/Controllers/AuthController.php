@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {

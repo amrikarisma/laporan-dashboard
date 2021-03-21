@@ -16,7 +16,7 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function index()
     {
-        $akurasilokasis = MyHelper::apiGet('indikatorakurasilokasi')['data'] ?? [];
+        $akurasilokasis = MyHelper::apiGet('indikatorlokasi')['data'] ?? [];
         return view('indikatorakurasilokasi::index', compact('akurasilokasis'));
     }
 
@@ -65,7 +65,7 @@ class IndikatorAkurasiLokasiController extends Controller
             'status'    => $request->status
         ];
 
-        $akurasilokasi = MyHelper::apiPost('indikatorakurasilokasi', $input);
+        $akurasilokasi = MyHelper::apiPost('indikatorlokasi', $input);
         if(isset($akurasilokasi['status']) && $akurasilokasi['status'] == 'success'){
             return redirect()->route('akurasilokasi.index')->with('message', $akurasilokasi['message']);
         }
@@ -90,7 +90,7 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function edit($id)
     {
-        $akurasilokasi  = MyHelper::apiGet('indikatorakurasilokasi/'.$id)['data'] ?? [];
+        $akurasilokasi  = MyHelper::apiGet('indikatorlokasi/'.$id)['data'] ?? [];
 
         $list_logic = [
             '<'     => 'Kurang Dari',
@@ -133,7 +133,7 @@ class IndikatorAkurasiLokasiController extends Controller
             'status'    => $request->status
         ];
 
-        $akurasilokasi = MyHelper::apiRequest('PUT','indikatorakurasilokasi/'.$id, $input);
+        $akurasilokasi = MyHelper::apiRequest('PUT','indikatorlokasi/'.$id, $input);
         if(isset($akurasilokasi['status']) && $akurasilokasi['status'] == 'success'){
             return redirect()->route('akurasilokasi.index')->with('message', $akurasilokasi['message']);
         }
@@ -148,7 +148,7 @@ class IndikatorAkurasiLokasiController extends Controller
      */
     public function destroy($id)
     {
-        $akurasilokasi = MyHelper::apiRequest('DELETE','indikatorakurasilokasi/'.$id);
+        $akurasilokasi = MyHelper::apiRequest('DELETE','indikatorlokasi/'.$id);
         if(isset($akurasilokasi['status']) && $akurasilokasi['status'] == 'success'){
             return redirect()->route('akurasilokasi.index')->with('message', $akurasilokasi['message']);
         }

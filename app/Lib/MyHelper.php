@@ -19,7 +19,6 @@ class MyHelper{
     public static function postLogin($request){
         $api = env('API_URL');
         $client = new Client;
-
         try {
             $response = $client->request('POST',$api.'/api/login', [
                 'headers' => [
@@ -30,7 +29,7 @@ class MyHelper{
                     'password'      => $request->password,
                     'device_name'   => 'dashboard'
                 ],
-                'connect_timeout' => 5
+                'connect_timeout' => 30
             ]);
             return json_decode($response->getBody(), true);
         }catch (\GuzzleHttp\Exception\RequestException $e) {
