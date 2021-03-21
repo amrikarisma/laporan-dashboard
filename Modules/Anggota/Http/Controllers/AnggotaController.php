@@ -85,7 +85,7 @@ class AnggotaController extends Controller
             'join_date'             => $request->join_date,
             'sk_pengangkatan'       => $request->sk_pengangkatan,
             'nik'                   => $request->nik,
-            'password'              => $request->password??'12345678',
+            'password'              => $request->password??substr($request->nik, -6)
         ];
         // return $anggota;
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
@@ -162,7 +162,6 @@ class AnggotaController extends Controller
             'first_name'        => $request->first_name,
             'last_name'         => $request->last_name,
             'email'             => $request->email,
-            'password'          => 'harusdiganti',
             'roles'             => $request->role,
             'nick_name'         => $request->nick_name,
             'place_of_birth'    => $request->place_of_birth,
@@ -181,9 +180,10 @@ class AnggotaController extends Controller
             'join_date'         => $request->join_date,
             'sk_pengangkatan'   => $request->sk_pengangkatan,
             'nik'               => $request->nik,
-            'password'          => $request->password,
         ];
-
+        if($request->password) {
+            $anggota['password']    = $request->password;
+        }
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
 
         if(isset($newAnggota['status']) ) {
