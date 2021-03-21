@@ -85,7 +85,7 @@ class AnggotaController extends Controller
             'join_date'             => $request->join_date,
             'sk_pengangkatan'       => $request->sk_pengangkatan,
             'nik'                   => $request->nik,
-            'password'              => $request->password??substr($request->nik, -6)
+            'password'              => $request->password??substr($request->nik, -4)
         ];
         // return $anggota;
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
