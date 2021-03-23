@@ -22,12 +22,12 @@ class KunjunganController extends Controller
         // $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)??[];
 
         $kunjungans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota)??[];
-        // return $kunjungans;
+        $collection = collect($kunjungans['data']['data']);
+        $location = $collection->pluck('laporan_geolocation');
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
-
-        return view('kunjungan::index', compact('kunjungans', 'anggota', 'jabatan', 'request'));
+        return view('kunjungan::index', compact('kunjungans', 'location','anggota', 'jabatan', 'request'));
     }
 
     /**

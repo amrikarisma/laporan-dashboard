@@ -56,6 +56,9 @@
                                     {{ _('Judul')}}
                                 </th>
                                 <th>
+                                    {{ _('Kategori')}}
+                                </th>
+                                <th>
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
@@ -63,9 +66,6 @@
                                 </th>
                                 <th>
                                     {{ _('Performa')}}
-                                </th>
-                                <th>
-                                    {{ _('Kategori')}}
                                 </th>
                                 <th>
                                     {{ _('Tanggal Laporan')}}
@@ -82,10 +82,10 @@
                             @foreach ($kunjungans['data']['data'] as $kunjungan)
                             <tr>
                                 <td>{{ $kunjungan['laporan_title'] }}</td>
+                                <td>{{ $kunjungan['laporan_category'] }}</td>
                                 <td>{{ strip_tags(Str::limit($kunjungan['laporan_description'],20) ) }}</td>
                                 <td>{{ $kunjungan['laporan_geolocation'] }}</td>
                                 <td>{{ $kunjungan['laporan_performance'] }}</td>
-                                <td>{{ $kunjungan['laporan_category'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $kunjungan['user']['name'] }}</td>
                                 <td>
