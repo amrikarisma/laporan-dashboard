@@ -15,6 +15,11 @@
             <div class="card-body">
                 <table class="table table-borderless">
                     <tr>
+                        <td>Nama Cabang Induk</td>
+                        <td>:</td>
+                        <td>{{ isset($cabang['ancestors'][0]['name']) ? $cabang['ancestors'][0]['name'] : $cabang['name'] }}</td>
+                    </tr>
+                    <tr>
                         <td>Nama Cabang</td>
                         <td>:</td>
                         <td>{{ $cabang['name']??'' }}</td>
