@@ -13,6 +13,6 @@
 
 Route::prefix('history')->middleware('validate_session')->group(function() {
     Route::get('/list', 'HistoryController@location')->name('history.location');
-    Route::get('/', 'HistoryController@index');
+    Route::get('/', 'HistoryController@index')->name('history.index');
     Route::post('/', 'HistoryController@index');
 });

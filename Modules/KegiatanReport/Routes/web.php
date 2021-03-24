@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('laporan-kegiatan')->middleware('validate_session')->group(function() {
     Route::get('/', 'KegiatanReportController@index')->name('laporan.kegiatan.index');
     Route::get('/{id}', 'KegiatanReportController@show')->name('laporan.kegiatan.show');
+    Route::post('/{id}/update', 'KegiatanReportController@update')->name('laporan.kegiatan.update');
 });

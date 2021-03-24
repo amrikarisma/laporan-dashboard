@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('kategori-laporan.store' ) }}" method="POST" class="form-horizontal">
+<form action="{{ route('kategori-laporan.update', $kategori['id'] ) }}" method="POST" class="form-horizontal">
     @csrf
     <div class="card">
         <div class="card-header">

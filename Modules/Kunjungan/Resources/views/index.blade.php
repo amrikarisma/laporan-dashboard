@@ -82,7 +82,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kunjungans['data']['data'] as $kunjungan)
+                            @foreach ($kunjungans['data']['data']??[] as $kunjungan)
                             
                             <tr>
                                 <td>{{ $kunjungan['laporan_title'] }}</td>
