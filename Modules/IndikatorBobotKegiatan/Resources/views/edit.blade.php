@@ -5,7 +5,7 @@
     @csrf
     <div class="card">
         <div class="card-header">
-            <h3>Tambah Indikator Bobot Kegiatan</h3>
+            <h3>Edit Indikator Bobot Kegiatan</h3>
         </div>
         <div class="card-body">
             @include('layouts.notification')

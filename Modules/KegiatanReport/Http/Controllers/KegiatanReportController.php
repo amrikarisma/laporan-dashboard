@@ -102,7 +102,6 @@ class KegiatanReportController extends Controller
     public function downloadExcel(Request $request)
     {
         return (new LaporanExport)->download('laporan.xlsx');
-
     }
 
     /**

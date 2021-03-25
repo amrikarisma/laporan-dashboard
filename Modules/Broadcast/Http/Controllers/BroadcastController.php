@@ -51,12 +51,13 @@ class BroadcastController extends Controller
         $validator = Validator::make($request->all(), [
             'title'         => ['required'],
             'description'   => ['required'],
-            'image'         => ['nullable'],
+            'image' => ['nullable','image:jpeg,png,jpg','max:2048'],
         ]);
         
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
+        // dd($request);
 
         $input = [
             'user'          => session('id_user'),
@@ -66,7 +67,8 @@ class BroadcastController extends Controller
             'target_send'   => $request->target_send
         ];
 
-        $broadcast = MyHelper::apiPost('broadcast', $input);
+        $broadcast = MyHelper::apiPostWithFile('broadcast', $input, $request);
+        return $broadcast;
         if(isset($broadcast['status']) && $broadcast['status'] == 'success'){
             return redirect()->route('broadcast.index')->with('message', $broadcast['message']);
         }
