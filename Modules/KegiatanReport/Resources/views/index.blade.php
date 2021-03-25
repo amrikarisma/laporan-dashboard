@@ -28,6 +28,9 @@
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Laporan</a>
+                    </div>
                 </div>
             </form>
         </div>

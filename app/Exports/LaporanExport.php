@@ -6,9 +6,10 @@ use App\Laporan;
 use App\Lib\MyHelper;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class LaporanExport implements FromCollection, WithHeadings
+class LaporanExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     use Exportable;
     private $fileName = 'laporan.xlsx';
@@ -47,5 +48,18 @@ class LaporanExport implements FromCollection, WithHeadings
 
 
         return $laporan;
+    }
+
+    /**
+     * @return array
+     */
+    public function registerEvents(): array
+    {
+        return [
+            LaporanExport::class    => function(LaporanExport $event) {
+                $cellRange = 'A1:W1'; // All headers
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
+            },
+        ];
     }
 }

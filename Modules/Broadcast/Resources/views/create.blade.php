@@ -1,13 +1,15 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('broadcast.store' ) }}" method="POST" class="form-horizontal">
+{{ Form::open(['route' => 'broadcast.store',  'method' => 'post', 'files' => true, 'class' => 'form-horizontal needs-validation', 'novalidate']) }}
+
     @csrf
     <div class="card">
         <div class="card-header">
             <h3>Kirim Broadcast Pengumuman</h3>
         </div>
         <div class="card-body">
+            @include('layouts.notification')
             {{-- <div class="form-group row">
                 {!! Form::label('logic', 'Logic',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
@@ -41,6 +43,19 @@
                 </div>
             </div>
             <div class="form-group row">
+                {!! Form::label('image', 'Upload Foto',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                <div class="col-sm-9">
+                    {!! Form::file('image', array('accept' => 'image/*')) !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3 col-form-label"></div>
+                <div class="col-sm-9">
+                    <img id="image_preview" src="{{ asset('image/avatar-no-image.png') }}"
+                    alt="preview image" style="max-height: 150px;">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
                     <button type="submit" class="btn btn-primary"> Kirim</button>
@@ -48,13 +63,24 @@
             </div>
         </div>
     </div>
-</form>
+{!! Form::close() !!}
 @endsection
 @section('js')
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
     <script>
         $(function() {
+            $('#image').on('change', function () {
+                let reader = new FileReader();
+                console.log(reader);
+
+                reader.onload = (e) => { 
+                    console.log('e');
+                    $('#image_preview').attr('src', e.target.result); 
+                }
+                reader.readAsDataURL(this.files[0]); 
+
+            });
             $('input[name="birthday"], input[name="schedule"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
