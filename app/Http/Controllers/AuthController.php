@@ -64,7 +64,9 @@ class AuthController extends Controller
 
             $data_to_save = [
                 'id_user'          => $user_data['id'],
+                'id_anggota'        => $user_data['anggota']['id']??0,
                 'name'             => $user_data['name'],
+                'roles'             => $user_data['role_array'],
             ];
 
             session($data_to_save);

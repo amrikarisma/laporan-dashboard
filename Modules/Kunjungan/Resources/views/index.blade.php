@@ -56,16 +56,19 @@
                                     {{ _('Judul')}}
                                 </th>
                                 <th>
+                                    {{ _('Kategori')}}
+                                </th>
+                                <th>
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
-                                    {{ _('Lokasi')}}
+                                    {{ _('Lokasi Laporan')}}
+                                </th>
+                                <th>
+                                    {{ _('Lokasi GPS')}}
                                 </th>
                                 <th>
                                     {{ _('Performa')}}
-                                </th>
-                                <th>
-                                    {{ _('Kategori')}}
                                 </th>
                                 <th>
                                     {{ _('Tanggal Laporan')}}
@@ -79,13 +82,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kunjungans['data']['data'] as $kunjungan)
+                            @foreach ($kunjungans['data']['data']??[] as $kunjungan)
+                            
                             <tr>
                                 <td>{{ $kunjungan['laporan_title'] }}</td>
+                                <td>{{ $kunjungan['category']['title']??'Tidak Ada Kategori' }}</td>
                                 <td>{{ strip_tags(Str::limit($kunjungan['laporan_description'],20) ) }}</td>
-                                <td>{{ $kunjungan['laporan_geolocation'] }}</td>
+                                <td>{{ $kunjungan['laporan_location'] }}</td>
+                                <td><a id="{{$loop->index}}" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_geolocation']??'' }}</a></td>
                                 <td>{{ $kunjungan['laporan_performance'] }}</td>
-                                <td>{{ $kunjungan['laporan_category'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $kunjungan['user']['name'] }}</td>
                                 <td>
@@ -109,7 +114,26 @@
 @section('plugins.Charts', true)
 
 <script type="text/javascript"> 
-
+    $(function () {
+        var location =  @json($location);
+        let i = 0;
+        location.forEach(el => {
+            var loc = el.split(', ');
+            console.log(loc[1])
+            if( typeof loc[1] != 'undefined') {
+                $.get( "https://nominatim.openstreetmap.org/reverse?format=geojson&lat="+loc[0]+"&lon="+loc[1], function( data ) {
+                    console.log(data['features'][0]['properties']['display_name']);
+                    $('#'+i).tooltip({
+                        delay: 500,
+                        placement: "top",
+                        title: data['features'][0]['properties']['display_name'],
+                        html: true
+                    }); 
+                });
+            }
+            i++;
+        });
+    })
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
     

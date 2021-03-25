@@ -56,16 +56,19 @@
                                     {{ _('Judul')}}
                                 </th>
                                 <th>
+                                    {{ _('Kategori')}}
+                                </th>
+                                <th>
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
-                                    {{ _('Lokasi')}}
+                                    {{ _('Lokasi Laporan')}}
+                                </th>
+                                <th>
+                                    {{ _('Lokasi dari GPS')}}
                                 </th>
                                 <th>
                                     {{ _('Performa')}}
-                                </th>
-                                <th>
-                                    {{ _('Kategori')}}
                                 </th>
                                 <th>
                                     {{ _('Tanggal Laporan')}}
@@ -74,20 +77,25 @@
                                     {{ _('Pengirim')}}
                                 </th>
                                 <th>
+                                    {{ _('Status')}}
+                                </th>
+                                <th>
                                     {{ _('')}}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kegiatans['data']['data'] as $kegiatan)
+                            @foreach ($kegiatans['data']['data']??[] as $kegiatan)
                             <tr>
                                 <td>{{ $kegiatan['laporan_title'] }}</td>
+                                <td>{{ $kegiatan['category']['title']??'Tidak Ada Kategori' }}</td>
                                 <td>{{ strip_tags(Str::limit($kegiatan['laporan_description'],20) ) }}</td>
-                                <td>{{ $kegiatan['laporan_geolocation'] }}</td>
+                                <td>{{ $kegiatan['laporan_location'] }}</td>
+                                <td><a id="{{$loop->index}}" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_geolocation']??'' }}</a></td>
                                 <td>{{ $kegiatan['laporan_performance'] }}</td>
-                                <td>{{ $kegiatan['laporan_category'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($kegiatan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $kegiatan['user']['name'] }}</td>
+                                <td>{{ $kegiatan['status']}}</td>
                                 <td>
                                     <a class="btn btn-primary"
                                     href="{{ route('laporan.kegiatan.show', $kegiatan['id']) }}">Detail</a>
