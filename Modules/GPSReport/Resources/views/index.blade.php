@@ -46,7 +46,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Tabel Laporan Presensi</h5>
+                    <h5>Tabel Laporan Aktifitas GPS</h5>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -75,7 +75,7 @@
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($gps['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $gps['name']??'' }}</td>
-                                <td>{{ $gps['gps_activity']??0 }}</td>
+                                <td><a href="{{ route('history.index') }}">{{ $gps['gps_activity']??0 }}</a></td>
                                 <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>
                                 {{-- <td>
                                     <div style="display: inline-block">

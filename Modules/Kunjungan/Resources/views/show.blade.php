@@ -18,6 +18,10 @@
                         <td>{{ $kunjungan['user']['name']??'' }}</td>
                     </tr>
                     <tr>
+                        <td>{{ 'Kategori' }}</td>
+                        <td>{{ $kunjungan['category']['title']??'Tidak ada kategori' }}</td>
+                    </tr>
+                    <tr>
                         <td>{{ 'Judul' }}</td>
                         <td>{{ $kunjungan['laporan_title']??'' }}</td>
                     </tr>
@@ -26,16 +30,12 @@
                         <td>{!! $kunjungan['laporan_description']??'' !!}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'Kategori' }}</td>
-                        <td>{{ $kunjungan['laporan_category']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Lokasi' }}</td>
+                        <td>{{ 'Lokasi Laporan' }}</td>
                         <td>{{ $kunjungan['laporan_location']??'' }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'Lokasi Kunjungan' }}</td>
-                        <td>{{ $kunjungan['laporan_geolocation']??'' }}</td>
+                        <td>{{ 'Lokasi GPS' }}</td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_geolocation']??'' }}</a></td>
                     </tr>
                     <tr>
                         <td>{{ 'Performa' }}</td>

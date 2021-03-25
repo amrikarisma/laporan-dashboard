@@ -2,10 +2,13 @@
 
 namespace Modules\KegiatanReport\Http\Controllers;
 
+use App\Exports\LaporanExport;
 use App\Lib\MyHelper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KegiatanReportController extends Controller
 {
@@ -56,7 +59,14 @@ class KegiatanReportController extends Controller
      */
     public function show($id)
     {
-        return view('kegiatanreport::show');
+        $kegiatan = MyHelper::apiGet('laporan/'.$id)['data']??[];
+
+        if(!$kegiatan) {
+            return redirect(route('laporan.kegiatan.index'));
+        }
+        $idAnggota = session('id_anggota');
+        $anggota = MyHelper::apiGet('anggota/'.$idAnggota)['data']??[];
+        return view('kegiatanreport::show', compact('kegiatan', 'anggota'));
     }
 
     /**
@@ -77,7 +87,22 @@ class KegiatanReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = [
+            'penanganan' => $request->penanganan,
+            'penanganan_oleh' => $request->penanganan_oleh,
+            'status' => $request->status,
+        ];
+        $kegiatan = MyHelper::apiRequest('PUT','laporan/'.$id, $input);
+        if(isset($kegiatan['status']) && $kegiatan['status'] == 'success'){
+            return redirect()->route('laporan.kegiatan.index')->with('message', $kegiatan['message']);
+        }
+        // return $kegiatan;
+        return redirect()->back()->withErrors($kegiatan['error'])->withInput();
+    }
+    public function downloadExcel(Request $request)
+    {
+        return (new LaporanExport)->download('laporan.xlsx');
+
     }
 
     /**

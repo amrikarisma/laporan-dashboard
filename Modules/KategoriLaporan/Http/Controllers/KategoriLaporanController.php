@@ -59,7 +59,7 @@ class KategoriLaporanController extends Controller
 
         $kategorilaporan = MyHelper::apiPost('kategorilaporan', $input);
         if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'success'){
-            return redirect()->route('kategorilaporan.index')->with('message', $kategorilaporan['message']);
+            return redirect()->route('kategori-laporan.index')->with('message', $kategorilaporan['message']);
         }
 
         return redirect()->back()->withErrors($kategorilaporan['error'])->withInput();
@@ -72,7 +72,12 @@ class KategoriLaporanController extends Controller
      */
     public function show($id)
     {
-        return view('kategorilaporan::show');
+        $kategorilaporan = MyHelper::apiGet('kategorilaporan/'.$id)??[];
+        if($kategorilaporan['status'] == 'failed') {
+            return redirect()->route('kategori-laporan.index')->with('error', 'Data tidak ditemukan');
+        }
+        $kategori = $kategorilaporan['data']??[];
+        return view('kategorilaporan::show', compact('kategori'));
     }
 
     /**
@@ -82,7 +87,12 @@ class KategoriLaporanController extends Controller
      */
     public function edit($id)
     {
-        return view('kategorilaporan::edit');
+        $kategorilaporan = MyHelper::apiGet('kategorilaporan/'.$id)??[];
+        if($kategorilaporan['status'] == 'failed') {
+            return redirect()->route('kategori-laporan.index')->with('error', 'Data tidak ditemukan');
+        }
+        $kategori = $kategorilaporan['data']??[];
+        return view('kategorilaporan::edit', compact('kategori'));
     }
 
     /**
@@ -93,7 +103,25 @@ class KategoriLaporanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name'         => ['required'],
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $input = [
+            'name'         => $request->name,
+            'description'   => $request->description,
+        ];
+
+        $kategorilaporan = MyHelper::apiRequest('PUT', 'kategorilaporan/'.$id, $input);
+        if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'success'){
+            return redirect()->route('kategori-laporan.index')->with('message', $kategorilaporan['message']);
+        }
+
+        return redirect()->back()->withErrors($kategorilaporan['error'])->withInput();
     }
 
     /**
@@ -103,6 +131,11 @@ class KategoriLaporanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategorilaporan = MyHelper::apiRequest('DELETE', 'kategorilaporan/'.$id);
+        if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'success'){
+            return redirect()->route('kategori-laporan.index')->with('message', $kategorilaporan['message']);
+        }
+
+        return redirect()->back()->withErrors($kategorilaporan['error'])->withInput();
     }
 }
