@@ -5,7 +5,7 @@
     @csrf
     <div class="card">
         <div class="card-header">
-            <h3>Tambah Indikator Kedisiplinan</h3>
+            <h3>Edit Indikator Kedisiplinan</h3>
         </div>
         <div class="card-body">
             @include('layouts.notification')
@@ -24,7 +24,7 @@
             <div class="form-group row">
                 {!! Form::label('param', 'Parameter',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::time('param', $kedisiplinan['param'], array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
+                    {!! Form::text('param', $kedisiplinan['param'], array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
                 </div>
             </div>
             <div class="form-group row">
@@ -57,17 +57,29 @@
     </div>
 </form>
 @endsection
-@section('css')
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css' type='text/css' media='all' />
-@endsection
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
-    <script>
-        $(function () {
-            // $('#param').datetimepicker({
-            //     use24hours: true,
-            //     format: 'HH:mm:ss'
-            // });
-        });
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+<script>
+    $(function() {
+        $('input[name="param"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                datePicker:false,
+                locale: {
+                    format: 'hh:MM:ss',
+
+                },
+                timePicker :true,
+                timePicker24Hour:true,
+                timePickerSeconds:true
+            }, function (start, end, label) { //callback
+                start_time = start.format('HH:mm');
+                end_time = end.format('HH:mm');
+                console.log(start_time, end_time);
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
+    });
     </script>
 @endsection

@@ -24,7 +24,7 @@
             <div class="form-group row">
                 {!! Form::label('param', 'Parameter',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::time('param', \Carbon\Carbon::now()->isoFormat('HH:mm:ss'), array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
+                    {!! Form::text('param', old('param'), array( 'class' => 'form-control', 'placeholder' => 'Parameter') ) !!}
                 </div>
             </div>
             <div class="form-group row">
@@ -56,4 +56,30 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+<script>
+    $(function() {
+        $('input[name="param"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                datePicker:false,
+                locale: {
+                    format: 'hh:MM:ss',
+
+                },
+                timePicker :true,
+                timePicker24Hour:true,
+                timePickerSeconds:true
+            }, function (start, end, label) { //callback
+                start_time = start.format('HH:mm');
+                end_time = end.format('HH:mm');
+                console.log(start_time, end_time);
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
+    });
+    </script>
 @endsection

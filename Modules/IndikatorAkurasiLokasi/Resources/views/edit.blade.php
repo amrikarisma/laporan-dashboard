@@ -5,7 +5,7 @@
     @csrf
     <div class="card">
         <div class="card-header">
-            <h3>Tambah Indikator Akurasi Lokasi</h3>
+            <h3>Edit Indikator Akurasi Lokasi</h3>
         </div>
         <div class="card-body">
             @include('layouts.notification')
