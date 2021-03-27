@@ -27,14 +27,15 @@ class PresensiReportController extends Controller
             ];
          })
 
-        ->editColumn('geolocation_in', "presensi::index.geolocation_in") 
-        ->editColumn('geolocation_out', "presensi::index.geolocation_out") 
-        ->editColumn('category.name', "presensi::index.category") 
+        ->editColumn('user.name', "presensireport::index.name") 
+        ->editColumn('geolocation_in', "presensireport::index.geolocation_in") 
+        ->editColumn('geolocation_out', "presensireport::index.geolocation_out") 
+        ->editColumn('category.name', "presensireport::index.category") 
         ->editColumn('no_present.with_note.text', "presensireport::index.no_present_with_note") 
         ->editColumn('no_present.without_note.text', "presensireport::index.no_present_without_note") 
-        ->editColumn('note', "presensi::index.note") 
-        ->addColumn('actions', "presensi::index.action") 
-        ->rawColumns(['actions','date','geolocation_in','geolocation_out','category.name','no_present.with_note.text', 'no_present.without_note.text','note'])
+        ->editColumn('note', "presensireport::index.note") 
+        ->addColumn('actions', "presensireport::index.action") 
+        ->rawColumns(['actions','date','user.name','geolocation_in','geolocation_out','category.name','no_present.with_note.text', 'no_present.without_note.text','note'])
         ->make();
     }
     /**
