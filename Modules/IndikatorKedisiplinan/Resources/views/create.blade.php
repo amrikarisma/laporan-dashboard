@@ -67,7 +67,7 @@
                 showDropdowns: true,
                 datePicker:false,
                 locale: {
-                    format: 'hh:mm:ss',
+                    format: 'HH:mm:ss',
 
                 },
                 timePicker :true,

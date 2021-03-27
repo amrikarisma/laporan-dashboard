@@ -33,12 +33,12 @@
                     {!! Form::text('time_out', $jabatan['time_out'] , array( 'class' => 'form-control', 'placeholder' => 'Jam Keluar') ) !!}
                 </div>
             </div>
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 {!! Form::label('work_time', 'Jam Kerja',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
                     {!! Form::text('work_time', $jabatan['work_time'] , array( 'class' => 'form-control', 'placeholder' => 'Jam Kerja') ) !!}
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group row">
                 {!! Form::label('daily_report', 'Laporan Harian Wajib',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
@@ -84,7 +84,7 @@
                 showDropdowns: true,
                 datePicker:false,
                 locale: {
-                    format: 'hh:mm:ss',
+                    format: 'HH:mm:ss',
 
                 },
                 timePicker :true,
