@@ -1,0 +1,1 @@
+<a target="_blank" rel="noreferrer" href="https://www.google.com/maps/place/{{ $geolocation_out }}">{{$geolocation_out}}</a>

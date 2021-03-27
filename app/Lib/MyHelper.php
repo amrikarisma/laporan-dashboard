@@ -9,7 +9,7 @@ class MyHelper{
 
     public static function hasAccess($granted, $features){
         foreach($granted as $g){
-            if(!is_array($features)) $features = session('granted_features');
+            if(!is_array($features)) $features = session('roles');
             if(in_array($g, $features)) return true;
         }
 

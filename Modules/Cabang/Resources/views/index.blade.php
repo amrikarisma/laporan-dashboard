@@ -24,6 +24,9 @@
                         <th>
                             {{ _('Penanggung Jawab')}}
                         </th>
+                        <th>
+                            {{ _('No. Telepon Cabang')}}
+                        </th>
                         </th>
                         <th>{{ _('')}}</th>
                     </tr>
@@ -36,6 +39,7 @@
                         <td> {{ $cabang['name']??'' }}</td>
                         <td>{{ $cabang['branch']['name']??'' }}</td>
                         <td>{{ $cabang['anggota']['user']['name']??'' }}</td>
+                        <td>{{ $cabang['phone_number']??'' }}</td>
                     
                         <td>
                             <div style="display: inline-block">

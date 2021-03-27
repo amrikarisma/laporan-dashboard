@@ -14,5 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('laporan-presensi')->middleware('validate_session')->group(function () {
+    Route::get('/list', 'PresensiReportController@ajaxlist')->name('laporan.presensi.ajaxlist');
     Route::get('/', 'PresensiReportController@index')->name('laporan.presensi.index');
+    Route::get('/{id}', 'PresensiReportController@show')->name('laporan.presensi.show');
 });

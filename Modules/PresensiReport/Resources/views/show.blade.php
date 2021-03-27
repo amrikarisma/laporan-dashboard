@@ -3,100 +3,79 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3>Detail Presensi</h3>
+            <h3>Laporan Presensi : {{ $anggota['user']['name'] }}</h3>
         </div>
         <div class="card-body">
-            <table class="table table-borderless">
-                <thead></thead>
+            <table id="table" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            {{ _('Date')}}
+                        </th>
+                        <th>
+                            {{ _('Jam Masuk')}}
+                        </th>
+                        <th>
+                            {{ _('Jam Keluar')}}
+                        </th>
+                        <th>
+                            {{ _('Jam Kerja')}}
+                        </th>
+                        <th>
+                            {{ _('Lokasi Masuk')}}
+                        </th>
+                        <th>
+                            {{ _('Lokasi Keluar')}}
+                        </th>
+                        <th>
+                            {{ _('Kategori')}}
+                        </th>
+                        <th>
+                            {{ _('Skor')}}
+                        </th>
+                        <th>
+                            {{ _('Hasil')}}
+                        </th>
+                        <th>
+                            {{ _('Keterangan')}}
+                        </th>
+                        <th>{{ _('Action')}}</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr>
-                        <td>{{ 'Tanggal' }}</td>
-                        <td>:</td>
-                        <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Nama' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['user']['name']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Jam Masuk' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['time_in']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Jam Keluar' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['time_out']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Total Jam Kerja' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['work_time']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Lokasi Presensi Masuk' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['geolocation_in']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Lokasi Presensi Keluar' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['geolocation_out']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Keterangan' }}</td>
-                        <td>:</td>
-                        <td>{{ $absent['category']['name']??'' }}</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    @include('presensi::maps');
-
-
 @endsection
-
 @section('css')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-    <style>
-        #mapMasuk, #mapKeluar {
-			width: 100%;
-			height: 500px;
-		}
-    </style>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 @endsection
 @section('js')
-
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script>
-        $(function(){
-            var map = L.map('mapMasuk').setView([{{ $absent['geolocation_in'] }}], 13);
-        
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
-        
-                var LeafIcon = L.Icon.extend({
-                    options: {
-                        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-                        iconSize:     [38, 95],
-                        shadowSize:   [50, 64],
-                        iconAnchor:   [22, 94],
-                        shadowAnchor: [4, 62],
-                        popupAnchor:  [-3, -76]
-                    }
-                });
-                var masuk = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'})
-                var keluar = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'})
-        
-                L.marker([{{ $absent['geolocation_in'] }}], {icon: masuk}).bindPopup("{{ $absent['user']['name']??'' }} Masuk<br />Jam {{ $absent['time_in']??'' }}").addTo(map);
-                L.marker([{{ $absent['geolocation_out'] }}], {icon: keluar}).bindPopup("{{ $absent['user']['name']??'' }} Keluar<br />Jam {{ $absent['time_in']??'' }}").addTo(map);
-        });
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: `{{ route('laporan.presensi.ajaxlist') }}`,
+        columns: [
+        { data: 'date' },
+        { data: 'time_in' },
+        { data: 'time_out' },
+        { data: 'work_time' },
+        { data: 'geolocation_in'},
+        { data: 'geolocation_out'},
+        { data: 'category.name'},
+        { data: 'score'},
+        { data: 'score_text'},
+        { data: 'note'},
+        { data: 'actions'},
+    ]
+    });
     </script>
 @endsection
