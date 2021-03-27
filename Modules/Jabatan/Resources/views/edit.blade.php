@@ -74,3 +74,29 @@
     </div>
 </form>
 @endsection
+@section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+<script>
+    $(function() {
+        $('input[name="time_in"], input[name="time_out"], input[name="work_time"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                datePicker:false,
+                locale: {
+                    format: 'hh:mm:ss',
+
+                },
+                timePicker :true,
+                timePicker24Hour:true,
+                timePickerSeconds:true
+            }, function (start, end, label) { //callback
+                start_time = start.format('HH:mm:ss');
+                end_time = end.format('HH:mm:ss');
+                console.log(start_time, end_time);
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
+    });
+    </script>
+@endsection
