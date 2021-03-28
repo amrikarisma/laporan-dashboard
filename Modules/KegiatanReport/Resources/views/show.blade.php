@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Performa' }}</td>
-                            <td>{{ $kegiatan['laporan_performance']??'' }}</td>
+                            <td>{{ $kegiatan['laporan_performance']['count']??0 }} %</td>
                         </tr>
                     </tbody>
                 </table>

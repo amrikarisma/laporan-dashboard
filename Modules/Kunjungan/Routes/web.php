@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('laporan-kunjungan')->middleware('validate_session')->group(function() {
+Route::prefix('kunjungan')->middleware('validate_session')->group(function() {
     Route::get('/', 'KunjunganController@index')->name('kunjungan.index');
     Route::get('/{id}', 'KunjunganController@show')->name('kunjungan.show');
     Route::post('/', 'KunjunganController@index')->name('kunjungan.post');

@@ -28,16 +28,16 @@
                             {{ _('Jam Kerja')}}
                         </th>
                         <th>
-                            {{ _('Laporan Harian Wajib')}}
+                            {{ _('Laporan Wajib (Harian)')}}
                         </th>
                         <th>
-                            {{ _('Laporan Kunjungan Harian Wajib')}}
+                            {{ _('Laporan Kunjungan Wajib (Harian)')}}
                         </th>
                         <th>
-                            {{ _('Toleransi Presensi tanpa Keterangan')}}
+                            {{ _('Toleransi Presensi tanpa Keterangan (Bulanan)')}}
                         </th>
                         <th>
-                            {{ _('Toleransi Presensi dengan Keterangan')}}
+                            {{ _('Toleransi Presensi dengan Keterangan (Bulanan)')}}
                         </th>
                         <th>{{ _('')}}</th>
                     </tr>

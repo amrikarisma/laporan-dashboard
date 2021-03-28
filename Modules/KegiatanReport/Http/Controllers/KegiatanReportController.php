@@ -9,9 +9,29 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 class KegiatanReportController extends Controller
 {
+    public function ajaxlist(Request $request)
+    {
+        $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start_date.'&end='.$request->end_date.'&' : '';
+        $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+
+        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota)['data']??[];
+        return DataTables::of($kegiatans)
+        ->editColumn('user.name', "kegiatanreport::index.name") 
+        ->editColumn('category.name', "kegiatanreport::index.category") 
+        ->editColumn('laporan_geolocation', "kegiatanreport::index.geolocation") 
+        ->editColumn('created_at', "kegiatanreport::index.date") 
+        ->editColumn('laporan_description', "kegiatanreport::index.laporan_description") 
+        ->editColumn('laporan_performance.persentase', "kegiatanreport::index.performance") 
+        ->editColumn('status', "kegiatanreport::index.status") 
+        ->addColumn('actions', "kegiatanreport::index.action") 
+        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_geolocation','laporan_performance.persentase','status'])
+        ->make();
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
