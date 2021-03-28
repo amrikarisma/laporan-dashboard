@@ -10,17 +10,17 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-3">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control', 'placeholder' => 'Filter Anggota')) !!}
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
                     <div class="col-md-3">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
                     <div class="col-md-4">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
-                            <input type="hidden" name="start">
-                            <input type="hidden" name="end">
+                            <input type="hidden" name="start" value="{{ $request->start??''}}">
+                            <input type="hidden" name="end" value="{{ $request->end??''}}">
                             <span style="align-self:center" ><i class="fa fa-caret-down"></i></span> 
                         </div>
                         {{-- {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!} --}}
@@ -49,7 +49,7 @@
                 </div>
                 <div class="card-body">
         
-                    <table class="table">
+                    <table id="table" class="table">
                         <thead>
                             <tr>
                                 <th>
@@ -62,7 +62,10 @@
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
-                                    {{ _('Lokasi')}}
+                                    {{ _('Lokasi Manual')}}
+                                </th>
+                                <th>
+                                    {{ _('Lokasi GPS')}}
                                 </th>
                                 <th>
                                     {{ _('Performa')}}
@@ -79,7 +82,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kunjungans['data']['data'] as $kunjungan)
+                            {{-- @foreach ($kunjungans['data']['data'] as $kunjungan)
                             <tr>
                                 <td>{{ $kunjungan['laporan_title'] }}</td>
                                 <td>{{ $kunjungan['laporan_category'] }}</td>
@@ -90,10 +93,10 @@
                                 <td>{{ $kunjungan['user']['name'] }}</td>
                                 <td>
                                     <a class="btn btn-primary"
-                                    href="{{ route('kunjungan.show', $kunjungan['id']) }}">Detail</a>
+                                    href="{{ route('laporan.kunjungan.show', $kunjungan['id']) }}">Detail</a>
                                 </td>
                             </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -102,13 +105,24 @@
     </div>
 
 @endsection
-
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container .select2-selection--single {
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+    }
+</style>
+@endsection
 @section('js')
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
 @section('plugins.Charts', true)
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript"> 
+    $('.select2').select2();
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
@@ -144,8 +158,8 @@
 
     $(function() {
 
-        var start = moment().startOf('month');
-        var end = moment().endOf('month');
+        var start = $('[name=start]').val() != '' ? moment($('[name=start]').val()) : moment().startOf('month');
+        var end = $('[name=end]').val() != '' ? moment($('[name=end]').val()) : moment().endOf('month');
 
         function cb(start, end) {
             $('#showdate').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -170,4 +184,47 @@
 
     });
 </script>
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `{{ route('laporan.kunjungan.ajaxlist') }}`,
+            data: {
+                "start_date": "{{ $request->input('start')??'' }}",
+                "end_date": "{{ $request->input('end')??'' }}",
+                "jabatan": "{{ $request->input('jabatan')??'' }}",
+                "anggota": "{{ $request->input('anggota')??'' }}",
+                "hadir": "{{ $request->input('hadir')??'' }}"
+            }
+        },
+        order: [[ 0, "desc" ]],
+        columns: [
+        // { 
+        //     data: {
+        //           _: 'date.display',
+        //           sort: 'date.timestamp'
+        //        },
+        //     name: 'date.timestamp',
+
+        // },
+        // { data: 'date' },
+        { data: 'laporan_title' },
+        { data: 'category.name' },
+        { data: 'laporan_description' },
+        { data: 'laporan_location' },
+        { data: 'laporan_geolocation' },
+        { data: 'laporan_performance'},
+        { data: 'created_at'},
+        { data: 'user.name'},
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection

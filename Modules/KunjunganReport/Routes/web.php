@@ -13,6 +13,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('laporan-kegiatan')->middleware('validate_session')->group(function () {
-    Route::get('/', 'KunjunganReportController@index');
+Route::prefix('laporan-kunjungan')->middleware('validate_session')->group(function () {
+    Route::get('/list', 'KunjunganReportController@ajaxlist')->name('laporan.kunjungan.ajaxlist');
+    Route::get('/', 'KunjunganReportController@index')->name('laporan.kunjungan.index');
+    Route::get('/{id}', 'KunjunganReportController@show')->name('laporan.kunjungan.show');
+    Route::post('/', 'KunjunganReportController@index')->name('laporan.kunjungan.post');
 });
