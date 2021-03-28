@@ -15,15 +15,12 @@
                     <div class="col-md-2">
                         {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
-                    <div class="col-md-2">
-                        {!! Form::select('hadir', $hadir, $request->hadir??'',array('class' => 'form-control', 'placeholder' => 'Filter Kehadiran')) !!}
-                    </div>
                     <div class="col-md-4">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
-                            <input type="hidden" name="start">
-                            <input type="hidden" name="end">
+                            <input type="hidden" name="start" value="{{ $request->start??''}}">
+                            <input type="hidden" name="end" value="{{ $request->end??''}}">
                             <span style="align-self:center" ><i class="fa fa-caret-down"></i></span> 
                         </div>
                         {{-- {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!} --}}
@@ -49,14 +46,17 @@
                     <h5>Tabel Laporan Aktifitas GPS</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table id="table" class="table">
                         <thead>
                             <tr>
                                 <th>
-                                    {{ _('Date')}}
+                                    {{ _('Tanggal')}}
                                 </th>
                                 <th>
                                     {{ _('Nama')}}
+                                </th>
+                                <th>
+                                    {{ _('Jabatan')}}
                                 </th>
                                 <th>
                                     {{ _('Jumlah Aktifitas GPS')}}
@@ -64,26 +64,29 @@
                                 <th>
                                     {{ _('Nilai')}}
                                 </th>
-                                {{-- <th>{{ _('Action')}}</th> --}}
+                                <th>
+                                    {{ _('Keterangan Nilai')}}
+                                </th>
+                                <th>{{ _('')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{-- <tr>
                                 <td></td>
                             </tr> --}}
-                            @foreach ($gpsReport['data']['data'] as $gps)
+                            {{-- @foreach ($gpsReport as $gps)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($gps['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $gps['name']??'' }}</td>
                                 <td><a href="{{ route('history.index') }}">{{ $gps['gps_activity']??0 }}</a></td>
                                 <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>
-                                {{-- <td>
+                                <td>
                                     <div style="display: inline-block">
                                         <a class="btn btn-sm btn-outline-primary" href="{{ route('laporan.gps.show', $gps['id']) }}">Detail</a>
                                     </div>
-                                </td> --}}
+                                </td>
                             </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -92,13 +95,24 @@
     </div>
 
 @endsection
-
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container .select2-selection--single {
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+    }
+</style>
+@endsection
 @section('js')
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
 @section('plugins.Charts', true)
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript"> 
+    $('.select2').select2();
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
@@ -133,8 +147,8 @@
 
     $(function() {
 
-        var start = moment().startOf('month');
-        var end = moment().endOf('month');
+        var start = $('[name=start]').val() != '' ? moment($('[name=start]').val()) : moment().startOf('month');
+        var end = $('[name=end]').val() != '' ? moment($('[name=end]').val()) : moment().endOf('month');
 
         function cb(start, end) {
             $('#showdate').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -159,4 +173,42 @@
 
     });
 </script>
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `{{ route('laporan.gps.ajaxlist') }}`,
+            data: {
+                "start_date": "{{ $request->input('start')??'' }}",
+                "end_date": "{{ $request->input('end')??'' }}",
+                "jabatan": "{{ $request->input('jabatan')??'' }}",
+                "anggota": "{{ $request->input('anggota')??'' }}"
+            }
+        },
+        order: [[ 0, "desc" ]],
+        columns: [
+        { 
+            data: {
+                  _: 'created_at.display',
+                  sort: 'created_at.timestamp'
+               },
+            name: 'created_at.timestamp',
+
+        },
+        { data: 'user.name'},
+        { data: 'user.anggota.jabatan.name'},
+        { data: 'gps_activity'},
+        { data: 'score'},
+        { data: 'score_text'},
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection
