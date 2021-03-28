@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('laporan-kegiatan')->middleware('validate_session')->group(function() {
+    Route::get('/list', 'KegiatanReportController@ajaxlist')->name('laporan.kegiatan.ajaxlist');
     Route::get('/', 'KegiatanReportController@index')->name('laporan.kegiatan.index');
     Route::get('/export', 'KegiatanReportController@downloadExcel')->name('laporan.kegiatan.export');
     Route::get('/{id}', 'KegiatanReportController@show')->name('laporan.kegiatan.show');

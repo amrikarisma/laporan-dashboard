@@ -23,8 +23,9 @@ class KunjunganReportController extends Controller
         ->editColumn('laporan_geolocation', "kunjunganreport::index.geolocation") 
         ->editColumn('created_at', "kunjunganreport::index.date") 
         ->editColumn('laporan_description', "kunjunganreport::index.laporan_description") 
+        ->editColumn('laporan_performance.persentase', "kunjunganreport::index.performance") 
         ->addColumn('actions', "kunjunganreport::index.action") 
-        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_geolocation'])
+        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_geolocation','laporan_performance.persentase'])
         ->make();
     }
     /**
@@ -59,7 +60,6 @@ class KunjunganReportController extends Controller
         if(!$kunjungan) {
             return redirect(route('laporan.kunjungan.index'));
         }
-
 
         return view('kunjunganreport::show', compact('kunjungan'));
     }

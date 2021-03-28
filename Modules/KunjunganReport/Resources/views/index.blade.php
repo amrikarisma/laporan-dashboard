@@ -220,7 +220,7 @@
         { data: 'laporan_description' },
         { data: 'laporan_location' },
         { data: 'laporan_geolocation' },
-        { data: 'laporan_performance'},
+        { data: 'laporan_performance.persentase'},
         { data: 'created_at'},
         { data: 'user.name'},
         { data: 'actions'},
