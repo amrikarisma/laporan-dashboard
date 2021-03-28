@@ -82,7 +82,10 @@
                                     {{ _('Skor')}}
                                 </th>
                                 <th>
-                                    {{ _('Hasil')}}
+                                    {{ _('Status Presensi')}}
+                                </th>
+                                <th>
+                                    {{ _('Status Jam Kerja')}}
                                 </th>
                                 <th>
                                     {{ _('Tidak Hadir Dengan Keterangan (Bulan ini)')}}
@@ -237,7 +240,8 @@
         { data: 'geolocation_out'},
         { data: 'category.name'},
         { data: 'score'},
-        { data: 'score_text'},
+        { data: 'status_presensi.status_presensi_masuk'},
+        { data: 'status_presensi.status_presensi_worktime'},
         { data: 'no_present.with_note.text'},
         { data: 'no_present.without_note.text'},
         { data: 'note'},

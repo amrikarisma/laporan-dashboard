@@ -33,9 +33,11 @@ class PresensiReportController extends Controller
         ->editColumn('category.name', "presensireport::index.category") 
         ->editColumn('no_present.with_note.text', "presensireport::index.no_present_with_note") 
         ->editColumn('no_present.without_note.text', "presensireport::index.no_present_without_note") 
+        ->editColumn('status_presensi.status_presensi_masuk', "presensireport::index.status_presensi") 
+        ->editColumn('status_presensi.status_presensi_worktime', "presensireport::index.status_presensi_worktime") 
         ->editColumn('note', "presensireport::index.note") 
         ->addColumn('actions', "presensireport::index.action") 
-        ->rawColumns(['actions','date','user.name','geolocation_in','geolocation_out','category.name','no_present.with_note.text', 'no_present.without_note.text','note'])
+        ->rawColumns(['actions','date','user.name','geolocation_in','geolocation_out','category.name','no_present.with_note.text', 'no_present.without_note.text','status_presensi.status_presensi_masuk','status_presensi.status_presensi_worktime','note'])
         ->make();
     }
     /**
