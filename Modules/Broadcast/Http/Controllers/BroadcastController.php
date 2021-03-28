@@ -68,7 +68,7 @@ class BroadcastController extends Controller
         ];
 
         $broadcast = MyHelper::apiPostWithFile('broadcast', $input, $request);
-        return $broadcast;
+
         if(isset($broadcast['status']) && $broadcast['status'] == 'success'){
             return redirect()->route('broadcast.index')->with('message', $broadcast['message']);
         }

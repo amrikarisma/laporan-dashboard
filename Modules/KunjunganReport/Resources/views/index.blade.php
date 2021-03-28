@@ -56,19 +56,13 @@
                                     {{ _('Judul')}}
                                 </th>
                                 <th>
-                                    {{ _('Kategori')}}
-                                </th>
-                                <th>
-                                    {{ _('Deskripsi')}}
-                                </th>
-                                <th>
                                     {{ _('Lokasi Manual')}}
                                 </th>
                                 <th>
-                                    {{ _('Lokasi GPS')}}
+                                    {{ _('Alamat GPS')}}
                                 </th>
                                 <th>
-                                    {{ _('Performa')}}
+                                    {{ _('Lokasi GPS')}}
                                 </th>
                                 <th>
                                     {{ _('Tanggal Laporan')}}
@@ -216,11 +210,9 @@
         // },
         // { data: 'date' },
         { data: 'laporan_title' },
-        { data: 'category.name' },
-        { data: 'laporan_description' },
         { data: 'laporan_location' },
+        { data: 'address' },
         { data: 'laporan_geolocation' },
-        { data: 'laporan_performance.persentase'},
         { data: 'created_at'},
         { data: 'user.name'},
         { data: 'actions'},
