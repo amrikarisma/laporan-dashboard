@@ -1,0 +1,1 @@
+{{ isset($category['name']) ? $category['name'] : 'Tidak ada kategori' }}

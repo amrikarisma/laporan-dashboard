@@ -10,20 +10,20 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-2">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control', 'placeholder' => 'Filter Anggota')) !!}
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('hadir', $hadir, $request->hadir??'',array('class' => 'form-control', 'placeholder' => 'Filter Kehadiran')) !!}
+                        {!! Form::select('hadir', $hadir, $request->hadir??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Kehadiran')) !!}
                     </div>
                     <div class="col-md-4">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
-                            <input type="hidden" name="start">
-                            <input type="hidden" name="end">
+                            <input type="hidden" name="start" value="{{ $request->start??''}}">
+                            <input type="hidden" name="end" value="{{ $request->end??''}}">
                             <span style="align-self:center" ><i class="fa fa-caret-down"></i></span> 
                         </div>
                         {{-- {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!} --}}
@@ -51,7 +51,7 @@
                     <h5>Tabel Laporan Presensi</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table id="table" class="table table-responsive">
                         <thead>
                             <tr>
                                 <th>
@@ -70,20 +70,41 @@
                                     {{ _('Jam Kerja')}}
                                 </th>
                                 <th>
-                                    {{ _('Nilai')}}
+                                    {{ _('Lokasi Masuk')}}
+                                </th>
+                                <th>
+                                    {{ _('Lokasi Keluar')}}
                                 </th>
                                 <th>
                                     {{ _('Kategori')}}
+                                </th>
+                                <th>
+                                    {{ _('Skor')}}
+                                </th>
+                                <th>
+                                    {{ _('Status Presensi')}}
+                                </th>
+                                <th>
+                                    {{ _('Status Jam Kerja')}}
+                                </th>
+                                <th>
+                                    {{ _('Tidak Hadir Dengan Keterangan (Bulan ini)')}}
+                                </th>
+                                <th>
+                                    {{ _('Tidak Hadir Tanpa Keterangan (Bulan ini)')}}
+                                </th>
+                                <th>
+                                    {{ _('Keterangan')}}
                                 </th>
                                 <th>{{ _('Action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($absents['data']['data'] as $absent)
+                            {{-- @foreach ($absents['data'] as $absent)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
-                                <td>{{ $absent['user']['name']??'' }}</td>
+                                <td><a href="{{ route('laporan.presensi.show', $absent['user']['anggota']['id']) }}">{{ $absent['user']['name']??'' }}</a></td>
                                 <td>{{ $absent['time_in']??'' }}</td>
                                 <td>{{ $absent['time_out']??'' }}</td>
                                 <td>{{ $absent['work_time']??0 }}</td>
@@ -94,7 +115,7 @@
                                     href="{{ route('presensi.show', $absent['id']) }}">Detail</a>
                                 </td>
                             </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -103,14 +124,23 @@
     </div>
 
 @endsection
-
+@section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container .select2-selection--single {
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+    }
+</style>
+@endsection
 @section('js')
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
 @section('plugins.Charts', true)
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript"> 
-
+    $('.select2').select2();
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
     
@@ -145,8 +175,8 @@
 
     $(function() {
 
-        var start = moment().startOf('month');
-        var end = moment().endOf('month');
+        var start = $('[name=start]').val() != '' ? moment($('[name=start]').val()) : moment().startOf('month');
+        var end = $('[name=end]').val() != '' ? moment($('[name=end]').val()) : moment().endOf('month');
 
         function cb(start, end) {
             $('#showdate').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -171,4 +201,52 @@
 
     });
 </script>
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        }
+    });
+    $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `{{ route('laporan.presensi.ajaxlist') }}`,
+            data: {
+                "start_date": "{{ $request->input('start')??'' }}",
+                "end_date": "{{ $request->input('end')??'' }}",
+                "jabatan": "{{ $request->input('jabatan')??'' }}",
+                "anggota": "{{ $request->input('anggota')??'' }}",
+                "hadir": "{{ $request->input('hadir')??'' }}"
+            }
+        },
+        order: [[ 0, "desc" ]],
+        columns: [
+        { 
+            data: {
+                  _: 'date.display',
+                  sort: 'date.timestamp'
+               },
+            name: 'date.timestamp',
+
+        },
+        // { data: 'date' },
+        { data: 'user.name' },
+        { data: 'time_in' },
+        { data: 'time_out' },
+        { data: 'work_time' },
+        { data: 'geolocation_in'},
+        { data: 'geolocation_out'},
+        { data: 'category.name'},
+        { data: 'score'},
+        { data: 'status_presensi.status_presensi_masuk'},
+        { data: 'status_presensi.status_presensi_worktime'},
+        { data: 'no_present.with_note.text'},
+        { data: 'no_present.without_note.text'},
+        { data: 'note'},
+        { data: 'actions'},
+    ]
+    });
+    </script>
 @endsection

@@ -33,12 +33,12 @@
                     {!! Form::text('time_out', $jabatan['time_out'] , array( 'class' => 'form-control', 'placeholder' => 'Jam Keluar') ) !!}
                 </div>
             </div>
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 {!! Form::label('work_time', 'Jam Kerja',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
                     {!! Form::text('work_time', $jabatan['work_time'] , array( 'class' => 'form-control', 'placeholder' => 'Jam Kerja') ) !!}
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group row">
                 {!! Form::label('daily_report', 'Laporan Harian Wajib',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
@@ -73,4 +73,30 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+<script>
+    $(function() {
+        $('input[name="time_in"], input[name="time_out"], input[name="work_time"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                datePicker:false,
+                locale: {
+                    format: 'HH:mm:ss',
+
+                },
+                timePicker :true,
+                timePicker24Hour:true,
+                timePickerSeconds:true
+            }, function (start, end, label) { //callback
+                start_time = start.format('HH:mm:ss');
+                end_time = end.format('HH:mm:ss');
+                console.log(start_time, end_time);
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
+    });
+    </script>
 @endsection
