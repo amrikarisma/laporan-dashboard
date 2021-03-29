@@ -190,7 +190,7 @@
     });
     $('#table').DataTable({
         processing: true,
-        serverSide: false,
+        serverSide: true,
         ajax: {
             url: `{{ route('laporan.kunjungan.ajaxlist') }}`,
             data: {
