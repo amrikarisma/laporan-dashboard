@@ -212,7 +212,6 @@
         { data: 'laporan_title' },
         { data: 'laporan_location' },
         // { data: 'address' },
-        { data: 'laporan_geolocation' },
         { 
             data: 'laporan_geolocation',
             render: function (data, type, full, meta) {
@@ -239,6 +238,7 @@
                 return data;
             }, 
         },
+        { data: 'laporan_geolocation' },
         { data: 'created_at'},
         { data: 'user.name'},
         { data: 'actions'},
