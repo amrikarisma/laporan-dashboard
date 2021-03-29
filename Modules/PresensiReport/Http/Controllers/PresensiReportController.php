@@ -23,7 +23,7 @@ class PresensiReportController extends Controller
         ->editColumn('date', function ($presensi) {
             return [
                'display' => !empty($presensi['date']) ? Carbon::parse($presensi['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y') : '',
-               'timestamp' => Carbon::parse($presensi['date'])->timestamp
+               'timestamp' => !empty($presensi['date']) ? Carbon::parse($presensi['date'])->timestamp : ''
             ];
          })
 
