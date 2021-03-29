@@ -85,7 +85,12 @@ class KegiatanReportController extends Controller
             return redirect(route('laporan.kegiatan.index'));
         }
         $idAnggota = session('id_anggota');
-        $anggota = MyHelper::apiGet('anggota/'.$idAnggota)['data']??[];
+        $superadmin = MyHelper::hasAccess([1], session('roles'));
+        if($superadmin) {
+            $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
+        } else {
+            $anggota = MyHelper::apiGet('anggota/'.$idAnggota)['data']??[];
+        }
         return view('kegiatanreport::show', compact('kegiatan', 'anggota'));
     }
 
