@@ -21,5 +21,6 @@
     "SuperFeature": true,
     "Settings": true,
     "ImportAnggota": true,
-    "KategoriLaporan": true
+    "KategoriLaporan": true,
+    "KategoriPresensi": true
 }

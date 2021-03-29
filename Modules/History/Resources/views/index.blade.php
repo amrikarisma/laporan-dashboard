@@ -58,15 +58,15 @@
                 var LeafIcon = L.Icon.extend({
                     options: {
                         shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-                        iconSize:     [38, 95],
-                        shadowSize:   [50, 64],
+                        iconSize:     [38, 38],
+                        shadowSize:   [30, 30],
                         iconAnchor:   [22, 94],
                         shadowAnchor: [4, 62],
                         popupAnchor:  [-3, -76]
                     }
                 });
         
-                var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/tentara.png') }}`});
+                var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/logo-sikumbang.png') }}`});
         
                 result.forEach(el => {
                     var split = el.pin.split(',');

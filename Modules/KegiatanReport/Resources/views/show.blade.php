@@ -81,29 +81,36 @@
                             {!! Form::textarea('penanganan',$kegiatan['penanganan']??'', array( 'class' => 'form-control summernote', 'readonly','rows' => '4','placeholder' => 'Penanganan/Upaya') ) !!}
                         </div>
                     </div>
+                    <input type="hidden" name="status" value="{{'Ditidak Lanjuti'}}">
+                    @if(in_array(1, session('roles')))
                     <div class="form-group row">
-                        {!! Form::label('anggota', 'Penanganan oleh',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        {!! Form::label('penanganan_oleh', 'Penanganan oleh',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('anggota',$anggota['user']['name']??session('name'), array( 'class' => 'form-control', 'readonly') ) !!}
-                            <input type="hidden" name="penanganan_oleh" value="{{ $kegiatan['penanganan_oleh']??$anggota['id'] }}">
-                            <input type="hidden" name="status" value="{{'Ditidak Lanjuti'}}">
+                            {!! Form::select('penanganan_oleh', $anggota, $kegiatan['penanganan_oleh']??'', array( 'class' => 'form-control select2')) !!}
                         </div>
                     </div>
-                        @if (empty($kegiatan['penanganan']) || in_array(1, session('roles')))
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <button type="submit" class="btn btn-primary"> Kirim</button>
+                        </div>
+                    </div>
+                    @elseif (empty($kegiatan['penanganan']) || (!empty($kegiatan['penanganan']) && ($anggota['id'] == $kegiatan['penanganan_oleh'])))
+                        <div class="form-group row">
+                            {!! Form::label('anggota', 'Penanganan oleh',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                            <div class="col-sm-9">
+                                {!! Form::text('anggota',$anggota['user']['name']??session('name'), array( 'class' => 'form-control', 'readonly') ) !!}
+                            </div>
+                        </div>
+                        <input type="hidden" name="penanganan_oleh" value="{{ $kegiatan['penanganan_oleh']??$anggota['id'] }}">
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
                             <div class="col-sm-9">
                                 <button type="submit" class="btn btn-primary"> Kirim</button>
                             </div>
                         </div>
-                        @elseif (!empty($kegiatan['penanganan']) && ($anggota['id'] == $kegiatan['penanganan_oleh']))
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-3 col-form-label"></label>
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-primary"> Kirim</button>
-                                </div>
-                            </div>
-                        @endif
+
+                    @endif
                 </form>
 
             </div>
@@ -114,11 +121,27 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('vendor/ekko-lightbox/ekko-lightbox.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px);
+            padding: .375rem .75rem;
+        }
+    </style>
 @endsection
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/id.min.js"></script>
     <script src="{{ asset('vendor/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
+        $('.select2').select2({
+            placeholder: "Pilih anggota",
+            maximumInputLength: 50,
+            minimumResultsForSearch: 20,
+            allowClear: true,
+            language: "id",
+        });
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
             $(this).ekkoLightbox();

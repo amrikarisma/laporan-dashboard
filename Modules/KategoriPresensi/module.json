@@ -1,0 +1,13 @@
+{
+    "name": "KategoriPresensi",
+    "alias": "kategoripresensi",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\KategoriPresensi\\Providers\\KategoriPresensiServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
