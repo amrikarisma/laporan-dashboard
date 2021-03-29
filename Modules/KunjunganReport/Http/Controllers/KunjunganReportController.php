@@ -21,17 +21,17 @@ class KunjunganReportController extends Controller
         return DataTables::of($kunjungans)
         ->editColumn('user.name', "kunjunganreport::index.name") 
         ->editColumn('category.name', "kunjunganreport::index.category") 
-        ->editColumn('laporan_geolocation', "kunjunganreport::index.geolocation") 
-        ->addColumn('address', function($data) {
-            $var = $data['laporan_geolocation'];
-            $geo = explode (", ", $var);
-            if(isset($geo[1])) {
-                // return $geo[1];
-                return $this->getAddress($geo[0],$geo[1]);
-            } else {
-                return 'GPS tidak valid';
-            }
-        }) 
+        // ->editColumn('laporan_geolocation', "kunjunganreport::index.geolocation") 
+        // ->addColumn('address', function($data) {
+        //     $var = $data['laporan_geolocation'];
+        //     $geo = explode (", ", $var);
+        //     if(isset($geo[1])) {
+        //         // return $geo[1];
+        //         return $this->getAddress($geo[0],$geo[1]);
+        //     } else {
+        //         return 'GPS tidak valid';
+        //     }
+        // }) 
         ->editColumn('created_at', "kunjunganreport::index.date") 
         ->editColumn('laporan_description', "kunjunganreport::index.laporan_description") 
         ->editColumn('laporan_performance.persentase', "kunjunganreport::index.performance") 
