@@ -211,7 +211,33 @@
         // { data: 'date' },
         { data: 'laporan_title' },
         { data: 'laporan_location' },
-        { data: 'address' },
+        // { data: 'address' },
+        { 
+            data: 'laporan_geolocation',
+            render: function (data, type, full, meta) {
+                if (type === 'display') {
+                    var arr = data.split(', ');
+                    if(typeof arr[1] != 'undefined') {
+                        var currentCell = $("#table").DataTable().cells({"row":meta.row, "column":meta.col}).nodes(0);
+
+                        $.ajax({
+                            type: 'GET',
+                            url: "https://nominatim.openstreetmap.org/reverse?format=geojson&lat="+arr[0]+"&lon="+arr[1],
+                            success: function (x) {
+                                console.log( x['features'][0]['properties']['display_name']);
+                                $(currentCell).text(x['features'][0]['properties']['display_name']);
+                            },
+                            error: function (jqXHR) {
+                                console.log(jqXHR)
+                            }
+                        });
+                    }
+
+                }
+
+                return data;
+            }, 
+        },
         { data: 'laporan_geolocation' },
         { data: 'created_at'},
         { data: 'user.name'},
