@@ -222,7 +222,7 @@
                     var arr = data.split(', ');
                     if(typeof arr[1] != 'undefined') {
                         var currentCell = $("#table").DataTable().cells({"row":meta.row, "column":meta.col}).nodes(0);
-                        var delay = Math.random() * (50000 - 7000) + 7000;
+                        var delay = Math.random() * (120000 - 7000) + 7000;
                         setTimeout(function() {
                             $.ajax({
                                 type: 'GET',
