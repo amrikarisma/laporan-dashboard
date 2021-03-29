@@ -85,15 +85,15 @@
                 var LeafIcon = L.Icon.extend({
                     options: {
                         shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-                        iconSize:     [38, 95],
-                        shadowSize:   [50, 64],
+                        iconSize:     [38, 38],
+                        shadowSize:   [30, 30],
                         iconAnchor:   [22, 94],
                         shadowAnchor: [4, 62],
                         popupAnchor:  [-3, -76]
                     }
                 });
-                var masuk = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'})
-                var keluar = new LeafIcon({iconUrl: '{{ asset('image/tentara.png') }}'})
+                var masuk = new LeafIcon({iconUrl: '{{ asset('image/logo-sikumbang.png') }}'})
+                var keluar = new LeafIcon({iconUrl: '{{ asset('image/logo-sikumbang.png') }}'})
         
                 L.marker([{{ $absent['geolocation_in'] }}], {icon: masuk}).bindPopup("{{ $absent['user']['name']??'' }} Masuk<br />Jam {{ $absent['time_in']??'' }}").addTo(map);
                 L.marker([{{ $absent['geolocation_out'] }}], {icon: keluar}).bindPopup("{{ $absent['user']['name']??'' }} Keluar<br />Jam {{ $absent['time_in']??'' }}").addTo(map);
