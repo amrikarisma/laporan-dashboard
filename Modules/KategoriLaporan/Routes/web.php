@@ -18,7 +18,6 @@ Route::prefix('kategori-laporan')->middleware('validate_session')->group(functio
     Route::get('/', 'KategoriLaporanController@index')->name('kategori-laporan.index');
     Route::get('/create', 'KategoriLaporanController@create')->name('kategori-laporan.create');
     Route::post('/store', 'KategoriLaporanController@store')->name('kategori-laporan.store');
-    Route::post('/destroy', 'KategoriLaporanController@destroy')->name('kategori-laporan.destroy');
     Route::get('/{id}', 'KategoriLaporanController@show')->name('kategori-laporan.show');
     Route::post('/{id}/update', 'KategoriLaporanController@update')->name('kategori-laporan.update');
     Route::get('/{id}/edit', 'KategoriLaporanController@edit')->name('kategori-laporan.edit');

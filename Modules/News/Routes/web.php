@@ -15,7 +15,6 @@ Route::prefix('news')->middleware('validate_session')->group(function() {
     Route::get('/', 'NewsController@index')->name('news.index');
     Route::get('/create', 'NewsController@create')->name('news.create');
     Route::post('/store', 'NewsController@store')->name('news.store');
-    Route::post('/destroy', 'NewsController@destroy')->name('news.destroy');
     Route::get('/{id}', 'NewsController@show')->name('news.show');
     Route::post('/{id}/update', 'NewsController@update')->name('news.update');
     Route::get('/{id}/edit', 'NewsController@edit')->name('news.edit');
