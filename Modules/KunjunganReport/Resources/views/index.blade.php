@@ -9,13 +9,16 @@
             <form action="" method="GET" class="form-horizontal">
                 {{-- @csrf --}}
                 <div class="form-group row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
+                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                    </div>
+                    <div class="col-md-2">
                         {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
@@ -56,19 +59,13 @@
                                     {{ _('Judul')}}
                                 </th>
                                 <th>
-                                    {{ _('Kategori')}}
-                                </th>
-                                <th>
-                                    {{ _('Deskripsi')}}
-                                </th>
-                                <th>
                                     {{ _('Lokasi Manual')}}
                                 </th>
                                 <th>
-                                    {{ _('Lokasi GPS')}}
+                                    {{ _('Alamat GPS')}}
                                 </th>
                                 <th>
-                                    {{ _('Performa')}}
+                                    {{ _('Lokasi GPS')}}
                                 </th>
                                 <th>
                                     {{ _('Tanggal Laporan')}}
@@ -201,7 +198,7 @@
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
                 "anggota": "{{ $request->input('anggota')??'' }}",
-                "hadir": "{{ $request->input('hadir')??'' }}"
+                "cabang": "{{ $request->input('cabang')??'' }}"
             }
         },
         order: [[ 0, "desc" ]],
@@ -216,11 +213,35 @@
         // },
         // { data: 'date' },
         { data: 'laporan_title' },
-        { data: 'category.name' },
-        { data: 'laporan_description' },
         { data: 'laporan_location' },
+        // { data: 'address' },
+        { 
+            data: 'laporan_geolocation',
+            render: function (data, type, full, meta) {
+                if (type === 'display') {
+                    var arr = data.split(', ');
+                    if(typeof arr[1] != 'undefined') {
+                        var currentCell = $("#table").DataTable().cells({"row":meta.row, "column":meta.col}).nodes(0);
+
+                        $.ajax({
+                            type: 'GET',
+                            url: "https://nominatim.openstreetmap.org/reverse?format=geojson&lat="+arr[0]+"&lon="+arr[1],
+                            success: function (x) {
+                                console.log( x['features'][0]['properties']['display_name']);
+                                $(currentCell).text(x['features'][0]['properties']['display_name']);
+                            },
+                            error: function (jqXHR) {
+                                console.log(jqXHR)
+                            }
+                        });
+                    }
+
+                }
+
+                return data;
+            }, 
+        },
         { data: 'laporan_geolocation' },
-        { data: 'laporan_performance.persentase'},
         { data: 'created_at'},
         { data: 'user.name'},
         { data: 'actions'},

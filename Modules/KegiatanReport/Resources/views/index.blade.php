@@ -9,13 +9,16 @@
             <form action="" method="GET" class="form-horizontal">
                 {{-- @csrf --}}
                 <div class="form-group row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
+                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                    </div>
+                    <div class="col-md-2">
                         {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
@@ -207,7 +210,7 @@
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
                 "anggota": "{{ $request->input('anggota')??'' }}",
-                "hadir": "{{ $request->input('hadir')??'' }}"
+                "cabang": "{{ $request->input('cabang')??'' }}"
             }
         },
         order: [[ 0, "desc" ]],

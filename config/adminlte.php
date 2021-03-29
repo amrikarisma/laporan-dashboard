@@ -311,8 +311,8 @@ return [
             'icon'        => 'far fa-fw fa-file',
         ],
         [
-            'text'        => 'Presensi Anggota',
-            'url'         => '/presensi',
+            'text'        => 'Kategori Presensi',
+            'url'         => '/kategori-presensi',
             'icon'        => 'far fa-fw fa-file',
         ],
         [
