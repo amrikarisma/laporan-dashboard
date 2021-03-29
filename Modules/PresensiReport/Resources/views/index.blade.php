@@ -210,8 +210,9 @@
         }
     });
     $('#table').DataTable({
+        searchDelay:350,
         processing: true,
-        serverSide: true,
+        serverSide: false,
         ajax: {
             url: `{{ route('laporan.presensi.ajaxlist') }}`,
             data: {
