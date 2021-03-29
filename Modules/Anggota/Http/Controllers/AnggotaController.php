@@ -85,6 +85,8 @@ class AnggotaController extends Controller
             'join_date'             => $request->join_date,
             'sk_pengangkatan'       => $request->sk_pengangkatan,
             'nik'                   => $request->nik,
+            'phone'                 => $request->phone,
+            'status'                => $request->status,
             'password'              => $request->password??substr($request->nik, -4)
         ];
         // return $anggota;
@@ -142,6 +144,7 @@ class AnggotaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request;
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -180,6 +183,9 @@ class AnggotaController extends Controller
             'join_date'         => $request->join_date,
             'sk_pengangkatan'   => $request->sk_pengangkatan,
             'nik'               => $request->nik,
+            'phone'             => $request->phone,
+            'status'            => $request->status,
+
         ];
         if($request->password) {
             $anggota['password']    = $request->password;

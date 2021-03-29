@@ -47,6 +47,13 @@
                             {!! Form::text('nik', $anggota['nik'], array( 'class' => 'form-control', 'placeholder' => 'NIK') ) !!}
                         </div>
                     </div>
+                    <div class="form-group row">
+                        {!! Form::label('status', 'Status',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            <input type="hidden" name="status" value="Tidak Aktif">
+                            <input type="checkbox" {{$anggota['status'] == 'Aktif' ? 'checked' : '' }} name="status" value="Aktif" data-toggle="toggle" data-on="Aktif" data-off="Tidak Aktif" data-onstyle="success" data-offstyle="danger">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,10 +156,15 @@
     </div>
 </form>
 @endsection
+@section('css')
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+@endsection
 @section('js')
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
     <script>
+        
         $(function() {
             $('#profile_photo').on('change', function () {
                 let reader = new FileReader();
@@ -178,5 +190,7 @@
                 console.log("You are " + years + " years old!");
             });
         });
+        // $('[data-toggle="switch"]').bootstrapSwitch();
+
     </script>
 @endsection
