@@ -4,6 +4,7 @@ namespace Modules\KegiatanReport\Http\Controllers;
 
 use App\Exports\LaporanExport;
 use App\Lib\MyHelper;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -18,8 +19,9 @@ class KegiatanReportController extends Controller
         $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start_date.'&end='.$request->end_date.'&' : '';
         $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+        $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
-        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota)['data']??[];
+        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
         return DataTables::of($kegiatans)
         ->editColumn('user.name', "kegiatanreport::index.name") 
         ->editColumn('category.name', "kegiatanreport::index.category") 
@@ -41,16 +43,19 @@ class KegiatanReportController extends Controller
         $filterDate     = ($request->start && $request->end) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
         $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+        $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
         // $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)??[];
 
-        $kegiatans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota)??[];
+        $kegiatans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)??[];
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
-        return view('kegiatanreport::index', compact('kegiatans', 'anggota', 'jabatan', 'request'));
+        $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
+
+        return view('kegiatanreport::index', compact('kegiatans', 'cabang','anggota', 'jabatan', 'request'));
     }
 
     /**
@@ -126,7 +131,10 @@ class KegiatanReportController extends Controller
     }
     public function downloadExcel(Request $request)
     {
-        return (new LaporanExport)->download('laporan.xlsx');
+        $profile = MyHelper::apiGet('profile')['data'] ?? [];
+        $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
+        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
+        return (new LaporanExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'.xlsx');
     }
 
     /**
