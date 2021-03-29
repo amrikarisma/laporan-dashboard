@@ -202,7 +202,7 @@
     });
     $('#table').DataTable({
         processing: true,
-        serverSide: true,
+        serverSide: false,
         ajax: {
             url: `{{ route('laporan.kegiatan.ajaxlist') }}`,
             data: {
