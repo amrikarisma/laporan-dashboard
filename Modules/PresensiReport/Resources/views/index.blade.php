@@ -186,7 +186,8 @@
 
         $('#reportrange').daterangepicker({
             startDate: start,
-            endDate: end,
+            endDate: '+1m',
+            maxDate: moment(start, 'YYYY-MM-DD').add(90, 'days'),
             ranges: {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -209,8 +210,9 @@
         }
     });
     $('#table').DataTable({
+        searchDelay:350,
         processing: true,
-        serverSide: true,
+        serverSide: false,
         ajax: {
             url: `{{ route('laporan.presensi.ajaxlist') }}`,
             data: {

@@ -18,7 +18,6 @@ Route::prefix('kategori-presensi')->middleware('validate_session')->group(functi
     Route::get('/', 'KategoriPresensiController@index')->name('kategori-presensi.index');
     Route::get('/create', 'KategoriPresensiController@create')->name('kategori-presensi.create');
     Route::post('/store', 'KategoriPresensiController@store')->name('kategori-presensi.store');
-    Route::post('/destroy', 'KategoriPresensiController@destroy')->name('kategori-presensi.destroy');
     Route::get('/{id}', 'KategoriPresensiController@show')->name('kategori-presensi.show');
     Route::post('/{id}/update', 'KategoriPresensiController@update')->name('kategori-presensi.update');
     Route::get('/{id}/edit', 'KategoriPresensiController@edit')->name('kategori-presensi.edit');
