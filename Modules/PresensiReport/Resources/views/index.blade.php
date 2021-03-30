@@ -212,7 +212,10 @@
     $('#table').DataTable({
         searchDelay:350,
         processing: true,
-        serverSide: false,
+        serverSide: true,
+        scrollCollapse:true,
+        scrollY:500,
+        scrollX:true,
         ajax: {
             url: `{{ route('laporan.presensi.ajaxlist') }}`,
             data: {
