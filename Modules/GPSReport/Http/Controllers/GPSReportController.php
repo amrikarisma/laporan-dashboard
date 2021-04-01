@@ -42,9 +42,7 @@ class GPSReportController extends Controller
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterHadir  = ($request->hadir) ? 'hadir='.$request->hadir.'&' : 0;
 
-        $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota.$filterHadir)??[];
-
-        $gpsReport = MyHelper::apiGet('gps-report')??[];
+        $gpsReport = MyHelper::apiGet('gps-report?'.$filterDate.$filterJabatan.$filterAnggota.$filterHadir)??[];
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
@@ -59,10 +57,4 @@ class GPSReportController extends Controller
      * @param int $id
      * @return Renderable
      */
-    // public function show($id)
-    // {
-    //     $absent = MyHelper::apiGet('gps-report/'.$id)['data'][0]??[];
-    //     // return $absent;
-    //     return view('gpsreport::show', compact('absent'));
-    // }
 }
