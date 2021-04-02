@@ -52,7 +52,7 @@
                 </div>
                 <div class="card-body">
         
-                    <table id="table" class="table">
+                    <table id="table" class="table" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>

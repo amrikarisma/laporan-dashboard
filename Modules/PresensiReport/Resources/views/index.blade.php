@@ -51,7 +51,7 @@
                     <h5>Tabel Laporan Presensi</h5>
                 </div>
                 <div class="card-body">
-                    <table id="table" class="table table-responsive">
+                    <table id="table" class="table" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>
