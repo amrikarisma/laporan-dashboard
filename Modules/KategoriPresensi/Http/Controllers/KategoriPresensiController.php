@@ -55,11 +55,15 @@ class KategoriPresensiController extends Controller
         $input = [
             'name'         => $request->name,
             'description'   => $request->description,
+            'group'   => $request->group,
+            'status'   => $request->status,
         ];
 
         $kategoripresensi = MyHelper::apiPost('kategori-presensi', $input);
         if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'success'){
             return redirect()->route('kategori-laporan.index')->with('message', $kategoripresensi['message']);
+        } else if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'failed') {
+            return redirect()->back()->with('error', $kategoripresensi['message']);
         }
 
         return redirect()->back()->withErrors($kategoripresensi['error'])->withInput();
@@ -114,11 +118,15 @@ class KategoriPresensiController extends Controller
         $input = [
             'name'         => $request->name,
             'description'   => $request->description,
+            'group'   => $request->group,
+            'status'   => $request->status,
         ];
 
         $kategoripresensi = MyHelper::apiRequest('PUT', 'kategori-presensi/'.$id, $input);
         if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'success'){
-            return redirect()->route('kategori-laporan.index')->with('message', $kategoripresensi['message']);
+            return redirect()->route('kategori-presensi.index')->with('message', $kategoripresensi['message']);
+        } else if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'failed') {
+            return redirect()->back()->with('error', $kategoripresensi['message']);
         }
 
         return redirect()->back()->withErrors($kategoripresensi['error'])->withInput();
@@ -133,7 +141,9 @@ class KategoriPresensiController extends Controller
     {
         $kategoripresensi = MyHelper::apiRequest('DELETE', 'kategori-presensi/'.$id);
         if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'success'){
-            return redirect()->route('kategori-laporan.index')->with('message', $kategoripresensi['message']);
+            return redirect()->route('kategori-presensi.index')->with('message', $kategoripresensi['message']);
+        } else if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'failed') {
+            return redirect()->route('kategori-presensi.index')->with('error', $kategoripresensi['message']);
         }
 
         return redirect()->back()->withErrors($kategoripresensi['error'])->withInput();

@@ -63,11 +63,11 @@
         }).then((result) => {
             console.log(result);
             if (result.value) {
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
+                // Swal.fire(
+                // 'Deleted!',
+                // 'Your file has been deleted.',
+                // 'success'
+                // )
                 $form.submit();
             }
         });

@@ -22,6 +22,6 @@ Route::group(['middleware' => ['validate_session']], function () {
         Route::post('{id}/update', 'DivisiController@update')->name('divisi.update');
         Route::get('/{id}/edit', 'DivisiController@edit')->name('divisi.edit');
         Route::get('/{id}', 'DivisiController@show')->name('divisi.show');
-        Route::get('/{id}/delete', 'DivisiController@destroy')->name('divisi.destroy');
+        Route::delete('/{id}', 'DivisiController@destroy')->name('divisi.destroy');
     });
 });
