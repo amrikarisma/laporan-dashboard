@@ -57,6 +57,7 @@
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 @endsection
 @section('js')
+@section('plugins.Sweetalert2', true)
 <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script>
     $.extend($.fn.dataTable.defaults, {
@@ -73,6 +74,29 @@
         { data: 'status' },
         { data: 'actions'},
     ]
+    });
+    $('#table').on('click','.btn-delete', function(e) {
+        let $form = $(this).closest('form');
+        Swal.fire({
+            title: 'Yakin hapus data?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#2ecc71',
+            confirmButtonText: 'Ya, Saya yakin!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            console.log(result);
+            if (result.value) {
+                // Swal.fire(
+                // 'Deleted!',
+                // 'Your file has been deleted.',
+                // 'success'
+                // )
+                $form.submit();
+            }
+        });
     });
     </script>
 @endsection

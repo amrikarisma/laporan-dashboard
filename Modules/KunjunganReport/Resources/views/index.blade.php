@@ -31,6 +31,9 @@
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.kunjungan.export') }}" class="btn btn-success">Export Kunjungan</a>
+                    </div>
                 </div>
             </form>
         </div>

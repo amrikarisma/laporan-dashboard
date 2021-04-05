@@ -28,6 +28,9 @@
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.gps.export') }}" class="btn btn-success">Export Laporan GPS</a>
+                    </div>
                 </div>
             </form>
         </div>
