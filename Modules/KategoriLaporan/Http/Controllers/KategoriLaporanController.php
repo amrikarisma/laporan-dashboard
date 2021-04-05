@@ -60,8 +60,9 @@ class KategoriLaporanController extends Controller
         $kategorilaporan = MyHelper::apiPost('kategorilaporan', $input);
         if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'success'){
             return redirect()->route('kategori-laporan.index')->with('message', $kategorilaporan['message']);
+        } else if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'failed') {
+            return redirect()->route('kategori-laporan.index')->with('error', $kategorilaporan['message']);
         }
-
         return redirect()->back()->withErrors($kategorilaporan['error'])->withInput();
     }
 
@@ -119,8 +120,9 @@ class KategoriLaporanController extends Controller
         $kategorilaporan = MyHelper::apiRequest('PUT', 'kategorilaporan/'.$id, $input);
         if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'success'){
             return redirect()->route('kategori-laporan.index')->with('message', $kategorilaporan['message']);
+        } else if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'failed') {
+            return redirect()->route('kategori-laporan.index')->with('error', $kategorilaporan['message']);
         }
-
         return redirect()->back()->withErrors($kategorilaporan['error'])->withInput();
     }
 
@@ -134,6 +136,8 @@ class KategoriLaporanController extends Controller
         $kategorilaporan = MyHelper::apiRequest('DELETE', 'kategorilaporan/'.$id);
         if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'success'){
             return redirect()->route('kategori-laporan.index')->with('message', $kategorilaporan['message']);
+        } else if(isset($kategorilaporan['status']) && $kategorilaporan['status'] == 'failed') {
+            return redirect()->route('kategori-laporan.index')->with('error', $kategorilaporan['message']);
         }
 
         return redirect()->back()->withErrors($kategorilaporan['error'])->withInput();

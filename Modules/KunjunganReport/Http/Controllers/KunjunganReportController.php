@@ -2,7 +2,9 @@
 
 namespace Modules\KunjunganReport\Http\Controllers;
 
+use App\Exports\KunjugnanExport;
 use App\Lib\MyHelper;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -91,5 +93,13 @@ class KunjunganReportController extends Controller
         }
 
         return view('kunjunganreport::show', compact('kunjungan'));
+    }
+
+    public function downloadExcel(Request $request)
+    {
+        $profile = MyHelper::apiGet('profile')['data'] ?? [];
+        $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
+        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
+        return (new KunjugnanExport)->download('laporan-kunjungan-'.$date.'-'.$cabang.'.xlsx');
     }
 }

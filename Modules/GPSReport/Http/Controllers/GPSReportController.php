@@ -2,6 +2,7 @@
 
 namespace Modules\GPSReport\Http\Controllers;
 
+use App\Exports\GPSExport;
 use App\Lib\MyHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
@@ -52,9 +53,12 @@ class GPSReportController extends Controller
 
         return view('gpsreport::index', compact('gpsReport', 'anggota', 'jabatan','hadir', 'request'));
     }
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
+    public function downloadExcel(Request $request)
+    {
+        $profile = MyHelper::apiGet('profile')['data'] ?? [];
+        $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
+        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
+        return (new GPSExport)->download('laporan-aktifitas-gps-'.$date.'-'.$cabang.'.xlsx');
+    }
 }

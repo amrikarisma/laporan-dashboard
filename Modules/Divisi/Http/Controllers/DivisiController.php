@@ -153,7 +153,12 @@ class DivisiController extends Controller
      */
     public function destroy($id)
     {
-        $divisi = MyHelper::apiRequest('delete', 'divisi/' . $id) ?? [];
+        $divisi = MyHelper::apiRequest('delete', 'divisi/' . $id);
+        if(isset($divisi['status']) && $divisi['status'] == 'success'){
+            return redirect()->route('divisi.index')->with('message', $divisi['message']);
+        } else if(isset($divisi['status']) && $divisi['status'] == 'fail') {
+            return redirect()->route('divisi.index')->with('error', $divisi['message']);
+        }
         return redirect()->route('divisi.index')->with('message', $divisi['message']);
     }
 }
