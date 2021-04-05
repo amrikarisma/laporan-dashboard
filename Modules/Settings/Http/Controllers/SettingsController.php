@@ -28,7 +28,6 @@ class SettingsController extends Controller
         return view('settings::index', compact('cabang', 'divisi', 'jabatan', 'profile','roles'));
     }
 
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -80,7 +79,7 @@ class SettingsController extends Controller
         if(isset($request->profile_photo) && !empty($request->profile_photo)) {
             $anggota['profile_photo'] = $request->profile_photo;
         }
-        // return $anggota;
+
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
 
         if(isset($newAnggota['status']) ) {

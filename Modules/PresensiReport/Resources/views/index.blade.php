@@ -18,7 +18,7 @@
                     <div class="col-md-2">
                         {!! Form::select('hadir', $hadir, $request->hadir??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Kehadiran')) !!}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
@@ -30,6 +30,9 @@
                     </div>
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.presensi.export') }}" class="btn btn-success">Export Presensi</a>
                     </div>
                 </div>
             </form>

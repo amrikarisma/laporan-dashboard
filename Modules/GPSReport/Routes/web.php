@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('laporan-gps')->middleware('validate_session')->group(function () {
     Route::get('/list', 'GPSReportController@ajaxlist')->name('laporan.gps.ajaxlist');
+    Route::get('/export', 'GPSReportController@downloadExcel')->name('laporan.gps.export');
     Route::get('/', 'GPSReportController@index')->name('laporan.gps.index');
     Route::get('/{id}', 'GPSReportController@show')->name('laporan.gps.show');
 });

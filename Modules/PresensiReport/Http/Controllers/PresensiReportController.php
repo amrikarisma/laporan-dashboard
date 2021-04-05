@@ -2,6 +2,7 @@
 
 namespace Modules\PresensiReport\Http\Controllers;
 
+use App\Exports\PresensiExport;
 use App\Lib\MyHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
@@ -88,5 +89,13 @@ class PresensiReportController extends Controller
         }
         return view('presensireport::show', compact('anggota'));
 
+    }
+
+    public function downloadExcel(Request $request)
+    {
+        $profile = MyHelper::apiGet('profile')['data'] ?? [];
+        $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
+        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
+        return (new PresensiExport)->download('laporan-presensi-'.$date.'-'.$cabang.'.xlsx');
     }
 }

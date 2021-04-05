@@ -2,16 +2,13 @@
 
 namespace App\Exports;
 
-use App\Laporan;
 use App\Lib\MyHelper;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class LaporanExport implements FromView,ShouldAutoSize
+class KunjugnanExport implements FromView,ShouldAutoSize
 {
     use Exportable;
     private $fileName = "laporan.xlsx";
@@ -21,7 +18,8 @@ class LaporanExport implements FromView,ShouldAutoSize
         $getLaporan = MyHelper::apiGet('laporan/export')['data']??[];
         $anggota = MyHelper::apiGet('profile')['data']??[];
         $collectionLaporan = collect($getLaporan);
-        return view('kegiatanreport::export', [
+
+        return view('kunjunganreport::export', [
             'laporans' => $collectionLaporan,
             'anggota' => $anggota
         ]);
