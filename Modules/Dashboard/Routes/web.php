@@ -14,5 +14,5 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['validate_session']], function () {
-    Route::get('/', 'DashboardController@index');
+    Route::get('/', 'DashboardController@index')->name('dashboard');
 });
