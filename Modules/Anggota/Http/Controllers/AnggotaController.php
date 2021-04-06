@@ -161,7 +161,6 @@ class AnggotaController extends Controller
         if(!$checkAnggota) {
             return redirect()->route('anggota.index');
         }
-
         $anggota = [
             'first_name'        => $request->first_name,
             'last_name'         => $request->last_name,
@@ -188,7 +187,7 @@ class AnggotaController extends Controller
             'status'            => $request->status,
 
         ];
-        if(!empty($request->password)) {
+        if($request->password && !empty($request->password)) {
             $anggota['password']    = $request->password;
         }
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);

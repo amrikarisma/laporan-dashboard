@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('settings.update', $profile['anggota']['id']) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+<form action="{{ route('settings.update', $profile['anggota']['id']) }}" method="POST" enctype="multipart/form-data" class="form-horizontal" autocomplete="off">
     @csrf
     <div class="row">
         <div class="col-md-6 col-lg-6">
@@ -131,6 +131,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        {!! Form::label('password', 'Ganti Password',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::password('password', array( 'class' => 'form-control', 'placeholder' => 'Ganti Password' , 'autocomplete' => 'off') ) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
                             {!! Form::select('role', $roles, $profile['role_array'], array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang') ) !!}
@@ -154,6 +160,8 @@
 @section('plugins.Daterangepicker', true)
     <script>
     $(function() {
+        $('#password').empty();
+        $('#password').val('');
         $('#profile_photo').on('change', function () {
             let reader = new FileReader();
             console.log(reader);
