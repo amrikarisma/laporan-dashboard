@@ -10,17 +10,27 @@
             <form action="" method="GET" class="form-horizontal">
                 {{-- @csrf --}}
                 <div class="form-group row">
-                    <div class="col-md-3">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control', 'placeholder' => 'Filter Anggota')) !!}
+                    <div class="col-md-2">
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
-                    <div class="col-md-3">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
+                    <div class="col-md-2">
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
-                    <div class="col-md-3">
-                        {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!}
+                    <div class="col-md-4">
+                        <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                            <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
+                            <span id="showdate"></span>
+                            <input type="hidden" name="start" value="{{ $request->start??''}}">
+                            <input type="hidden" name="end" value="{{ $request->end??''}}">
+                            <span style="align-self:center" ><i class="fa fa-caret-down"></i></span> 
+                        </div>
+                        {{-- {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!} --}}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('history.export') }}" class="btn btn-success">Export History GPS</a>
                     </div>
                 </div>
             </form>
@@ -30,6 +40,13 @@
     </div>
 @endsection
 @section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px);
+            padding: .375rem .75rem;
+        }
+    </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
@@ -44,9 +61,14 @@
     </style>
 @endsection
 @section('js')
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
         $(function(){
+            $('.select2').select2();
+
             $.ajax({url: `{{ route('history.location') }}`, success: function(result){
                 var viewmap = result[0].pin.split(',');
                 var map = L.map('map').setView([viewmap[0], viewmap[1]], 13);
@@ -79,6 +101,33 @@
             
             // L.marker([-7.759130, 110.414314], {icon: greenIcon}).bindPopup("I am a red leaf.").addTo(map);
             // L.marker([-7.759452, 110.418285], {icon: greenIcon}).bindPopup("I am an orange leaf.").addTo(map);
+        });
+        $(function() {
+
+            var start = $('[name=start]').val() != '' ? moment($('[name=start]').val()) : moment().startOf('month');
+            var end = $('[name=end]').val() != '' ? moment($('[name=end]').val()) : moment().endOf('month');
+
+            function cb(start, end) {
+                $('#showdate').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                $('[name=start]').val(start.format('YYYY-MM-DD'));
+                $('[name=end]').val(end.format('YYYY-MM-DD'));
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
         });
     </script>
 @endsection
