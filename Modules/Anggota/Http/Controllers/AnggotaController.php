@@ -144,7 +144,6 @@ class AnggotaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -191,6 +190,7 @@ class AnggotaController extends Controller
             $anggota['password']    = $request->password;
         }
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
+        // return $newAnggota;
 
         if(isset($newAnggota['status']) ) {
             if($newAnggota['status'] == 'success') {

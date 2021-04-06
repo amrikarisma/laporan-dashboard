@@ -43,7 +43,10 @@ class GPSReportController extends Controller
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterHadir  = ($request->hadir) ? 'hadir='.$request->hadir.'&' : 0;
 
-        $gpsReport = MyHelper::apiGet('gps-report?'.$filterDate.$filterJabatan.$filterAnggota.$filterHadir)??[];
+        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterHadir;
+        $gpsReport = MyHelper::apiGet('gps-report?'.$param_url)??[];
+
+        session()->put('gps_param', $param_url);
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 

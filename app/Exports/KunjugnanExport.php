@@ -15,7 +15,9 @@ class KunjugnanExport implements FromView,ShouldAutoSize
 
     public function view(): View
     {
-        $getLaporan = MyHelper::apiGet('laporan/export')['data']??[];
+        $getUrl = session('kunjungan_param')??'';
+        $getLaporan = MyHelper::apiGet('laporan/export/?'.$getUrl)['data']??[];
+        session()->forget('kunjungan_param');
         $anggota = MyHelper::apiGet('profile')['data']??[];
         $collectionLaporan = collect($getLaporan);
 
