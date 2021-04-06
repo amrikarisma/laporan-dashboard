@@ -15,7 +15,10 @@ class PresensiExport implements FromView,ShouldAutoSize
 
     public function view(): View
     {
-        $getPresensi = MyHelper::apiGet('presensi/export')['data']??[];
+        $getUrl = session('presensi_param')??'';
+        $getPresensi = MyHelper::apiGet('presensi-report/export/?'.$getUrl)['data']??[];
+        // dd($getPresensi);
+        session()->forget('presensi_param');
         $anggota = MyHelper::apiGet('profile')['data']??[];
         $collectionPresensi = collect($getPresensi);
         // dd($collectionPresensi);

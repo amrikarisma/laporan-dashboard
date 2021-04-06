@@ -18,7 +18,11 @@ class LaporanExport implements FromView,ShouldAutoSize
 
     public function view(): View
     {
-        $getLaporan = MyHelper::apiGet('laporan/export')['data']??[];
+        // $getLaporan = MyHelper::apiGet('laporan/export')['data']??[];
+
+        $getUrl = session('kegiatan_param')??'';
+        $getLaporan = MyHelper::apiGet('laporan/export/?'.$getUrl)['data']??[];
+        session()->forget('kegiatan_param');
         $anggota = MyHelper::apiGet('profile')['data']??[];
         $collectionLaporan = collect($getLaporan);
         return view('kegiatanreport::export', [

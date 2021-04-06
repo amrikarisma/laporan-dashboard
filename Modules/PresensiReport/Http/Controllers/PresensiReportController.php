@@ -14,14 +14,6 @@ class PresensiReportController extends Controller
 {
     public function ajaxlist(Request $request)
     {
-        // dd($request);
-        // $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start_date.'&end='.$request->end_date.'&' : '';
-        // $filterJabatan  = (!empty($request->jabatan)) ? 'jabatan='.$request->jabatan.'&' : '';
-        // $filterAnggota  = (!empty($request->anggota)) ? 'anggota='.$request->anggota.'&' : '';
-        // $filterHadir  = (!empty($request->hadir)) ? 'hadir='.$request->hadir.'&' : 0;
-        // $offset  = (!empty($request->start)) ? 'offset='.$request->start.'&' : '';
-        // $limit  = (!empty($request->limit)) ? 'limit='.$request->limit.'&' : '';
-
         $params = [
             'start' => $request->start_date??'',
             'end'   => $request->end_date??'',
@@ -33,7 +25,7 @@ class PresensiReportController extends Controller
             'search'     => $request->input('search.value')
         ];
         $absents = MyHelper::apiGet('presensi-report?table=1', $params)['data']??[];
-        // return $absents;
+
         return DataTables::collection($absents['data']??[])
         ->filter(function (){})
         ->setTotalRecords($absents['record_data']??0)
@@ -70,7 +62,10 @@ class PresensiReportController extends Controller
         $filterAnggota  = (!empty($request->anggota)) ? 'anggota='.$request->anggota.'&' : '';
         $filterHadir  = (!empty($request->hadir)) ? 'hadir='.$request->hadir.'&' : '';
 
-        $absents = MyHelper::apiGet('presensi-report?'.$filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterHadir)??[];
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterHadir;
+        $absents = MyHelper::apiGet('presensi-report?'.$param_url)??[];
+
+        session()->put('presensi_param', $param_url);
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 

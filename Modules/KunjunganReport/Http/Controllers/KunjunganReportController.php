@@ -60,7 +60,9 @@ class KunjunganReportController extends Controller
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
-        $kunjungans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)??[];
+        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
+        $kunjungans = MyHelper::apiGet('laporan?'.$param_url)??[];
+        session()->put('kunjungan_param', $param_url);
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
