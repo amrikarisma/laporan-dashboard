@@ -137,6 +137,15 @@
                             {!! Form::email('email', $anggota['user']['email']??'', array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
                         </div>
                     </div>
+                    @if ($superadmin)
+                        <div class="form-group row">
+                            {!! Form::label('password', 'Ganti Password',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                            <div class="col-sm-9">
+                                {!! Form::password('password', array( 'class' => 'form-control', 'placeholder' => 'Ganti Password') ) !!}
+                                <small class="text-danger">Super Admin only</small>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group row">
                         {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">

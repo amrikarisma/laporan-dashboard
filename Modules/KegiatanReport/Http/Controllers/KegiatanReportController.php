@@ -45,9 +45,9 @@ class KegiatanReportController extends Controller
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
-        // $absents = MyHelper::apiGet('presensi-report?'.$filterDate.$filterJabatan.$filterAnggota)??[];
-
-        $kegiatans = MyHelper::apiGet('laporan?'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)??[];
+        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
+        $kegiatans = MyHelper::apiGet('laporan?'.$param_url)??[];
+        session()->put('kegiatan_param', $param_url);
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 

@@ -21,7 +21,7 @@
                 <td>{{ $loop->iteration}}</td>
                 <td>{{ $laporan['laporan_title']??'' }}</td>
                 <td>{{ $laporan['laporan_location']??'' }}</td>
-                <td>{{ $laporan['laporan_geolocation']??'' }}</td>
+                <td>{{ !empty($laporan['laporan_address_geo']) ? $laporan['laporan_address_geo'] : ($laporan['laporan_geolocation']??'') }}</td>
                 <td>{{ $laporan['laporan_geolocation']??'' }}</td>
                 <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                 <td>{{ $laporan['user']['name']??'' }}</td>
