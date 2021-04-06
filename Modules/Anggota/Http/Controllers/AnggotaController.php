@@ -133,7 +133,9 @@ class AnggotaController extends Controller
         if(!$anggota) {
             return redirect()->back();
         }
-        return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota','roles'));
+        $superadmin = MyHelper::hasAccess([1], session('roles'));
+
+        return view('anggota::edit',  compact('cabang', 'divisi', 'jabatan', 'anggota','roles', 'superadmin'));
     }
 
     /**
@@ -186,11 +188,10 @@ class AnggotaController extends Controller
             'status'            => $request->status,
 
         ];
-        if($request->password) {
+        if(!empty($request->password)) {
             $anggota['password']    = $request->password;
         }
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
-        // return $newAnggota;
 
         if(isset($newAnggota['status']) ) {
             if($newAnggota['status'] == 'success') {
