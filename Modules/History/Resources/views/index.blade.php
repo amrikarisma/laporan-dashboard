@@ -68,36 +68,54 @@
     <script>
         $(function(){
             $('.select2').select2();
-
-            $.ajax({url: `{{ route('history.location') }}`, success: function(result){
-                var viewmap = result[0].pin.split(',');
-                var map = L.map('map').setView([viewmap[0], viewmap[1]], 13);
-            
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
+            var param = {
+                'start_date' : @json($request->start),
+                'end_date' : @json($request->end),
+                'anggota' : @json($request->anggota),
+            }
+            console.log(param);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                method: "POST",
+                url: `{{ route('history.location') }}`,
+                data: param,
+                success: function(result){
+                    if(typeof result[0] != 'undefined') {
+                        var viewmap = result[0].pin.split(',');
+                        var map = L.map('map').setView([viewmap[0], viewmap[1]], 13);
+                    
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+                
+                        var LeafIcon = L.Icon.extend({
+                            options: {
+                                shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+                                iconSize:     [38, 38],
+                                shadowSize:   [30, 30],
+                                iconAnchor:   [22, 94],
+                                shadowAnchor: [4, 62],
+                                popupAnchor:  [-3, -76]
+                            }
+                        });
+                
+                        var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/logo-sikumbang.png') }}`});
+                
+                        result.forEach(el => {
+                            var split = el.pin.split(',');
+                            console.log(split)
         
-                var LeafIcon = L.Icon.extend({
-                    options: {
-                        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-                        iconSize:     [38, 38],
-                        shadowSize:   [30, 30],
-                        iconAnchor:   [22, 94],
-                        shadowAnchor: [4, 62],
-                        popupAnchor:  [-3, -76]
+                            L.marker([split[0],split[1]], {icon: greenIcon}).bindPopup(el.user.name).addTo(map);
+                        });
+                    } else {
+                        $('#map').html('Tidak ada map ditemukan.');
                     }
-                });
-        
-                var greenIcon = new LeafIcon({iconUrl: `{{ asset('image/logo-sikumbang.png') }}`});
-        
-                result.forEach(el => {
-                    var split = el.pin.split(',');
-                    console.log(split)
-
-                    L.marker([split[0],split[1]], {icon: greenIcon}).bindPopup(el.user.name).addTo(map);
-                });
-      
-            }});
+                }
+            });
             
             // L.marker([-7.759130, 110.414314], {icon: greenIcon}).bindPopup("I am a red leaf.").addTo(map);
             // L.marker([-7.759452, 110.418285], {icon: greenIcon}).bindPopup("I am an orange leaf.").addTo(map);
