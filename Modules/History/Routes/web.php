@@ -11,8 +11,11 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('history')->middleware('validate_session')->group(function() {
-    Route::get('/list', 'HistoryController@location')->name('history.location');
+    Route::get('/export', 'HistoryController@downloadExcel')->name('history.export');
+    Route::post('/list', 'HistoryController@location')->name('history.location');
     Route::get('/', 'HistoryController@index')->name('history.index');
     Route::post('/', 'HistoryController@index');
 });

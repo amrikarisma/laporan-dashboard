@@ -10,10 +10,10 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-2">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control', 'placeholder' => 'Filter Anggota')) !!}
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control', 'placeholder' => 'Filter Jabatan')) !!}
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2' , 'placeholder' => 'Filter Jabatan')) !!}
                     </div>
                     <div class="col-md-4">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">

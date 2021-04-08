@@ -74,12 +74,13 @@ class SettingsController extends Controller
             'join_date'         => $request->join_date,
             'sk_pengangkatan'   => $request->sk_pengangkatan,
             'nik'               => $request->nik,
-            'password'          => $request->password,
         ];
         if(isset($request->profile_photo) && !empty($request->profile_photo)) {
             $anggota['profile_photo'] = $request->profile_photo;
         }
-
+        if($request->password && !empty($request->password)) {
+            $anggota['password']    = $request->password;
+        }
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
 
         if(isset($newAnggota['status']) ) {
