@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('broadcast')->middleware('validate_session')->group(function() {
     Route::get('/list', 'BroadcastController@ajaxlist')->name('broadcast.ajaxlist');
+    Route::post('broadcast/repush', 'BroadcastController@repush')->name('broadcast.repush');
     Route::get('/', 'BroadcastController@index')->name('broadcast.index');
     Route::get('/create', 'BroadcastController@create')->name('broadcast.create');
     Route::post('/store', 'BroadcastController@store')->name('broadcast.store');

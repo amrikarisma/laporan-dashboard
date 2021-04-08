@@ -84,8 +84,16 @@
         processing: true,
         serverSide: true,
         ajax: `{{ route('broadcast.ajaxlist') }}`,
+        order: [[ 0, "desc" ]],
         columns: [
-        { data: 'created_at' },
+        { 
+            data: {
+                  _: 'created_at.display',
+                  sort: 'created_at.timestamp'
+               },
+            name: 'created_at.timestamp',
+
+        },
         { data: 'user.name' },
         { data: 'title'},
         { data: 'target_send'},
