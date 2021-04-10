@@ -91,6 +91,7 @@ class BroadcastController extends Controller
     public function show($id)
     {
         $broadcast = MyHelper::apiGet('broadcast/'.$id)['data']??[];
+        // return $broadcast;
         if(!$broadcast) {
             return redirect(route('broadcast.index'))->with('error', 'Pengumuman tidak ditemukan');
         }
