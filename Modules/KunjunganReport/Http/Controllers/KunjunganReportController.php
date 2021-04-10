@@ -81,15 +81,6 @@ class KunjunganReportController extends Controller
     public function show($id)
     {
         $kunjungan = MyHelper::apiGet('laporan/'.$id)['data']??[];
-        $var = $kunjungan['laporan_geolocation'];
-        $geo = explode (", ", $var);
-        if(isset($geo[1])) {
-            // return $geo[1];
-            $kunjungan['address'] = $this->getAddress($geo[0],$geo[1]);
-        } else {
-            $kunjungan['address'] =  'GPS tidak valid';
-        }
-
         if(!$kunjungan) {
             return redirect(route('laporan.kunjungan.index'));
         }
