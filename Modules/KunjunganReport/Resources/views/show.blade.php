@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td>{{ 'Alamat dari GPS' }}</td>
-                        <td>{{ $kunjungan['address']??'' }}</td>
+                        <td>{{ $kunjungan['laporan_address_geo']??'' }}</td>
                     </tr>
                     <tr>
                         <td>{{ 'Lokasi GPS' }}</td>
