@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetRequest;
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -87,5 +88,57 @@ class AuthController extends Controller
             'message',
             'Sukses Logout'
         ]);
+    }
+    public function reset(Request $request, $id)
+    {
+        $token = $id;
+        return view('auth.passwords.reset')->with(['token' => $token]);
+    }
+
+    public function forgot()
+    {
+        return view('auth.passwords.forgot');
+    }
+
+    public function forgotPost(Request $request)
+    {
+        $data = [
+            'email' => $request->email,
+        ];
+        $sendNewPassword = MyHelper::apiPost('forgot-password', $data);
+        // return $sendNewPassword;
+        if(isset($sendNewPassword['status'])) {
+            if($sendNewPassword['status'] == 'failed') {
+                return redirect()->back()->with('error', $sendNewPassword['message']);
+            } else {
+                return redirect()->back()->with('message', $sendNewPassword['message']);
+            }
+        }
+        return redirect()->back()->withErrors($sendNewPassword['errors'])->withInput();
+    }
+    public function resetPassword(ResetRequest $request)
+    {
+        $data = [
+            'token' => $request->token,
+            'password'  => $request->password,
+            'password_confirmation'  => $request->password_confirmation,
+        ];
+
+        $sendNewPassword = MyHelper::apiPost('forgot-password/reset', $data);
+        // return $sendNewPassword;
+        if(isset($sendNewPassword['status'])) {
+            if($sendNewPassword['status'] == 'failed') {
+                return redirect()->back()->with('error', $sendNewPassword['message']);
+            } else {
+                return redirect()->route('reset.success')->with('message', $sendNewPassword['message']);
+            }
+        }
+        return redirect()->back()->withErrors($sendNewPassword['errors'])->withInput();
+
+    }
+
+    public function resetSuccess()
+    {
+        return view('auth.success_reset_password');
     }
 }
