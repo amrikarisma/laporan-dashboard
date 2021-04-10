@@ -188,8 +188,8 @@
     <script>
     $.extend($.fn.dataTable.defaults, {
         language: {
-            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
-        }
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json",
+        },
     });
     $('#table').DataTable({
         processing: true,
