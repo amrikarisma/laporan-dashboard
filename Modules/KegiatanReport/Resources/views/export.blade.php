@@ -9,6 +9,7 @@
             <th><strong>Tanggal</strong></th>
             <th><strong>Judul</strong></th>
             <th><strong>Kategori</strong></th>
+            <th><strong>Lokasi</strong></th>
             <th><strong>Pengirim</strong></th>
             <th><strong>Penanganan</strong></th>
         </tr>
@@ -21,6 +22,7 @@
                 <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                 <td>{{ $laporan['laporan_title']??'' }}</td>
                 <td>{{ $laporan['category']['name']??'Tidak ada kategori' }}</td>
+                <td>{{ $laporan['laporan_location']??'' }}</td>
                 <td>{{ $laporan['user']['name']??'' }}</td>
                 <td>{{ $laporan['penanganan']??'' }}</td>
             </tr>
@@ -61,6 +63,8 @@
                 <td>
                 </td>
                 <td>
+                </td>
+                <td colspan="2">
                     Jakarta, {{ \Carbon\Carbon::now()->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}
                 </td>
             </tr>
@@ -74,6 +78,8 @@
                 <td>
                 </td>
                 <td>
+                </td>
+                <td colspan="2">
                     Anggota FKDM
                 </td>
             </tr>
@@ -87,6 +93,8 @@
                 <td>
                 </td>
                 <td>
+                </td>
+                <td colspan="2">
                     {{ $anggota['anggota']['cabang']['name']??'' }}
                 </td>
             </tr>
@@ -99,7 +107,9 @@
                 </td>
                 <td>
                 </td>
-                <td style="height: 100px">
+                <td>
+                </td>
+                <td colspan="2" style="height: 100px">
                     Tanda Tangan
                 </td>
             </tr>
@@ -113,6 +123,8 @@
                 <td>
                 </td>
                 <td>
+                </td>
+                <td colspan="2">
                     {{ $anggota['name']??''}}
                 </td>
             </tr>
