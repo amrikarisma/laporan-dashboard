@@ -29,7 +29,7 @@ class PresensiReportController extends Controller
         return DataTables::collection($absents['data']??[])
         ->filter(function (){})
         ->setTotalRecords($absents['record_data']??0)
-        ->setFilteredRecords($absents['record_data']??0)
+        ->setFilteredRecords($absents['total_filtered']??0)
         ->skipPaging()
         ->editColumn('date', function ($presensi) {
             return [

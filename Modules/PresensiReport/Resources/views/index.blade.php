@@ -209,7 +209,8 @@
     <script>
     $.extend($.fn.dataTable.defaults, {
         language: {
-            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+            url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json",
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
         }
     });
     $('#table').DataTable({

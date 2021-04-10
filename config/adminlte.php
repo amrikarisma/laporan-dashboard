@@ -238,8 +238,8 @@ return [
         [
             'text'        => 'Dashboard',
             'url'         => '/',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            'icon'        => 'fas fa-fw fa-home',
+            // 'label'       => 4,
             'label_color' => 'success',
         ],
         [
@@ -255,37 +255,44 @@ return [
                 [
                     'text' => 'Laporan Presensi',
                     'url'  => '/laporan-presensi',
+                    'icon'  => 'fas fa-fw fa-calendar-check',
                 ],
                 [
                     'text' => 'Laporan Kunjungan',
                     'url'  => '/laporan-kunjungan',
+                    'icon'  => 'fas fa-fw fa-street-view',
                 ],
                 [
                     'text' => 'Laporan Kegiatan',
                     'url'  => '/laporan-kegiatan',
+                    'icon'  => 'fas fa-fw fa-hands-helping',
                 ],
                 [
                     'text' => 'GPS aktif',
                     'url'  => '/laporan-gps',
+                    'icon'  => 'fas fa-fw fa-map-marker-alt',
                 ],
             ],
         ],
         [
             'text'        => 'Indikator',
             'url'         => '/indikator',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-tachometer-alt',
             'submenu' => [
                 [
                     'text' => 'Akurasi Kedisiplinan',
                     'url'  => '/indikator/kedisiplinan',
+                    'icon' => 'fas fa-fw fa-balance-scale',
                 ],
                 [
                     'text' => 'Akurasi Lokasi',
                     'url'  => '/indikator/akurasi-lokasi',
+                    'icon'  => 'fas fa-fw fa-map-marked-alt',
                 ],
                 [
                     'text' => 'Akurasi Bobot Kegiatan',
                     'url'  => '/indikator/bobot-kegiatan',
+                    'icon' => 'fas fa-fw fa-tasks',
                 ],
             ]
         ],
@@ -293,44 +300,44 @@ return [
         [
             'text'        => 'Unit Cabang',
             'url'         => '/unit-cabang',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'far fa-fw fa-building',
         ],
         [
             'text'        => 'Divisi',
             'url'         => '/divisi',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'far fa-fw fa-id-badge',
         ],
         [
             'text'        => 'Jabatan',
             'url'         => '/jabatan',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-user-tie',
         ],
         [
             'text'        => 'Data Pegawai dan Anggota',
             'url'         => '/anggota',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-users',
         ],
         [
             'text'        => 'Kategori Presensi',
             'url'         => '/kategori-presensi',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'far fa-fw fa-calendar-alt',
         ],
         [
             'text'        => 'Kategori Laporan',
             'url'         => '/kategori-laporan',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'far fa-fw fa-calendar-check',
         ],
         ['header' => 'INFORMASI'],
         [
             'text'        => 'Broadcast Pengumuman',
             'url'         => '/broadcast',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-bullhorn',
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'url'  => 'settings',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-user-cog',
         ],
         // [
         //     'text' => 'change_password',
