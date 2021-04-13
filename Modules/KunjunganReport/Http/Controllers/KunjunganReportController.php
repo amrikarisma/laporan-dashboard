@@ -16,9 +16,9 @@ class KunjunganReportController extends Controller
     public function ajaxlist(Request $request)
     {
         $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start_date.'&end='.$request->end_date.'&' : '';
-        $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
-        $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
         $kunjungans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
         return DataTables::of($kunjungans)
@@ -55,15 +55,15 @@ class KunjunganReportController extends Controller
     public function index(Request $request)
     {
         // return $request;
-        $filterDate     = ($request->start && $request->end) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
-        $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
-        $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDate     = (!empty($request->start) && !empty($request->end)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
         $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
         $kunjungans = MyHelper::apiGet('laporan?'.$param_url)??[];
         session()->put('kunjungan_param', $param_url);
-
+        // dd(session('kunjungan_param'));
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];

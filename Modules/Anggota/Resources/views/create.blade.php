@@ -177,6 +177,7 @@
                 reader.readAsDataURL(this.files[0]); 
 
             });
+            moment.locale('id');
             $('input[name="birthday"], input[name="join_date"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,

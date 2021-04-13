@@ -17,9 +17,9 @@ class KegiatanReportController extends Controller
     public function ajaxlist(Request $request)
     {
         $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start_date.'&end='.$request->end_date.'&' : '';
-        $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
-        $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
         $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
         return DataTables::of($kegiatans)
@@ -40,10 +40,10 @@ class KegiatanReportController extends Controller
      */
     public function index(Request $request)
     {
-        $filterDate     = ($request->start && $request->end) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
-        $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
-        $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterCabang  = ($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
+        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
 
         $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
         $kegiatans = MyHelper::apiGet('laporan?'.$param_url)??[];
