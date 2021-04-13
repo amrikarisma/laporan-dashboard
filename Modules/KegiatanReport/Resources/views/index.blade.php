@@ -166,7 +166,7 @@
     }
 
     $(function() {
-
+        moment.locale('id');
         var start = $('[name=start]').val() != '' ? moment($('[name=start]').val()) : moment().startOf('month');
         var end = $('[name=end]').val() != '' ? moment($('[name=end]').val()) : moment().endOf('month');
 
@@ -180,12 +180,15 @@
             startDate: start,
             endDate: end,
             ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'Hari ini': [moment(), moment()],
+            'Kamrin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '7 Hari terakhir': [moment().subtract(6, 'days'), moment()],
+            '30 hari terakhir': [moment().subtract(29, 'days'), moment()],
+            'Bulan ini': [moment().startOf('month'), moment().endOf('month')],
+            'Bulan sebelumnya': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            locale: {
+                customRangeLabel : "Pilih Manual"
             }
         }, cb);
 

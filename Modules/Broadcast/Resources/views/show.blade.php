@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Tujuan' }}</td>
-                            <td>{{  $broadcast['target_send']??'' }}</td>
+                            <td>{{  $broadcast['target_send']['name']??'' }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Status' }}</td>

@@ -148,7 +148,7 @@ class AnggotaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
         ]);
