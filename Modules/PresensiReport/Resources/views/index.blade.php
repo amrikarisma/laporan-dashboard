@@ -106,7 +106,7 @@
 
                             {{-- @foreach ($absents['data'] as $absent)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($absent['date'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td><a href="{{ route('laporan.presensi.show', $absent['user']['anggota']['id']) }}">{{ $absent['user']['name']??'' }}</a></td>
                                 <td>{{ $absent['time_in']??'' }}</td>
                                 <td>{{ $absent['time_out']??'' }}</td>

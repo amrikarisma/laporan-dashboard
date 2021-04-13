@@ -11,7 +11,7 @@
                 <tbody>
                     <tr>
                         <td>{{ 'Tanggal' }}</td>
-                        <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                     </tr>
                     <tr>
                         <td>{{ 'Nama' }}</td>

@@ -42,7 +42,7 @@
                 <tbody>
                     {{-- @foreach ($absents as $absent)
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($absent['date'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                         <td>{{ $absent['user']['name']??'' }}</td>
                         <td>{{ $absent['time_in']??'' }}</td>
                         <td>{{ $absent['time_out']??'' }}</td>

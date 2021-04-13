@@ -92,7 +92,7 @@ class KunjunganReportController extends Controller
     {
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
-        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
+        $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
         return (new KunjugnanExport)->download('laporan-kunjungan-'.$date.'-'.$cabang.'.xlsx');
     }
 }

@@ -22,7 +22,7 @@
                 <td>{{ $laporan['gps_activity']??'' }}</td>
                 <td>{{ $laporan['score']??'' }}</td>
                 <td>{{ $laporan['score_text']??'' }}</td>
-                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('D MMMM Y') }}</td>
             </tr>
         @endforeach
         </tbody>
@@ -61,7 +61,7 @@
                 <td>
                 </td>
                 <td>
-                    Jakarta, {{ \Carbon\Carbon::now()->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}
+                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}
                 </td>
             </tr>
             <tr>

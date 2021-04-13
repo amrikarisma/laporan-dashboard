@@ -89,7 +89,7 @@
                                 <td>{{ strip_tags(Str::limit($kunjungan['laporan_description'],20) ) }}</td>
                                 <td>{{ $kunjungan['laporan_geolocation'] }}</td>
                                 <td>{{ $kunjungan['laporan_performance'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $kunjungan['user']['name'] }}</td>
                                 <td>
                                     <a class="btn btn-primary"
