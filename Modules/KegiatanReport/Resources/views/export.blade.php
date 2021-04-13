@@ -19,7 +19,7 @@
         @foreach($laporans as $laporan)
             <tr>
                 <td>{{ $loop->iteration}}</td>
-                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('D MMMM Y') }}</td>
                 <td>{{ $laporan['laporan_title']??'' }}</td>
                 <td>{{ $laporan['category']['name']??'Tidak ada kategori' }}</td>
                 <td>{{ $laporan['laporan_location']??'' }}</td>
@@ -65,7 +65,7 @@
                 <td>
                 </td>
                 <td colspan="2">
-                    Jakarta, {{ \Carbon\Carbon::now()->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}
+                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}
                 </td>
             </tr>
             <tr>

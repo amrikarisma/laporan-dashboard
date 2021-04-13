@@ -79,7 +79,7 @@
                             </tr> --}}
                             {{-- @foreach ($gpsReport as $gps)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($gps['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($gps['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $gps['name']??'' }}</td>
                                 <td><a href="{{ route('history.index') }}">{{ $gps['gps_activity']??0 }}</a></td>
                                 <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>

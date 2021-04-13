@@ -33,7 +33,7 @@ class PresensiReportController extends Controller
         ->skipPaging()
         ->editColumn('date', function ($presensi) {
             return [
-               'display' => !empty($presensi['date']) ? Carbon::parse($presensi['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y') : '',
+               'display' => !empty($presensi['date']) ? Carbon::parse($presensi['date'])->isoFormat('dddd, D MMMM Y') : '',
                'timestamp' => !empty($presensi['date']) ? Carbon::parse($presensi['date'])->timestamp : ''
             ];
          })
@@ -90,7 +90,7 @@ class PresensiReportController extends Controller
     {
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
-        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
+        $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
         return (new PresensiExport)->download('laporan-presensi-'.$date.'-'.$cabang.'.xlsx');
     }
 }

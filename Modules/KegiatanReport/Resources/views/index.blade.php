@@ -97,7 +97,7 @@
                                 <td>{{ $kegiatan['laporan_location']??'' }}</td>
                                 <td><a id="{{$loop->index}}" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_geolocation']??'' }}</a></td>
                                 <td>{{ $kegiatan['laporan_performance']??'' }}</td>
-                                <td>{{ $kegiatan['created_at'] ? \Carbon\Carbon::parse($kegiatan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' : ''}}</td>
+                                <td>{{ $kegiatan['created_at'] ? \Carbon\Carbon::parse($kegiatan['created_at'])->isoFormat('dddd, D MMMM Y')??'' : ''}}</td>
                                 <td>{{ $kegiatan['user']['name']??'' }}</td>
                                 <td>{{ $kegiatan['status']??''}}</td>
                                 <td>

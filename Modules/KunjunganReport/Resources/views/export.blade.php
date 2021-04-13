@@ -23,7 +23,7 @@
                 <td>{{ $laporan['laporan_location']??'' }}</td>
                 <td>{{ !empty($laporan['laporan_address_geo']) ? $laporan['laporan_address_geo'] : ($laporan['laporan_geolocation']??'') }}</td>
                 <td>{{ $laporan['laporan_geolocation']??'' }}</td>
-                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('D MMMM Y') }}</td>
                 <td>{{ $laporan['user']['name']??'' }}</td>
             </tr>
         @endforeach
@@ -63,7 +63,7 @@
                 <td>
                 </td>
                 <td>
-                    Jakarta, {{ \Carbon\Carbon::now()->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}
+                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}
                 </td>
             </tr>
             <tr>

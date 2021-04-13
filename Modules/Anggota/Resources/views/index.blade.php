@@ -53,7 +53,7 @@
                         <td>{{ $anggota['jabatan']['name'] }}</td>
                         <td>{{ $anggota['divisi']['name'] }}</td>
                         <td>{{ $anggota['cabang']['name'] }}</td>
-                        <td>{{ \Carbon\Carbon::parse($anggota['join_date'])->locale('id_ID')->isoFormat('D MMMM Y')??'' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($anggota['join_date'])->isoFormat('D MMMM Y')??'' }}</td>
                         <td>{{ $anggota['sk_pengangkatan'] }}</td>
                         <td>{{ $anggota['nik'] }}</td>
                         <td>

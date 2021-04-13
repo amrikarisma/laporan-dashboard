@@ -18,7 +18,7 @@ class BroadcastController extends Controller
         return DataTables::of($broadcasts)
         ->editColumn('created_at', function ($broadcast) {
             return [
-               'display' => !empty($broadcast['created_at']) ? Carbon::parse($broadcast['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y') : '',
+               'display' => !empty($broadcast['created_at']) ? Carbon::parse($broadcast['created_at'])->isoFormat('dddd, D MMMM Y') : '',
                'timestamp' => !empty($broadcast['created_at']) ? Carbon::parse($broadcast['created_at'])->timestamp : ''
             ];
          })
