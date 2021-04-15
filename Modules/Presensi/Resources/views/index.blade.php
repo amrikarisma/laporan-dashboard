@@ -76,6 +76,9 @@
     $('#table').DataTable({
         processing: true,
         serverSide: true,
+        scrollCollapse:true,
+        scrollY:500,
+        scrollX:true,
         ajax: `{{ route('presensi.ajaxlist') }}`,
         columns: [
         { data: 'date' },
