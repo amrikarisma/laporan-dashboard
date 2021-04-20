@@ -40,7 +40,7 @@ class KegiatanReportController extends Controller
      */
     public function index(Request $request)
     {
-        $filterDate     = (!empty($request->start_date) && !empty($request->end_date)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterDate     = (!empty($request->start) && !empty($request->start)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
         $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
@@ -131,6 +131,8 @@ class KegiatanReportController extends Controller
     }
     public function downloadExcel(Request $request)
     {
+        // return env('STORAGE_PATH').'/0FSqs0Ci4CCkEYpWauFieTV1FrACyCQT2GZ0cjVD.jpg';
+        // dd(file_exists(env('STORAGE_PATH').'/0FSqs0Ci4CCkEYpWauFieTV1FrACyCQT2GZ0cjVD.jpg' ) );
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
         $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');

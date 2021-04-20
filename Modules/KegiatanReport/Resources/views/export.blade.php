@@ -12,10 +12,15 @@
             <th><strong>Lokasi</strong></th>
             <th><strong>Pengirim</strong></th>
             <th><strong>Penanganan</strong></th>
+            <th><strong>Foto 1</strong></th>
+            <th><strong>Foto 2</strong></th>
+            <th><strong>Foto 3</strong></th>
+            <th><strong>Foto 4</strong></th>
+            <th><strong>Foto 5</strong></th>
         </tr>
         </thead>
         <tbody>
-    
+            
         @foreach($laporans as $laporan)
             <tr>
                 <td>{{ $loop->iteration}}</td>
@@ -25,6 +30,12 @@
                 <td>{{ $laporan['laporan_location']??'' }}</td>
                 <td>{{ $laporan['user']['name']??'' }}</td>
                 <td>{{ $laporan['penanganan']??'' }}</td>
+                @if (isset($laporan['image']))
+                    @foreach ($laporan['image'] as $image)
+                        <td><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$image['path'] }}" alt=""></td>
+                    @endforeach
+                @endif
+
             </tr>
         @endforeach
         </tbody>
