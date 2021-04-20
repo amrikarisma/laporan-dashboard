@@ -28,6 +28,7 @@ class KegiatanReportController extends Controller
         ->editColumn('laporan_geolocation', "kegiatanreport::index.geolocation") 
         ->editColumn('created_at', "kegiatanreport::index.date") 
         ->editColumn('laporan_description', "kegiatanreport::index.laporan_description") 
+        ->editColumn('recommendation', "kegiatanreport::index.recommendation") 
         ->editColumn('laporan_performance.persentase', "kegiatanreport::index.performance") 
         ->editColumn('status', "kegiatanreport::index.status") 
         ->addColumn('actions', "kegiatanreport::index.action") 
