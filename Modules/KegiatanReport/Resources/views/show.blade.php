@@ -27,11 +27,11 @@
                             <td>{{ 'Judul' }}</td>
                             <td>{{ $kegiatan['laporan_title']??'' }}</td>
                         </tr>
-                        <tr>
+                        <tr style="white-space: pre-line;">
                             <td>{{ 'Deskripsi' }}</td>
                             <td>{!! $kegiatan['laporan_description']??'' !!}</td>
                         </tr>
-                        <tr>
+                        <tr style="white-space: pre-line;">
                             <td>{{ 'Rekomendasi' }}</td>
                             <td>{!! $kegiatan['recommendation']??'' !!}</td>
                         </tr>
