@@ -65,6 +65,9 @@
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
+                                    {{ _('Rekomendasi')}}
+                                </th>
+                                <th>
                                     {{ _('Lokasi Laporan')}}
                                 </th>
                                 <th>
@@ -232,6 +235,7 @@
         { data: 'laporan_title' },
         { data: 'category.name' },
         { data: 'laporan_description' },
+        { data: 'recommendation' },
         { data: 'laporan_location' },
         { data: 'laporan_geolocation' },
         { data: 'laporan_performance.persentase'},

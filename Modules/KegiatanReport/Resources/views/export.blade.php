@@ -1,41 +1,49 @@
 <html>
+    <head>
+        <style>
+             td {
+                display: table-cell;
+                vertical-align: middle;
+                height: 100%;
+             }
+        </style>
+    </head>
     <table class="table-responsive" width="100%">
         <thead>
         <tr>
-            <th colspan="6" style="font-size: 16px; font-weight:bold;text-align:center">FORMAT LAPORAN FKDM</th>
+            <th colspan="10" style="font-size: 16px; font-weight:bold;text-align:center">FORMAT LAPORAN FKDM</th>
         </tr>
         <tr>
             <th><strong>No.</strong></th>
             <th><strong>Tanggal</strong></th>
+            <th><strong>Foto</strong></th>
             <th><strong>Judul</strong></th>
             <th><strong>Kategori</strong></th>
+            <th><strong>Deskripsi</strong></th>
+            <th><strong>Rekomendasi</strong></th>
             <th><strong>Lokasi</strong></th>
             <th><strong>Pengirim</strong></th>
             <th><strong>Penanganan</strong></th>
-            <th><strong>Foto 1</strong></th>
-            <th><strong>Foto 2</strong></th>
-            <th><strong>Foto 3</strong></th>
-            <th><strong>Foto 4</strong></th>
-            <th><strong>Foto 5</strong></th>
         </tr>
         </thead>
         <tbody>
             
         @foreach($laporans as $laporan)
             <tr>
-                <td>{{ $loop->iteration}}</td>
-                <td>{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('D MMMM Y') }}</td>
-                <td>{{ $laporan['laporan_title']??'' }}</td>
-                <td>{{ $laporan['category']['name']??'Tidak ada kategori' }}</td>
-                <td>{{ $laporan['laporan_location']??'' }}</td>
-                <td>{{ $laporan['user']['name']??'' }}</td>
-                <td>{{ $laporan['penanganan']??'' }}</td>
-                @if (isset($laporan['image']))
-                    @foreach ($laporan['image'] as $image)
-                        <td><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$image['path'] }}" alt=""></td>
-                    @endforeach
+                <td align="center" valign="center">{{ $loop->iteration}}</td>
+                <td align="center" valign="center">{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('D MMMM Y') }}</td>
+                @if (isset($laporan['image'][0]['path']))
+                    <td><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$laporan['image'][0]['path'] }}" alt=""></td>
+                @else
+                <td></td>
                 @endif
-
+                <td align="center" valign="center">{{ $laporan['laporan_title']??'' }}</td>
+                <td align="center" valign="center">{{ $laporan['category']['name']??'Tidak ada kategori' }}</td>
+                <td align="center" valign="center" style="table-layout: auto;width:60px;word-wrap:break-word;">{{ $laporan['laporan_description']??'' }}</td>
+                <td align="center" valign="center">{{ $laporan['recommendation']??'' }}</td>
+                <td align="center" valign="center">{{ $laporan['laporan_location']??'' }}</td>
+                <td align="center" valign="center">{{ $laporan['user']['name']??'' }}</td>
+                <td align="center" valign="center">{{ $laporan['penanganan']??'' }}</td>
             </tr>
         @endforeach
         </tbody>

@@ -32,6 +32,10 @@
                             <td>{!! $kegiatan['laporan_description']??'' !!}</td>
                         </tr>
                         <tr>
+                            <td>{{ 'Rekomendasi' }}</td>
+                            <td>{!! $kegiatan['recommendation']??'' !!}</td>
+                        </tr>
+                        <tr>
                             <td>{{ 'Lokasi Laporan' }}</td>
                             <td>{{ $kegiatan['laporan_location']??'' }}</td>
                         </tr>
