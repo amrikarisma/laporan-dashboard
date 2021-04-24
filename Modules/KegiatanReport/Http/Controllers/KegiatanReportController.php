@@ -23,10 +23,15 @@ class KegiatanReportController extends Controller
 
         $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
         return DataTables::of($kegiatans)
+        ->editColumn('created_at', function ($kegiatans) {
+            return [
+               'display' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->isoFormat('dddd, D MMMM Y') : '',
+               'timestamp' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->timestamp : ''
+            ];
+         })
         ->editColumn('user.name', "kegiatanreport::index.name") 
         ->editColumn('category.name', "kegiatanreport::index.category") 
         ->editColumn('laporan_geolocation', "kegiatanreport::index.geolocation") 
-        ->editColumn('created_at', "kegiatanreport::index.date") 
         ->editColumn('laporan_description', "kegiatanreport::index.laporan_description") 
         ->editColumn('recommendation', "kegiatanreport::index.recommendation") 
         ->editColumn('laporan_performance.persentase', "kegiatanreport::index.performance") 

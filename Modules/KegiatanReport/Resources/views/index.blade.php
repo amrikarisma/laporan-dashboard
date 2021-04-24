@@ -56,6 +56,9 @@
                         <thead>
                             <tr>
                                 <th>
+                                    {{ _('Tanggal')}}
+                                </th>
+                                <th>
                                     {{ _('Judul')}}
                                 </th>
                                 <th>
@@ -76,9 +79,7 @@
                                 <th>
                                     {{ _('Performa (Jumlah laporan)')}}
                                 </th>
-                                <th>
-                                    {{ _('Tanggal Laporan')}}
-                                </th>
+
                                 <th>
                                     {{ _('Pengirim')}}
                                 </th>
@@ -223,14 +224,14 @@
         },
         order: [[ 0, "desc" ]],
         columns: [
-        // { 
-        //     data: {
-        //           _: 'date.display',
-        //           sort: 'date.timestamp'
-        //        },
-        //     name: 'date.timestamp',
+        { 
+            data: {
+                  _: 'created_at.display',
+                  sort: 'created_at.timestamp'
+               },
+            name: 'created_at.timestamp',
 
-        // },
+        },
         // { data: 'date' },
         { data: 'laporan_title' },
         { data: 'category.name' },
@@ -239,7 +240,7 @@
         { data: 'laporan_location' },
         { data: 'laporan_geolocation' },
         { data: 'laporan_performance.persentase'},
-        { data: 'created_at'},
+        // { data: 'created_at'},
         { data: 'user.name'},
         { data: 'status'},
         { data: 'actions'},
