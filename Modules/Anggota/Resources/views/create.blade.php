@@ -139,6 +139,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        {!! Form::label('phone', 'No. Telepon',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::tel('phone', old('phone'), array( 'class' => 'form-control', 'placeholder' => 'No. Telepon') ) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
                             {!! Form::select('role', $roles, old('role'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang', 'required') ) !!}
