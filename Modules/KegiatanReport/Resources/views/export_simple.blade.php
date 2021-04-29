@@ -52,22 +52,22 @@
                 </td>
                 <td>
                 </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
                 <td>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
                 <td>
                 </td>
                 <td>
@@ -77,12 +77,10 @@
                 <td>
                 </td>
                 <td colspan="2">
-                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}
+                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y') }}
                 </td>
             </tr>
             <tr>
-                <td>
-                </td>
                 <td>
                 </td>
                 <td>
@@ -104,8 +102,6 @@
                 </td>
                 <td>
                 </td>
-                <td>
-                </td>
                 <td colspan="2">
                     {{ $anggota['anggota']['cabang']['name']??'' }}
                 </td>
@@ -119,15 +115,11 @@
                 </td>
                 <td>
                 </td>
-                <td>
-                </td>
                 <td colspan="2" style="height: 100px">
                     Tanda Tangan
                 </td>
             </tr>
             <tr>
-                <td>
-                </td>
                 <td>
                 </td>
                 <td>

@@ -84,7 +84,7 @@
                 <td>
                 </td>
                 <td colspan="2">
-                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}
+                    Jakarta, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y') }}
                 </td>
             </tr>
             <tr>
