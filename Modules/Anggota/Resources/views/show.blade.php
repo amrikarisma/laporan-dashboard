@@ -46,6 +46,14 @@
                             <td>{{ 'Status Pernikahan' }}</td>
                             <td>{{ $anggota['user']['userdata']['marriage']??'' }}</td>
                         </tr>
+                        <tr>
+                            <td>{{ 'Email' }}</td>
+                            <td>{{ $anggota['user']['email']??'' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'No. Telepon' }}</td>
+                            <td>{{ $anggota['user']['userdata']['phone']??'' }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

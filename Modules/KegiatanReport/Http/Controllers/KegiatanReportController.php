@@ -32,13 +32,13 @@ class KegiatanReportController extends Controller
          })
         ->editColumn('user.name', "kegiatanreport::index.name") 
         ->editColumn('category.name', "kegiatanreport::index.category") 
-        ->editColumn('laporan_geolocation', "kegiatanreport::index.geolocation") 
+        ->editColumn('laporan_address_geo', "kegiatanreport::index.laporan_address_geo") 
         ->editColumn('laporan_description', "kegiatanreport::index.laporan_description") 
         ->editColumn('recommendation', "kegiatanreport::index.recommendation") 
         ->editColumn('laporan_performance.persentase', "kegiatanreport::index.performance") 
         ->editColumn('status', "kegiatanreport::index.status") 
         ->addColumn('actions', "kegiatanreport::index.action") 
-        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_geolocation','laporan_performance.persentase','status'])
+        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_address_geo','laporan_performance.persentase','status'])
         ->make();
     }
     /**
