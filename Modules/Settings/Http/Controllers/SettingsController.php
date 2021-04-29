@@ -22,6 +22,7 @@ class SettingsController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
         $roles = MyHelper::apiGet('role')['data'] ?? [];
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
+
         if(!$profile['anggota']) {
             return redirect()->route('dashboard')->with('error', 'Anda tidak punya akses. Silahkan hubungi Administrator.');
         }

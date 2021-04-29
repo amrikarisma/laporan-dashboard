@@ -117,9 +117,12 @@
     </div>
 
 @endsection
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+@section('plugins.Charts', true)
+@section('plugins.Select2', true)
 @section('css')
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     .select2-container .select2-selection--single {
         height: calc(2.25rem + 2px);
@@ -128,10 +131,6 @@
 </style>
 @endsection
 @section('js')
-@section('plugins.Momentjs', true)
-@section('plugins.Daterangepicker', true)
-@section('plugins.Charts', true)
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript"> 
     $('.select2').select2();

@@ -28,12 +28,17 @@ class CabangController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cabangs = MyHelper::apiRequest('get', 'cabang')['data']??[];
-        // $cabangs = MyHelper::apiRequest('get', 'cabang');
-        // return $cabangs;
-        return view('cabang::index', compact('cabangs'));
+
+        $param = [
+            'filter_cabang' => $request->cabang
+        ];
+        $cabangs = MyHelper::apiRequest('get', 'cabang', $param)['data']??[];
+        
+        $cabang = MyHelper::apiRequest('get','cabang?pluck=1')['data'] ?? [];
+
+        return view('cabang::index', compact('cabangs','cabang', 'request'));
     }
 
     /**
@@ -43,7 +48,7 @@ class CabangController extends Controller
     public function create()
     {
         $avail = [
-            'current' => isset($cabang['anggota']['id']) ? $cabang['anggota']['id'] : '',
+            'current' => '',
         ];
 
         $anggotas = MyHelper::apiRequest('post', 'cabang/anggota-available/', $avail)['data']??[];
@@ -71,10 +76,8 @@ class CabangController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         
-        if ($request->hasFile('cabang_photo')) {
-            if ($request->file('cabang_photo')->isValid()) {
-                $input['cabang_photo'] = $request->cabang_photo;
-            }
+        if ($request->hasFile('cabang_photo') && $request->file('cabang_photo')->isValid()) {
+            $input['cabang_photo'] = $request->cabang_photo;
         }
 
         $input = [
@@ -102,7 +105,7 @@ class CabangController extends Controller
     public function show($id)
     {
         $cabang = MyHelper::apiRequest('get', 'cabang/'.$id)['data']??[];
-        // return $cabang;
+
         return view('cabang::show', compact('cabang'));
     }
 
@@ -174,7 +177,7 @@ class CabangController extends Controller
     public function destroy($id)
     {
         $cabang = MyHelper::apiRequest('delete', 'cabang/' . $id) ?? [];
-        // return $cabang;
+
         if($cabang['status'] == 'failed') {
             return redirect()->route('cabang.index')->with('error', $cabang['message']);
         }
