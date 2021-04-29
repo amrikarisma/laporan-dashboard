@@ -32,7 +32,10 @@
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
                     <div class="col-md-auto">
-                        <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Laporan</a>
+                        <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Semua</a>
+                    </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.kegiatan.export') .'?simple=1' }}" class="btn btn-success">Export Simple</a>
                     </div>
                 </div>
             </form>

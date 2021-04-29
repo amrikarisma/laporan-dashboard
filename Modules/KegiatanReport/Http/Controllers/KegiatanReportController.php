@@ -3,6 +3,7 @@
 namespace Modules\KegiatanReport\Http\Controllers;
 
 use App\Exports\LaporanExport;
+use App\Exports\LaporanSimpleExport;
 use App\Lib\MyHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
@@ -132,17 +133,20 @@ class KegiatanReportController extends Controller
         if(isset($kegiatan['status']) && $kegiatan['status'] == 'success'){
             return redirect()->route('laporan.kegiatan.index')->with('message', $kegiatan['message']);
         }
-        // return $kegiatan;
+
         return redirect()->back()->withErrors($kegiatan['error'])->withInput();
     }
     public function downloadExcel(Request $request)
     {
-        // return env('STORAGE_PATH').'/0FSqs0Ci4CCkEYpWauFieTV1FrACyCQT2GZ0cjVD.jpg';
-        // dd(file_exists(env('STORAGE_PATH').'/0FSqs0Ci4CCkEYpWauFieTV1FrACyCQT2GZ0cjVD.jpg' ) );
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
         $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
-        return (new LaporanExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'.xlsx');
+
+        if(!empty($request->simple) && $request->simple == "1") {
+            return (new LaporanSimpleExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'-simple.xlsx');
+        } else {
+            return (new LaporanExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'.xlsx');
+        }
     }
 
     /**
