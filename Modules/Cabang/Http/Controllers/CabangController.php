@@ -32,13 +32,14 @@ class CabangController extends Controller
     {
 
         $param = [
-            'filter_cabang' => $request->cabang
+            'filter_cabang' => $request->cabang,
+            'filter_branch' => $request->branch
         ];
         $cabangs = MyHelper::apiRequest('get', 'cabang', $param)['data']??[];
-        
+        $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
         $cabang = MyHelper::apiRequest('get','cabang?pluck=1')['data'] ?? [];
 
-        return view('cabang::index', compact('cabangs','cabang', 'request'));
+        return view('cabang::index', compact('cabangs','cabang', 'branch','request'));
     }
 
     /**

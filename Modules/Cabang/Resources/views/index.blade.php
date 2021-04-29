@@ -9,8 +9,11 @@
             <form action="" method="GET" class="form-horizontal">
                 {{-- @csrf --}}
                 <div class="form-group row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                    </div>
+                    <div class="col-md-3">
+                        {!! Form::select('branch', $branch, $request->branch??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Tingkat')) !!}
                     </div>
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
