@@ -88,3 +88,14 @@
     </div>
 </form>
 @endsection
+
+@section('plugins.Select2', true)
+
+@section('css')
+
+@endsection
+@section('js')
+    <script>
+        $('.select2').select2();
+    </script>
+@endsection

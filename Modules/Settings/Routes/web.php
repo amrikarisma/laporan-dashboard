@@ -12,8 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Route;
-
-Route::prefix('settings')->group(function() {
+Route::prefix('settings')->middleware('validate_session')->group(function () {
     Route::get('/', 'SettingsController@index')->name('settings.index');
     Route::post('/{id}', 'SettingsController@update')->name('settings.update');
 });

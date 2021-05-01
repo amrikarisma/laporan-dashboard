@@ -63,8 +63,14 @@
     </div>
     {!! Form::close() !!}
 @endsection
+@section('plugins.Select2', true)
+
+@section('css')
+
+@endsection
 @section('js')
     <script>
+        $('.select2').select2();
         $('#cabang_photo').on('change', function () {
             let reader = new FileReader();
             console.log(reader);

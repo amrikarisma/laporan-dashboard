@@ -137,6 +137,12 @@
                             {!! Form::email('email', $anggota['user']['email']??'', array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
                         </div>
                     </div>
+                    <div class="form-group row">
+                        {!! Form::label('phone', 'No. Telepon',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::tel('phone', $anggota['user']['userdata']['phone']??'', array( 'class' => 'form-control', 'placeholder' => 'No. Telepon') ) !!}
+                        </div>
+                    </div>
                     @if ($superadmin)
                         <div class="form-group row">
                             {!! Form::label('password', 'Ganti Password',  array( 'class' => 'col-sm-3 col-form-label') ) !!}

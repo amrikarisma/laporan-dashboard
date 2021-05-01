@@ -22,6 +22,7 @@ class SettingsController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
         $roles = MyHelper::apiGet('role')['data'] ?? [];
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
+
         if(!$profile['anggota']) {
             return redirect()->route('dashboard')->with('error', 'Anda tidak punya akses. Silahkan hubungi Administrator.');
         }
@@ -41,11 +42,13 @@ class SettingsController extends Controller
             'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
+            'phone' => ['nullable', 'regex:/(0)[0-9]/','not_regex:/[a-z]/','min:9','max:15']
         ]);
         
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
+        // return $request;
         $checkAnggota = MyHelper::apiGet('anggota/'.$id)['data']??[];
 
         if(!$checkAnggota) {
@@ -56,7 +59,7 @@ class SettingsController extends Controller
             'first_name'        => $request->first_name,
             'last_name'         => $request->last_name,
             'email'             => $request->email,
-            'password'          => 'harusdiganti',
+            'phone'             => $request->phone,
             'roles'             => $request->role,
             'nick_name'         => $request->nick_name,
             'place_of_birth'    => $request->place_of_birth,
@@ -75,12 +78,15 @@ class SettingsController extends Controller
             'sk_pengangkatan'   => $request->sk_pengangkatan,
             'nik'               => $request->nik,
         ];
+
         if(isset($request->profile_photo) && !empty($request->profile_photo)) {
             $anggota['profile_photo'] = $request->profile_photo;
         }
+
         if($request->password && !empty($request->password)) {
             $anggota['password']    = $request->password;
         }
+
         $newAnggota = MyHelper::apiPostWithFile('anggota/'.$id.'/update', $anggota, $request);
 
         if(isset($newAnggota['status']) ) {

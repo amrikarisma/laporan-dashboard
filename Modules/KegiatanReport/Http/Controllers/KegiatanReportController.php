@@ -3,6 +3,7 @@
 namespace Modules\KegiatanReport\Http\Controllers;
 
 use App\Exports\LaporanExport;
+use App\Exports\LaporanSimpleExport;
 use App\Lib\MyHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
@@ -20,24 +21,29 @@ class KegiatanReportController extends Controller
         $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : '';
+        $filterCategory  = !empty($request->category) ? 'category='.$request->category.'&' : '';
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
+        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$param_url)['data']??[];
+
         return DataTables::of($kegiatans)
         ->editColumn('created_at', function ($kegiatans) {
             return [
-               'display' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->isoFormat('dddd, D MMMM Y') : '',
+               'display' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->isoFormat('dddd, D MMMM Y / HH:mm') : '',
                'timestamp' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->timestamp : ''
             ];
          })
         ->editColumn('user.name', "kegiatanreport::index.name") 
         ->editColumn('category.name', "kegiatanreport::index.category") 
-        ->editColumn('laporan_geolocation', "kegiatanreport::index.geolocation") 
+        ->editColumn('laporan_address_geo', "kegiatanreport::index.laporan_address_geo") 
         ->editColumn('laporan_description', "kegiatanreport::index.laporan_description") 
         ->editColumn('recommendation', "kegiatanreport::index.recommendation") 
         ->editColumn('laporan_performance.persentase', "kegiatanreport::index.performance") 
         ->editColumn('status', "kegiatanreport::index.status") 
         ->addColumn('actions', "kegiatanreport::index.action") 
-        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_geolocation','laporan_performance.persentase','status'])
+        ->rawColumns(['actions','user.name','laporan_description','created_at','laporan_address_geo','laporan_performance.persentase','status'])
         ->make();
     }
     /**
@@ -46,12 +52,15 @@ class KegiatanReportController extends Controller
      */
     public function index(Request $request)
     {
-        $filterDate     = (!empty($request->start) && !empty($request->start)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
-        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
-        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDate     = (!empty($request->start) && !empty($request->end)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : ''; // Jabatan
+        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : ''; // Anggota
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : ''; //Cabang
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : ''; // Divisi
+        $filterCategory  = !empty($request->category) ? 'category='.$request->category.'&' : ''; // Category laporan
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
         $kegiatans = MyHelper::apiGet('laporan?'.$param_url)??[];
         session()->put('kegiatan_param', $param_url);
 
@@ -61,7 +70,13 @@ class KegiatanReportController extends Controller
 
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
 
-        return view('kegiatanreport::index', compact('kegiatans', 'cabang','anggota', 'jabatan', 'request'));
+        $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
+
+        $categories = MyHelper::apiGet('kategorilaporan?pluck=1')['data'] ?? [];
+
+        $branch = MyHelper::apiGet('cabang/branch?pluck=1')['data'] ?? [];
+
+        return view('kegiatanreport::index', compact('kegiatans', 'cabang','anggota', 'jabatan','divisi', 'categories','branch','request'));
     }
 
     /**
@@ -132,17 +147,20 @@ class KegiatanReportController extends Controller
         if(isset($kegiatan['status']) && $kegiatan['status'] == 'success'){
             return redirect()->route('laporan.kegiatan.index')->with('message', $kegiatan['message']);
         }
-        // return $kegiatan;
+
         return redirect()->back()->withErrors($kegiatan['error'])->withInput();
     }
     public function downloadExcel(Request $request)
     {
-        // return env('STORAGE_PATH').'/0FSqs0Ci4CCkEYpWauFieTV1FrACyCQT2GZ0cjVD.jpg';
-        // dd(file_exists(env('STORAGE_PATH').'/0FSqs0Ci4CCkEYpWauFieTV1FrACyCQT2GZ0cjVD.jpg' ) );
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
         $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
-        return (new LaporanExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'.xlsx');
+
+        if(!empty($request->simple) && $request->simple == "1") {
+            return (new LaporanSimpleExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'-simple.xlsx');
+        } else {
+            return (new LaporanExport)->download('laporan-kegiatan-'.$date.'-'.$cabang.'.xlsx');
+        }
     }
 
     /**

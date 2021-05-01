@@ -42,6 +42,6 @@ class HistoryController extends Controller
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
         $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
-        return (new GPSExport)->download('laporan-aktifitas-gps-'.$date.'-'.$cabang.'.xlsx');
+        return (new GPSExport)->download('laporan-aktivitas-gps-'.$date.'-'.$cabang.'.xlsx');
     }
 }

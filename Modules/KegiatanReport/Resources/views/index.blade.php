@@ -10,13 +10,13 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-2">
-                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                        {!! Form::select('divisi', $divisi, $request->divisi??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Divisi')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
+                        {!! Form::select('category', $categories, $request->category??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Kategori')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
+                        {!! Form::select('branch', $branch, $request->branch??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Level')) !!}
                     </div>
                     <div class="col-md-3">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
@@ -33,6 +33,9 @@
                     </div>
                     <div class="col-md-auto">
                         <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Laporan</a>
+                    </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.kegiatan.export') .'?simple=1' }}" class="btn btn-success">Export Resume</a>
                     </div>
                 </div>
             </form>
@@ -117,9 +120,12 @@
     </div>
 
 @endsection
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+@section('plugins.Charts', true)
+@section('plugins.Select2', true)
 @section('css')
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     .select2-container .select2-selection--single {
         height: calc(2.25rem + 2px);
@@ -128,10 +134,6 @@
 </style>
 @endsection
 @section('js')
-@section('plugins.Momentjs', true)
-@section('plugins.Daterangepicker', true)
-@section('plugins.Charts', true)
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript"> 
     $('.select2').select2();
@@ -219,7 +221,10 @@
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
                 "anggota": "{{ $request->input('anggota')??'' }}",
-                "cabang": "{{ $request->input('cabang')??'' }}"
+                "cabang": "{{ $request->input('cabang')??'' }}",
+                "divisi": "{{ $request->input('divisi')??'' }}",
+                "category": "{{ $request->input('category')??'' }}",
+                "branch": "{{ $request->input('branch')??'' }}",
             }
         },
         order: [[ 0, "desc" ]],
@@ -238,7 +243,7 @@
         { data: 'laporan_description' },
         { data: 'recommendation' },
         { data: 'laporan_location' },
-        { data: 'laporan_geolocation' },
+        { data: 'laporan_address_geo' },
         { data: 'laporan_performance.persentase'},
         // { data: 'created_at'},
         { data: 'user.name'},

@@ -65,9 +65,6 @@
                                     {{ _('Lokasi Manual')}}
                                 </th>
                                 <th>
-                                    {{ _('Alamat GPS')}}
-                                </th>
-                                <th>
                                     {{ _('Lokasi GPS')}}
                                 </th>
                                 <th>
@@ -82,21 +79,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($kunjungans['data']['data'] as $kunjungan)
-                            <tr>
-                                <td>{{ $kunjungan['laporan_title'] }}</td>
-                                <td>{{ $kunjungan['laporan_category'] }}</td>
-                                <td>{{ strip_tags(Str::limit($kunjungan['laporan_description'],20) ) }}</td>
-                                <td>{{ $kunjungan['laporan_geolocation'] }}</td>
-                                <td>{{ $kunjungan['laporan_performance'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($kunjungan['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
-                                <td>{{ $kunjungan['user']['name'] }}</td>
-                                <td>
-                                    <a class="btn btn-primary"
-                                    href="{{ route('laporan.kunjungan.show', $kunjungan['id']) }}">Detail</a>
-                                </td>
-                            </tr>
-                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -207,7 +189,10 @@
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
                 "anggota": "{{ $request->input('anggota')??'' }}",
-                "cabang": "{{ $request->input('cabang')??'' }}"
+                "cabang": "{{ $request->input('cabang')??'' }}",
+                "divisi": "{{ $request->input('divisi')??'' }}",
+                "category": "{{ $request->input('category')??'' }}",
+                "branch": "{{ $request->input('branch')??'' }}",
             }
         },
         order: [[ 0, "desc" ]],
@@ -252,7 +237,6 @@
         //     }, 
         // },
         { data: 'laporan_address_geo' },
-        { data: 'laporan_geolocation' },
         { data: 'created_at'},
         { data: 'user.name'},
         { data: 'actions'},

@@ -36,16 +36,12 @@
                             <td>{!! $kegiatan['recommendation']??'' !!}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'Lokasi Laporan' }}</td>
+                            <td>{{ 'Lokasi Laporan dari Anggota' }}</td>
                             <td>{{ $kegiatan['laporan_location']??'' }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'Alamat GPS' }}</td>
-                            <td>{{ $kegiatan['laporan_address_geo']??'' }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ 'Lokasi GPS' }}</td>
-                            <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kegiatan['laporan_geolocation']??'' }}">{{ $kegiatan['laporan_geolocation']??'' }}</a></td>
+                            <td>{{ 'Lokasi dari GPS' }}</td>
+                            <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kegiatan['laporan_geolocation']??'' }}">{{ $kegiatan['laporan_address_geo']??'' }}</a></td>
                         </tr>
                         <tr>
                             <td>{{ 'Performa' }}</td>

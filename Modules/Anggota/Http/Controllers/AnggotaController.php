@@ -57,6 +57,7 @@ class AnggotaController extends Controller
             'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg','max:2048'],
+            // 'phone' => ['nullable', 'numeric', 'min:8','max:15']
         ]);
         
         if ($validator->fails()) {
@@ -151,6 +152,7 @@ class AnggotaController extends Controller
             'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
+            // 'phone' => ['nullable', 'numeric', 'min:8','max:15']
         ]);
         
         if ($validator->fails()) {
