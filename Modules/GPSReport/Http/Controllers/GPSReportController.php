@@ -27,7 +27,8 @@ class GPSReportController extends Controller
                'timestamp' => Carbon::parse($laporanGPS['created_at'])->timestamp
             ];
          })
-         ->editColumn('user.name', "presensireport::index.name") 
+        ->editColumn('user.name', "gpsreport::index.name") 
+        ->editColumn('user.anggota.jabatan.name', "gpsreport::index.jabatan") 
         ->addColumn('actions', "kegiatanreport::index.action") 
         ->rawColumns(['actions','user.name'])
         ->make();
@@ -62,6 +63,6 @@ class GPSReportController extends Controller
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
         $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
-        return (new GPSExport)->download('laporan-aktifitas-gps-'.$date.'-'.$cabang.'.xlsx');
+        return (new GPSExport)->download('laporan-aktivitas-gps-'.$date.'-'.$cabang.'.xlsx');
     }
 }

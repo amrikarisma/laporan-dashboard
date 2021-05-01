@@ -11,39 +11,39 @@
     <table class="table-responsive" width="100%">
         <thead>
         <tr>
-            <th colspan="10" style="font-size: 16px; font-weight:bold;text-align:center">FORMAT LAPORAN FKDM</th>
+            <th align="center" valign="center"  colspan="10" style="font-size: 16px; font-weight:bold;text-align:center; height: 50px">LAPORAN FKDM</th>
         </tr>
         <tr>
-            <th><strong>No.</strong></th>
-            <th><strong>Tanggal</strong></th>
-            <th><strong>Foto</strong></th>
-            <th><strong>Judul</strong></th>
-            <th><strong>Kategori</strong></th>
-            <th><strong>Deskripsi</strong></th>
-            <th><strong>Rekomendasi</strong></th>
-            <th><strong>Lokasi</strong></th>
-            <th><strong>Pengirim</strong></th>
-            <th><strong>Penanganan</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>No.</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Hari/Tanggal/Jam</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Foto</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Judul</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Kategori</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Deskripsi</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Rekomendasi</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Lokasi</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Pengirim</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Penanganan</strong></th>
         </tr>
         </thead>
         <tbody>
             
         @foreach($laporans as $laporan)
             <tr>
-                <td align="center" valign="center">{{ $loop->iteration}}</td>
-                <td align="center" valign="center">{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('D MMMM Y') }}</td>
+                <td align="center" valign="center" style="border:1px solid black" >{{ $loop->iteration}}</td>
+                <td valign="center" style="border:1px solid black" >{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('dddd, D MMMM Y / HH:mm') }}</td>
                 @if (isset($laporan['image'][0]['path']))
-                    <td><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$laporan['image'][0]['path'] }}" alt=""></td>
+                    <td valign="center" style="border:1px solid black"><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$laporan['image'][0]['path'] }}" alt=""></td>
                 @else
                 <td></td>
                 @endif
-                <td align="center" valign="center">{{ $laporan['laporan_title']??'' }}</td>
-                <td align="center" valign="center">{{ $laporan['category']['name']??'Tidak ada kategori' }}</td>
-                <td align="center" valign="center" style="table-layout: auto;width:60px;word-wrap:break-word;">{{ $laporan['laporan_description']??'' }}</td>
-                <td align="center" valign="center">{{ $laporan['recommendation']??'' }}</td>
-                <td align="center" valign="center">{{ $laporan['laporan_location']??'' }}</td>
-                <td align="center" valign="center">{{ $laporan['user']['name']??'' }}</td>
-                <td align="center" valign="center">{{ $laporan['penanganan']??'' }}</td>
+                <td valign="center" style="border:1px solid black" >{{ $laporan['laporan_title']??'' }}</td>
+                <td valign="center" style="border:1px solid black" >{{ $laporan['category']['name']??'Tidak ada kategori' }}</td>
+                <td valign="center" style="border:1px solid black table-layout: auto;width:60px;word-wrap:break-word;">{{ $laporan['laporan_description']??'' }}</td>
+                <td valign="center" style="border:1px solid black" >{{ $laporan['recommendation']??'' }}</td>
+                <td valign="center" style="border:1px solid black;word-wrap:break-word;" >{{ $laporan['laporan_location']??'' }}</td>
+                <td valign="center" style="border:1px solid black" >{{ $laporan['user']['name']??'' }}</td>
+                <td valign="center" style="border:1px solid black" >{{ $laporan['penanganan']??'' }}</td>
             </tr>
         @endforeach
         </tbody>
@@ -83,7 +83,7 @@
                 </td>
                 <td>
                 </td>
-                <td colspan="2">
+                <td align="center" valign="center" colspan="2">
                     Jakarta, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y') }}
                 </td>
             </tr>
@@ -98,7 +98,7 @@
                 </td>
                 <td>
                 </td>
-                <td colspan="2">
+                <td align="center" valign="center" colspan="2">
                     Anggota FKDM
                 </td>
             </tr>
@@ -113,7 +113,7 @@
                 </td>
                 <td>
                 </td>
-                <td colspan="2">
+                <td align="center" valign="center" colspan="2">
                     {{ $anggota['anggota']['cabang']['name']??'' }}
                 </td>
             </tr>
@@ -128,8 +128,7 @@
                 </td>
                 <td>
                 </td>
-                <td colspan="2" style="height: 100px">
-                    Tanda Tangan
+                <td align="center" valign="center" colspan="2" style="height: 60px">
                 </td>
             </tr>
             <tr>
@@ -143,8 +142,8 @@
                 </td>
                 <td>
                 </td>
-                <td colspan="2">
-                    {{ $anggota['name']??''}}
+                <td align="center" valign="center" colspan="2">
+                    <strong>{{ $anggota['name']??''}}</strong>
                 </td>
             </tr>
         </tfoot>

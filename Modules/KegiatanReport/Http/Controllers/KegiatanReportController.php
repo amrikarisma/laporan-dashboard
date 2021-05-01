@@ -62,7 +62,6 @@ class KegiatanReportController extends Controller
 
         $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
         $kegiatans = MyHelper::apiGet('laporan?'.$param_url)??[];
-        // return $kegiatans;
         session()->put('kegiatan_param', $param_url);
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
