@@ -1,1 +1,1 @@
-{{ \Carbon\Carbon::parse($created_at)->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}
+{{ \Carbon\Carbon::parse($created_at)->isoFormat('dddd, D MMMM Y')??'' }}

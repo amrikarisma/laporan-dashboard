@@ -10,13 +10,13 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-2">
-                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                        {!! Form::select('divisi', $divisi, $request->divisi??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Divisi')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
+                        {!! Form::select('category', $categories, $request->category??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Kategori')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
+                        {!! Form::select('branch', $branch, $request->branch??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Level')) !!}
                     </div>
                     <div class="col-md-3">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
@@ -33,6 +33,9 @@
                     </div>
                     <div class="col-md-auto">
                         <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Laporan</a>
+                    </div>
+                    <div class="col-md-auto">
+                        <a href="{{ route('laporan.kegiatan.export') .'?simple=1' }}" class="btn btn-success">Export Resume</a>
                     </div>
                 </div>
             </form>
@@ -52,10 +55,12 @@
                     <h5>Tabel Laporan Kegiatan</h5>
                 </div>
                 <div class="card-body">
-        
                     <table id="table" class="table" style="width: 100%">
                         <thead>
                             <tr>
+                                <th>
+                                    {{ _('Tanggal')}}
+                                </th>
                                 <th>
                                     {{ _('Judul')}}
                                 </th>
@@ -66,6 +71,9 @@
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
+                                    {{ _('Rekomendasi')}}
+                                </th>
+                                <th>
                                     {{ _('Lokasi Laporan')}}
                                 </th>
                                 <th>
@@ -74,9 +82,7 @@
                                 <th>
                                     {{ _('Performa (Jumlah laporan)')}}
                                 </th>
-                                <th>
-                                    {{ _('Tanggal Laporan')}}
-                                </th>
+
                                 <th>
                                     {{ _('Pengirim')}}
                                 </th>
@@ -97,7 +103,7 @@
                                 <td>{{ $kegiatan['laporan_location']??'' }}</td>
                                 <td><a id="{{$loop->index}}" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_geolocation']??'' }}</a></td>
                                 <td>{{ $kegiatan['laporan_performance']??'' }}</td>
-                                <td>{{ $kegiatan['created_at'] ? \Carbon\Carbon::parse($kegiatan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' : ''}}</td>
+                                <td>{{ $kegiatan['created_at'] ? \Carbon\Carbon::parse($kegiatan['created_at'])->isoFormat('dddd, D MMMM Y')??'' : ''}}</td>
                                 <td>{{ $kegiatan['user']['name']??'' }}</td>
                                 <td>{{ $kegiatan['status']??''}}</td>
                                 <td>
@@ -114,9 +120,12 @@
     </div>
 
 @endsection
+@section('plugins.Momentjs', true)
+@section('plugins.Daterangepicker', true)
+@section('plugins.Charts', true)
+@section('plugins.Select2', true)
 @section('css')
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     .select2-container .select2-selection--single {
         height: calc(2.25rem + 2px);
@@ -125,10 +134,6 @@
 </style>
 @endsection
 @section('js')
-@section('plugins.Momentjs', true)
-@section('plugins.Daterangepicker', true)
-@section('plugins.Charts', true)
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript"> 
     $('.select2').select2();
@@ -216,27 +221,31 @@
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
                 "anggota": "{{ $request->input('anggota')??'' }}",
-                "cabang": "{{ $request->input('cabang')??'' }}"
+                "cabang": "{{ $request->input('cabang')??'' }}",
+                "divisi": "{{ $request->input('divisi')??'' }}",
+                "category": "{{ $request->input('category')??'' }}",
+                "branch": "{{ $request->input('branch')??'' }}",
             }
         },
         order: [[ 0, "desc" ]],
         columns: [
-        // { 
-        //     data: {
-        //           _: 'date.display',
-        //           sort: 'date.timestamp'
-        //        },
-        //     name: 'date.timestamp',
+        { 
+            data: {
+                  _: 'created_at.display',
+                  sort: 'created_at.timestamp'
+               },
+            name: 'created_at.timestamp',
 
-        // },
+        },
         // { data: 'date' },
         { data: 'laporan_title' },
         { data: 'category.name' },
         { data: 'laporan_description' },
+        { data: 'recommendation' },
         { data: 'laporan_location' },
-        { data: 'laporan_geolocation' },
+        { data: 'laporan_address_geo' },
         { data: 'laporan_performance.persentase'},
-        { data: 'created_at'},
+        // { data: 'created_at'},
         { data: 'user.name'},
         { data: 'status'},
         { data: 'actions'},

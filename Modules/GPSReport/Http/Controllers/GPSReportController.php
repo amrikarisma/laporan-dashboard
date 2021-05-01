@@ -23,11 +23,12 @@ class GPSReportController extends Controller
         return DataTables::of($laporanGPS)
         ->editColumn('created_at', function ($laporanGPS) {
             return [
-               'display' => !empty($laporanGPS['created_at']) ? Carbon::parse($laporanGPS['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y') : '',
+               'display' => !empty($laporanGPS['created_at']) ? Carbon::parse($laporanGPS['created_at'])->isoFormat('dddd, D MMMM Y') : '',
                'timestamp' => Carbon::parse($laporanGPS['created_at'])->timestamp
             ];
          })
-         ->editColumn('user.name', "presensireport::index.name") 
+        ->editColumn('user.name', "gpsreport::index.name") 
+        ->editColumn('user.anggota.jabatan.name', "gpsreport::index.jabatan") 
         ->addColumn('actions', "kegiatanreport::index.action") 
         ->rawColumns(['actions','user.name'])
         ->make();
@@ -61,7 +62,7 @@ class GPSReportController extends Controller
     {
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
         $cabang = $profile['anggota'] != null ? str_replace(' ','-',$profile['anggota']['cabang']['name']) : 'semua-cabang';
-        $date = Carbon::now()->locale('id_ID')->isoFormat('DD-MMMM-YYYY');
-        return (new GPSExport)->download('laporan-aktifitas-gps-'.$date.'-'.$cabang.'.xlsx');
+        $date = Carbon::now()->isoFormat('DD-MMMM-YYYY');
+        return (new GPSExport)->download('laporan-aktivitas-gps-'.$date.'-'.$cabang.'.xlsx');
     }
 }

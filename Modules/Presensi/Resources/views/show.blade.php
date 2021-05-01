@@ -12,7 +12,7 @@
                     <tr>
                         <td>{{ 'Tanggal' }}</td>
                         <td>:</td>
-                        <td>{{ \Carbon\Carbon::parse($absent['date'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($absent['date'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                     </tr>
                     <tr>
                         <td>{{ 'Nama' }}</td>

@@ -11,7 +11,7 @@
                 <tbody>
                     <tr>
                         <td>{{ 'Tanggal' }}</td>
-                        <td>{{ !empty($kunjungan['created_at']) ? \Carbon\Carbon::parse($kunjungan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y') : '' }}</td>
+                        <td>{{ !empty($kunjungan['created_at']) ? \Carbon\Carbon::parse($kunjungan['created_at'])->isoFormat('dddd, D MMMM Y') : '' }}</td>
                     </tr>
                     <tr>
                         <td>{{ 'Nama' }}</td>
@@ -35,11 +35,7 @@
                     </tr>
                     <tr>
                         <td>{{ 'Alamat dari GPS' }}</td>
-                        <td>{{ $kunjungan['laporan_address_geo']??'' }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ 'Lokasi GPS' }}</td>
-                        <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_geolocation']??'' }}</a></td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kunjungan['laporan_geolocation']??'' }}">{{ $kunjungan['laporan_address_geo']??'' }}</a></td>
                     </tr>
                     <tr>
                         <td>{{ 'Performa' }}</td>

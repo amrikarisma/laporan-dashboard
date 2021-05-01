@@ -8,19 +8,17 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class KunjugnanExport implements FromView,ShouldAutoSize
+class LaporanSimpleExport implements FromView,ShouldAutoSize
 {
     use Exportable;
-    private $fileName = "laporan.xlsx";
 
     public function view(): View
     {
-        $getUrl = session('kunjungan_param')??'';
+        $getUrl = session('kegiatan_param')??'';
         $getLaporan = MyHelper::apiGet('laporan/export/?'.$getUrl)['data']??[];
         $anggota = MyHelper::apiGet('profile')['data']??[];
         $collectionLaporan = collect($getLaporan);
-
-        return view('kunjunganreport::export', [
+        return view('kegiatanreport::export_simple', [
             'laporans' => $collectionLaporan,
             'anggota' => $anggota
         ]);

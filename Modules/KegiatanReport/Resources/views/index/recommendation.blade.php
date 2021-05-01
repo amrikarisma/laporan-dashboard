@@ -1,0 +1,1 @@
+{{ strip_tags(Str::limit($recommendation,40) ) }}

@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table id="table" class="table">
+            <table id="table" class="table table-hover dataTable dtr-inline">
                 <thead>
                     <tr>
                         <th>
@@ -21,33 +21,10 @@
                         <th>
                             {{ _('Status')}}
                         </th>
-
                         <th>{{ _('')}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($divisis['data'] as $divisi)
-                    <tr>
-                        <td>{{ $divisi['name']??'' }}</td>
-                        <td>{!! $divisi['status'] == 'Aktif' ? '<span class="badge badge-success">'. $divisi['status'] .'</span>' : '<span class="badge badge-danger">'. $divisi['status'] .'</span>'  !!}</td>
-                        <td>
-                            <div style="display: inline-block">
-                                <a class="btn btn-sm btn-outline-primary" href="{{ route('divisi.show', $divisi['id']) }}">Detail</a>
-                            </div>
-                            <div style="display: inline-block">
-                                    <a class="btn btn-sm btn-outline-primary"
-                                    href="{{ route('divisi.edit', $divisi['id']) }}">Edit</a>
-                            </div>
-                            <div style="display: inline-block">
-                                <form action="{{ route('divisi.destroy', $divisi['id']) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-sm btn-outline-danger">Hapus</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach --}}
                 </tbody>
             </table>
         </div>
@@ -68,6 +45,9 @@
     $('#table').DataTable({
         processing: true,
         serverSide: true,
+        // scrollCollapse:true,
+        // scrollY:500,
+        // scrollX:true,
         ajax: `{{ route('divisi.ajaxlist') }}`,
         columns: [
         { data: 'name' },

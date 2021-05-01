@@ -131,6 +131,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        {!! Form::label('phone', 'No. Telepon',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        <div class="col-sm-9">
+                            {!! Form::tel('phone', $profile['userdata']['phone']??'', array( 'class' => 'form-control', 'placeholder' => 'No. Telepon') ) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         {!! Form::label('password', 'Ganti Password',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
                             {!! Form::password('password', array( 'class' => 'form-control', 'placeholder' => 'Ganti Password' , 'autocomplete' => 'off') ) !!}

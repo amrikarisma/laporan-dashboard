@@ -46,7 +46,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Tabel Laporan Aktifitas GPS</h5>
+                    <h5>Tabel Laporan Aktivitas GPS</h5>
                 </div>
                 <div class="card-body">
                     <table id="table" class="table" style="width: 100%">
@@ -62,7 +62,7 @@
                                     {{ _('Jabatan')}}
                                 </th>
                                 <th>
-                                    {{ _('Jumlah Aktifitas GPS')}}
+                                    {{ _('Jumlah Aktivitas GPS')}}
                                 </th>
                                 <th>
                                     {{ _('Nilai')}}
@@ -79,7 +79,7 @@
                             </tr> --}}
                             {{-- @foreach ($gpsReport as $gps)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($gps['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($gps['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                                 <td>{{ $gps['name']??'' }}</td>
                                 <td><a href="{{ route('history.index') }}">{{ $gps['gps_activity']??0 }}</a></td>
                                 <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>
@@ -127,7 +127,7 @@
         }
 
         let entry = [
-                ['Kategori Presensi', 'Jumlah Anggota'],
+                ['Aktivitas GPS', 'Jumlah Anggota'],
             ];
 
         let countJson = @json($gpsReport['count']);
@@ -139,7 +139,7 @@
         var data = google.visualization.arrayToDataTable(entry);
 
         var options = {
-            title: 'Grafik Kategori Presensi Anggota',
+            title: 'Grafik Aktivitas GPS Anggota',
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));

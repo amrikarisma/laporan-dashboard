@@ -42,6 +42,9 @@
     $('#table').DataTable({
         processing: true,
         serverSide: true,
+        // scrollCollapse:true,
+        // scrollY:500,
+        // scrollX:true,
         ajax: `{{ route('kategori-laporan.ajaxlist') }}`,
         columns: [
         { data: 'name' },

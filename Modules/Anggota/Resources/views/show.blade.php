@@ -28,7 +28,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Tanggal Lahir' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($anggota['user']['userdata']['birthday'])->locale('id_ID')->isoFormat('D MMMM Y')??'' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($anggota['user']['userdata']['birthday'])->isoFormat('D MMMM Y')??'' }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Alamat' }}</td>
@@ -45,6 +45,14 @@
                         <tr>
                             <td>{{ 'Status Pernikahan' }}</td>
                             <td>{{ $anggota['user']['userdata']['marriage']??'' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'Email' }}</td>
+                            <td>{{ $anggota['user']['email']??'' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'No. Telepon' }}</td>
+                            <td>{{ $anggota['user']['userdata']['phone']??'' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -86,7 +94,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Tanggal Bergabung' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($anggota['join_date'])->locale('id_ID')->isoFormat('D MMMM Y')??'' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($anggota['join_date'])->isoFormat('D MMMM Y')??'' }}</td>
                         </tr>
                     </tbody>
                 </table>

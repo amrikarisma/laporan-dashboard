@@ -13,7 +13,7 @@
                     <tbody>
                         <tr>
                             <td>{{ 'Tanggal' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($kegiatan['created_at'])->locale('id_ID')->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($kegiatan['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Nama' }}</td>
@@ -27,25 +27,25 @@
                             <td>{{ 'Judul' }}</td>
                             <td>{{ $kegiatan['laporan_title']??'' }}</td>
                         </tr>
-                        <tr>
+                        <tr style="white-space: pre-line;">
                             <td>{{ 'Deskripsi' }}</td>
                             <td>{!! $kegiatan['laporan_description']??'' !!}</td>
                         </tr>
+                        <tr style="white-space: pre-line;">
+                            <td>{{ 'Rekomendasi' }}</td>
+                            <td>{!! $kegiatan['recommendation']??'' !!}</td>
+                        </tr>
                         <tr>
-                            <td>{{ 'Lokasi Laporan' }}</td>
+                            <td>{{ 'Lokasi Laporan dari Anggota' }}</td>
                             <td>{{ $kegiatan['laporan_location']??'' }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'Alamat GPS' }}</td>
-                            <td>{{ $kegiatan['laporan_address_geo']??'' }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ 'Lokasi GPS' }}</td>
-                            <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kegiatan['laporan_geolocation']??'' }}">{{ $kegiatan['laporan_geolocation']??'' }}</a></td>
+                            <td>{{ 'Lokasi dari GPS' }}</td>
+                            <td><a data-toggle="tooltip" data-placement="top" title="Tooltip on top" target="_blank" href="https://www.google.com/maps/place/{{ $kegiatan['laporan_geolocation']??'' }}">{{ $kegiatan['laporan_address_geo']??'' }}</a></td>
                         </tr>
                         <tr>
                             <td>{{ 'Performa' }}</td>
-                            <td>{{ $kegiatan['laporan_performance']['count']??0 }} %</td>
+                            <td>{{ $kegiatan['laporan_performance']['persentase']??0 }} %</td>
                         </tr>
                     </tbody>
                 </table>

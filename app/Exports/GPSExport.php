@@ -17,7 +17,6 @@ class GPSExport implements FromView,ShouldAutoSize
     {
         $getUrl = session('gps_param')??'';
         $getGPSReport = MyHelper::apiGet('gps-report/export/?'.$getUrl)['data']??[];
-        session()->forget('gps_param');
         $anggota = MyHelper::apiGet('profile')['data']??[];
         $collectionGPS = collect($getGPSReport);
         return view('gpsreport::export', [
