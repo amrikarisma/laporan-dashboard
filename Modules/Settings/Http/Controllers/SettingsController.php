@@ -22,7 +22,7 @@ class SettingsController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?sort=asc&pluck=1')['data'] ?? [];
         $roles = MyHelper::apiGet('role')['data'] ?? [];
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
-        // return $profile;
+
         if(!$profile['anggota']) {
             return redirect()->route('dashboard')->with('error', 'Anda tidak punya akses. Silahkan hubungi Administrator.');
         }
@@ -42,7 +42,7 @@ class SettingsController extends Controller
             'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
-            // 'phone' => ['nullable', 'numeric', 'min:8','max:15']
+            'phone' => ['nullable', 'regex:/(0)[0-9]/','not_regex:/[a-z]/','min:9','max:15']
         ]);
         
         if ($validator->fails()) {

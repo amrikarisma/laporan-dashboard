@@ -10,13 +10,13 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-2">
-                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                        {!! Form::select('divisi', $divisi, $request->divisi??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Divisi')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
+                        {!! Form::select('category', $categories, $request->category??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Kategori')) !!}
                     </div>
                     <div class="col-md-2">
-                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
+                        {!! Form::select('branch', $branch, $request->branch??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Level')) !!}
                     </div>
                     <div class="col-md-3">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
@@ -189,7 +189,10 @@
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
                 "anggota": "{{ $request->input('anggota')??'' }}",
-                "cabang": "{{ $request->input('cabang')??'' }}"
+                "cabang": "{{ $request->input('cabang')??'' }}",
+                "divisi": "{{ $request->input('divisi')??'' }}",
+                "category": "{{ $request->input('category')??'' }}",
+                "branch": "{{ $request->input('branch')??'' }}",
             }
         },
         order: [[ 0, "desc" ]],

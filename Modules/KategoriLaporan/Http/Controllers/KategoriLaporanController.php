@@ -14,6 +14,7 @@ class KategoriLaporanController extends Controller
     public function ajaxlist()
     {
         $kategorilaporan = MyHelper::apiGet('kategorilaporan')['data'] ?? [];
+        
         return DataTables::of($kategorilaporan)
         ->addColumn('actions', "kategorilaporan::index.action") 
         ->rawColumns(['actions'])

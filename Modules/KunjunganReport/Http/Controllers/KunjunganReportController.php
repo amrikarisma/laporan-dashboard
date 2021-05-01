@@ -19,8 +19,13 @@ class KunjunganReportController extends Controller
         $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : ''; // Divisi
+        $filterCategory  = !empty($request->category) ? 'category='.$request->category.'&' : ''; // Category laporan
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $kunjungans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
+
+        $kunjungans = MyHelper::apiGet('laporan?nopage=1&'.$param_url)['data']??[];
         return DataTables::of($kunjungans)
         ->editColumn('user.name', "kunjunganreport::index.name") 
         ->editColumn('category.name', "kunjunganreport::index.category") 
@@ -55,23 +60,32 @@ class KunjunganReportController extends Controller
      */
     public function index(Request $request)
     {
-        // return $request;
+
         $filterDate     = (!empty($request->start) && !empty($request->end)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
         $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : ''; // Divisi
+        $filterCategory  = !empty($request->category) ? 'category='.$request->category.'&' : ''; // Category laporan
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
         $kunjungans = MyHelper::apiGet('laporan?'.$param_url)??[];
         session()->put('kunjungan_param', $param_url);
-        // dd(session('kunjungan_param'));
+
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
 
-        return view('kunjunganreport::index', compact('kunjungans','cabang', 'anggota', 'jabatan', 'request'));
+        $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
+
+        $categories = MyHelper::apiGet('kategorilaporan?pluck=1')['data'] ?? [];
+
+        $branch = MyHelper::apiGet('cabang/branch?pluck=1')['data'] ?? [];
+
+        return view('kunjunganreport::index', compact('kunjungans','cabang', 'anggota', 'jabatan', 'divisi','categories','branch','request'));
     }
 
     /**

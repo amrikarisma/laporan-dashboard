@@ -21,12 +21,17 @@ class KegiatanReportController extends Controller
         $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
         $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : '';
+        $filterCategory  = !empty($request->category) ? 'category='.$request->category.'&' : '';
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$filterDate.$filterJabatan.$filterAnggota.$filterCabang)['data']??[];
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
+        $kegiatans = MyHelper::apiGet('laporan?nopage=1&'.$param_url)['data']??[];
+
         return DataTables::of($kegiatans)
         ->editColumn('created_at', function ($kegiatans) {
             return [
-               'display' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->isoFormat('dddd, D MMMM Y') : '',
+               'display' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->isoFormat('dddd, D MMMM Y / HH:mm') : '',
                'timestamp' => !empty($kegiatans['created_at']) ? Carbon::parse($kegiatans['created_at'])->timestamp : ''
             ];
          })
@@ -47,13 +52,17 @@ class KegiatanReportController extends Controller
      */
     public function index(Request $request)
     {
-        $filterDate     = (!empty($request->start) && !empty($request->start)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
-        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
-        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDate     = (!empty($request->start) && !empty($request->end)) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
+        $filterJabatan  = !empty($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : ''; // Jabatan
+        $filterAnggota  = !empty($request->anggota) ? 'anggota='.$request->anggota.'&' : ''; // Anggota
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : ''; //Cabang
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : ''; // Divisi
+        $filterCategory  = !empty($request->category) ? 'category='.$request->category.'&' : ''; // Category laporan
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterCabang;
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterCategory.''.$filterbranch;
         $kegiatans = MyHelper::apiGet('laporan?'.$param_url)??[];
+        // return $kegiatans;
         session()->put('kegiatan_param', $param_url);
 
         $anggota = MyHelper::apiGet('anggota?pluck=1')['data']??[];
@@ -62,7 +71,13 @@ class KegiatanReportController extends Controller
 
         $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
 
-        return view('kegiatanreport::index', compact('kegiatans', 'cabang','anggota', 'jabatan', 'request'));
+        $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
+
+        $categories = MyHelper::apiGet('kategorilaporan?pluck=1')['data'] ?? [];
+
+        $branch = MyHelper::apiGet('cabang/branch?pluck=1')['data'] ?? [];
+
+        return view('kegiatanreport::index', compact('kegiatans', 'cabang','anggota', 'jabatan','divisi', 'categories','branch','request'));
     }
 
     /**
