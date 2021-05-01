@@ -12,8 +12,8 @@
                     <thead></thead>
                     <tbody>
                         <tr>
-                            <td>{{ 'Tanggal' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($kegiatan['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
+                            <td>{{ 'Tanggal/Jam' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($kegiatan['created_at'])->isoFormat('dddd, D MMMM Y / HH:mm:ss')??'' }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Nama' }}</td>
