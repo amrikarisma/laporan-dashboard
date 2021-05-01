@@ -74,22 +74,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
-                                <td></td>
-                            </tr> --}}
-                            {{-- @foreach ($gpsReport as $gps)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($gps['created_at'])->isoFormat('dddd, D MMMM Y')??'' }}</td>
-                                <td>{{ $gps['name']??'' }}</td>
-                                <td><a href="{{ route('history.index') }}">{{ $gps['gps_activity']??0 }}</a></td>
-                                <td>{{ $gps['score']??0 }} - {{ $gps['score_text']??'' }}</td>
-                                <td>
-                                    <div style="display: inline-block">
-                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('laporan.gps.show', $gps['id']) }}">Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>

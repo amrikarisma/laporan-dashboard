@@ -29,7 +29,13 @@ class GPSReportController extends Controller
          })
         ->editColumn('user.name', "gpsreport::index.name") 
         ->editColumn('user.anggota.jabatan.name', "gpsreport::index.jabatan") 
-        ->addColumn('actions', "kegiatanreport::index.action") 
+        ->addColumn('actions', function($laporanGPS) use ($request){
+            if (isset($laporanGPS['user']['anggota']['id'])) {
+                return '<div style="display: inline-block">
+                <a class="btn btn-sm btn-outline-primary" href="'. route('history.index').'?anggota='.$laporanGPS['user']['anggota']['id'].'&jabatan=&start='.$request->start_date.'&end='.$request->end_date.'">Lihat Peta</a>
+            </div>';
+            }
+        }) 
         ->rawColumns(['actions','user.name'])
         ->make();
     }
