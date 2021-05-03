@@ -18,7 +18,7 @@
             <th align="center" valign="center" style="border:1px solid black"><strong>Hari/Tanggal/Jam</strong></th>
             <th align="center" valign="center" style="border:1px solid black"><strong>Judul</strong></th>
             <th align="center" valign="center" style="border:1px solid black"><strong>Deskripsi</strong></th>
-            <th align="center" valign="center" style="border:1px solid black"><strong>Rekomendasi</strong></th>
+            <th align="center" valign="center" style="border:1px solid black"><strong>Usulan</strong></th>
             <th align="center" valign="center" style="border:1px solid black"><strong>Foto</strong></th>
         </tr>
         </thead>
