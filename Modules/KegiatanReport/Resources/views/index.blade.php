@@ -10,6 +10,15 @@
                 {{-- @csrf --}}
                 <div class="form-group row">
                     <div class="col-md-2">
+                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                    </div>
+                    <div class="col-md-2">
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
+                    </div>
+                    <div class="col-md-2">
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
+                    </div>
+                    <div class="col-md-2">
                         {!! Form::select('divisi', $divisi, $request->divisi??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Divisi')) !!}
                     </div>
                     <div class="col-md-2">
