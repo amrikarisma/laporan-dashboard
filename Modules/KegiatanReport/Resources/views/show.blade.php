@@ -21,7 +21,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Kategori' }}</td>
-                            <td>{{ $kegiatan['category']['title']??'Tidak ada kategori' }}</td>
+                            <td>{{ $kegiatan['category']['name']??'Tidak ada kategori' }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Judul' }}</td>
