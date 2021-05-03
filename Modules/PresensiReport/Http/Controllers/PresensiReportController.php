@@ -20,6 +20,9 @@ class PresensiReportController extends Controller
             'jabatan'   => $request->jabatan??'',
             'anggota'   => $request->anggota??'',
             'hadir'     => $request->hadir??'',
+            'cabang'     => $request->cabang??'',
+            'divisi'     => $request->divisi??'',
+            'branch'     => $request->branch??'',
             'offset'    => $request->input('start'),
             'limit'     => $request->input('length'),
             'search'     => $request->input('search.value')
@@ -61,8 +64,11 @@ class PresensiReportController extends Controller
         $filterJabatan  = (!empty($request->jabatan)) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = (!empty($request->anggota)) ? 'anggota='.$request->anggota.'&' : '';
         $filterHadir  = (!empty($request->hadir)) ? 'hadir='.$request->hadir.'&' : '';
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : ''; // Divisi
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterHadir;
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.$filterbranch.''.$filterHadir;
         $absents = MyHelper::apiGet('presensi-report?'.$param_url)??[];
 
         session()->put('presensi_param', $param_url);
@@ -72,8 +78,14 @@ class PresensiReportController extends Controller
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
         $hadir = MyHelper::apiGet('kategori-presensi?pluck=1&group=0')['data']??[];
-        // return $absents;
-        return view('presensireport::index', compact('absents', 'anggota', 'jabatan','hadir', 'request'));
+
+        $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
+
+        $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
+
+        $branch = MyHelper::apiGet('cabang/branch?pluck=1')['data'] ?? [];
+
+        return view('presensireport::index', compact('absents', 'anggota', 'jabatan','hadir','cabang','divisi','branch', 'request'));
     }
 
     public function show(Request $request, $id)

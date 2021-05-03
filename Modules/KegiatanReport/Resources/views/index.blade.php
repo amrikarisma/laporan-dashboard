@@ -40,13 +40,13 @@
                     </div>
 
 
-                    <div class="col-md-1 order-md-5">
+                    <div class="col-md-2 order-md-5 mb-2">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
-                    <div class="col-md-1 order-md-6" >
+                    <div class="col-md-2 order-md-11" >
                         <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Laporan</a>
                     </div>
-                    <div class="col-md-1 order-md-7">
+                    <div class="col-md-2 order-md-12">
                         <a href="{{ route('laporan.kegiatan.export') .'?simple=1' }}" class="btn btn-success">Export Resume</a>
                     </div>
                 </div>
