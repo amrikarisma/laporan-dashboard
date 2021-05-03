@@ -191,7 +191,10 @@
                 "start_date": "{{ $request->input('start')??'' }}",
                 "end_date": "{{ $request->input('end')??'' }}",
                 "jabatan": "{{ $request->input('jabatan')??'' }}",
-                "anggota": "{{ $request->input('anggota')??'' }}"
+                "anggota": "{{ $request->input('anggota')??'' }}",
+                "cabang": "{{ $request->input('cabang')??'' }}",
+                "divisi": "{{ $request->input('divisi')??'' }}",
+                "branch": "{{ $request->input('branch')??'' }}",
             }
         },
         order: [[ 0, "desc" ]],
