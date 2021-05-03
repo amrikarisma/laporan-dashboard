@@ -45,9 +45,14 @@
                         <td id="loc_1"><a target="_blank" href="https://www.google.com/maps/place/{{ $absent['geolocation_out']??'' }}"> ({{ $absent['geolocation_out']??'' }})</a></td>
                     </tr>
                     <tr>
-                        <td>{{ 'Keterangan' }}</td>
+                        <td>{{ 'Kategori' }}</td>
                         <td>:</td>
                         <td>{{ $absent['category']['name']??'' }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Keterangan' }}</td>
+                        <td>:</td>
+                        <td>{{ $absent['note']??'' }}</td>
                     </tr>
                 </tbody>
             </table>
