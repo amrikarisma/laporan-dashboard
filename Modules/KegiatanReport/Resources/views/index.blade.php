@@ -83,7 +83,7 @@
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
-                                    {{ _('Rekomendasi')}}
+                                    {{ _('Usulan')}}
                                 </th>
                                 <th>
                                     {{ _('Lokasi Laporan')}}

@@ -32,7 +32,7 @@
                             <td>{!! $kegiatan['laporan_description']??'' !!}</td>
                         </tr>
                         <tr style="white-space: pre-line;">
-                            <td>{{ 'Rekomendasi' }}</td>
+                            <td>{{ 'Usulan' }}</td>
                             <td>{!! $kegiatan['recommendation']??'' !!}</td>
                         </tr>
                         <tr>
