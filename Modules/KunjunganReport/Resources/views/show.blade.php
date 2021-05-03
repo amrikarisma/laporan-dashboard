@@ -19,7 +19,7 @@
                     </tr>
                     <tr>
                         <td>{{ 'Kategori' }}</td>
-                        <td>{{ isset($kunjungan['category']['title']) ? $kunjungan['category']['title'] : 'Tidak ada kategori' }}</td>
+                        <td>{{ isset($kunjungan['category']['name']) ? $kunjungan['category']['name'] : 'Tidak ada kategori' }}</td>
                     </tr>
                     <tr>
                         <td>{{ 'Judul' }}</td>
