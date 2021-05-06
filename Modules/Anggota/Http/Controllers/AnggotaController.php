@@ -115,7 +115,7 @@ class AnggotaController extends Controller
             'nik'                   => $request->nik,
             'phone'                 => $request->phone,
             'status'                => $request->status,
-            'password'              => $request->password??1234
+            'password'              => $request->password??substr($request->nik, -4)
         ];
 
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
