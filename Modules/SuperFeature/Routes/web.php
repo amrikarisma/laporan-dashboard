@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('superfeature')->group(function() {
+Route::prefix('superfeature')->middleware('validate_session')->group(function() {
     Route::get('/', 'SuperFeatureController@index');
 });

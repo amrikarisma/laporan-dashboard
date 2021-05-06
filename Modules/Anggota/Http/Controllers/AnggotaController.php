@@ -16,13 +16,34 @@ class AnggotaController extends Controller
         $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
         return DataTables::of($anggotas)
         ->editColumn('user.userdata.profile_photo_url', "anggota::index.thumb") 
-        ->editColumn('user.name', $user['name']??'') 
-        ->editColumn('jabatan.name', $jabatan['name']??'') 
-        ->editColumn('divisi.name', $divisi['name']??'') 
-        ->editColumn('cabang.name', $cabang['name']??'') 
-        ->editColumn('join_date', $join_date??'') 
-        ->editColumn('sk_pengangkatan', $sk_pengangkatan??'') 
-        ->editColumn('nik', $nik??'') 
+        ->editColumn('user.name',  function ($anggotas)
+        {
+            return $anggotas['user']['name']??'';
+        }) 
+        ->editColumn('jabatan.name', function ($anggotas)
+        {
+            return $anggotas['jabatan']['name']??'';
+        }) 
+        ->editColumn('divisi.name', function ($anggotas)
+        {
+            return $anggotas['divisi']['name']??'';
+        }) 
+        ->editColumn('cabang.name', function ($anggotas)
+        {
+            return $anggotas['cabang']['name']??'';
+        }) 
+        ->editColumn('join_date', function ($anggotas)
+        {
+            return $anggotas['join_date']??'';
+        }) 
+        ->editColumn('sk_pengangkatan', function ($anggotas)
+        {
+            return $anggotas['sk_pengangkatan']??'';
+        }) 
+        ->editColumn('nik', function ($anggotas)
+        {
+            return $anggotas['nik']??'';
+        }) 
         ->addColumn('actions', "anggota::index.action") 
         ->rawColumns(['user.userdata.profile_photo_url','actions'])
         ->make();
@@ -33,7 +54,6 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-
         return view('anggota::index');
     }
 

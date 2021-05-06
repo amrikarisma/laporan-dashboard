@@ -14,7 +14,7 @@
         <div class="card-body">
             @include('layouts.notification')
 
-            <table id="anggota-table" class="table">
+            <table id="anggota-table" class="table ">
                 <thead>
                     <tr>
                         <th>
@@ -86,6 +86,9 @@
     $('#anggota-table').DataTable({
         processing: true,
         serverSide: true,
+        scrollCollapse:true,
+        scrollY:500,
+        scrollX:true,
         ajax: '{{ route('anggota.listanggota') }}',
         columns: [
         { data: 'user.userdata.profile_photo_url' },
