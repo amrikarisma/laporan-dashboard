@@ -33,6 +33,8 @@ class HistoryController extends Controller
 
         $jabatan = MyHelper::apiGet('jabatan?pluck=1')['data']??[];
 
+        // $location = MyHelper::apiGet('location');
+        // return $location;
         return view('history::index', compact('anggota','jabatan', 'request'));
 
     }

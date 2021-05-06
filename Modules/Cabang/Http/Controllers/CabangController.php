@@ -37,7 +37,14 @@ class CabangController extends Controller
         ];
         $cabangs = MyHelper::apiRequest('get', 'cabang', $param)['data']??[];
         $branch = MyHelper::apiRequest('get', 'cabang/branch?pluck=1')['data']??[];
+
         $cabang = MyHelper::apiRequest('get','cabang?pluck=1')['data'] ?? [];
+        // return $cabangLists;
+        // foreach ($cabangLists as $key => $value) {
+
+        //     $cabang[$key] = $value;
+        // }
+        // return $cabang;
 
         return view('cabang::index', compact('cabangs','cabang', 'branch','request'));
     }
