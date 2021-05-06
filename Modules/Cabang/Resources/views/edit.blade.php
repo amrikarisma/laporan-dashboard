@@ -13,7 +13,7 @@
             <div class="form-group row">
                 {!! Form::label('parent_id', 'Cabang Diatasnya',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('parent_id', $parent , $cabang['parent']['id']??null, array( 'class' => 'form-control select2', 'placeholder' => 'Tidak Ada',) ) !!}
+                    {!! Form::select('parent_id', $parent , $cabang['parent_id']??null, array( 'class' => 'form-control select2', 'placeholder' => 'Tidak Ada',) ) !!}
                 </div>
             </div>
             <div class="form-group row">

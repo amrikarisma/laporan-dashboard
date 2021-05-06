@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="row">
-    <div class="col-lg-7">
+    <div class="col-md-4">
         <img class="img-fluid" src="{{ $cabang['cabang_photo_url'] }}" />
     </div>
-    <div class="col-lg-5">
+    <div class="col-md-8">
         <div class="card">
             <div class="card-header">
                 <div class="card-title">
@@ -17,7 +17,7 @@
                     <tr>
                         <td>Nama Cabang Induk</td>
                         <td>:</td>
-                        <td>{{ isset($cabang['ancestors'][0]['name']) ? $cabang['ancestors'][0]['name'] : $cabang['name'] }}</td>
+                        <td>{{ isset($cabang['cabang_atas']['name']) ? $cabang['cabang_atas']['name'] : $cabang['name'] }}</td>
                     </tr>
                     <tr>
                         <td>Nama Cabang</td>
