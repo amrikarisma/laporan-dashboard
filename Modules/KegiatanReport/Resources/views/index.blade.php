@@ -8,17 +8,27 @@
         <div class="card-body">
             <form action="" method="GET" class="form-horizontal">
                 {{-- @csrf --}}
+
                 <div class="form-group row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 order-md-1">
+                        {!! Form::select('cabang', $cabang, $request->cabang??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Cabang')) !!}
+                    </div>
+                    <div class="col-md-2 order-md-2" >
+                        {!! Form::select('anggota', $anggota, $request->anggota??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Anggota')) !!}
+                    </div>
+                    <div class="col-md-2 order-md-3">
+                        {!! Form::select('jabatan', $jabatan, $request->jabatan??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Jabatan')) !!}
+                    </div>
+                    <div class="col-md-2 order-md-8">
                         {!! Form::select('divisi', $divisi, $request->divisi??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Divisi')) !!}
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 order-md-9">
                         {!! Form::select('category', $categories, $request->category??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Kategori')) !!}
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 order-md-10">
                         {!! Form::select('branch', $branch, $request->branch??'',array('class' => 'form-control select2', 'placeholder' => 'Filter Level')) !!}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 order-md-4">
                         <div id="reportrange" style="display:flex; justify-content:space-between; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                             <span style="align-self: center"><i class="fa fa-calendar"></i>&nbsp;</span>
                             <span id="showdate"></span>
@@ -28,13 +38,15 @@
                         </div>
                         {{-- {!! Form::date('date', $request->date??'' ,array('class' => 'form-control', 'placeholder' => 'Filter Tanggal')) !!} --}}
                     </div>
-                    <div class="col-md-auto">
+
+
+                    <div class="col-md-2 order-md-5 mb-2">
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
-                    <div class="col-md-auto">
+                    <div class="col-md-2 order-md-11" >
                         <a href="{{ route('laporan.kegiatan.export') }}" class="btn btn-success">Export Laporan</a>
                     </div>
-                    <div class="col-md-auto">
+                    <div class="col-md-2 order-md-12">
                         <a href="{{ route('laporan.kegiatan.export') .'?simple=1' }}" class="btn btn-success">Export Resume</a>
                     </div>
                 </div>
@@ -71,7 +83,7 @@
                                     {{ _('Deskripsi')}}
                                 </th>
                                 <th>
-                                    {{ _('Rekomendasi')}}
+                                    {{ _('Usulan')}}
                                 </th>
                                 <th>
                                     {{ _('Lokasi Laporan')}}

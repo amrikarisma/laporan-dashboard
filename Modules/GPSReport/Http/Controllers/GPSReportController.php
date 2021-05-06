@@ -48,9 +48,11 @@ class GPSReportController extends Controller
         $filterDate     = ($request->start && $request->end) ? 'start='.$request->start.'&end='.$request->end.'&' : '';
         $filterJabatan  = ($request->jabatan) ? 'jabatan='.$request->jabatan.'&' : '';
         $filterAnggota  = ($request->anggota) ? 'anggota='.$request->anggota.'&' : '';
-        $filterHadir  = ($request->hadir) ? 'hadir='.$request->hadir.'&' : 0;
+        $filterCabang  = !empty($request->cabang) ? 'cabang='.$request->cabang.'&' : '';
+        $filterDivisi  = !empty($request->divisi) ? 'divisi='.$request->divisi.'&' : ''; // Divisi
+        $filterbranch  = !empty($request->branch) ? 'branch='.$request->branch.'&' : ''; // Tingkatan provinsi, kota, kecamatan
 
-        $param_url = $filterDate.$filterJabatan.$filterAnggota.$filterHadir;
+        $param_url = $filterDate.''.$filterJabatan.''.$filterAnggota.''.$filterCabang.''.$filterDivisi.''.$filterbranch;
         $gpsReport = MyHelper::apiGet('gps-report?'.$param_url)??[];
 
         session()->put('gps_param', $param_url);
@@ -61,7 +63,13 @@ class GPSReportController extends Controller
 
         $hadir = MyHelper::apiGet('kategori-presensi?pluck=1&group=0')['data']??[];
 
-        return view('gpsreport::index', compact('gpsReport', 'anggota', 'jabatan','hadir', 'request'));
+        $cabang = MyHelper::apiGet('cabang?pluck=1')['data'] ?? [];
+
+        $divisi = MyHelper::apiGet('divisi?pluck=1')['data'] ?? [];
+
+        $branch = MyHelper::apiGet('cabang/branch?pluck=1')['data'] ?? [];
+
+        return view('gpsreport::index', compact('gpsReport', 'anggota', 'jabatan','hadir', 'cabang','divisi','branch','request'));
     }
 
     public function downloadExcel(Request $request)

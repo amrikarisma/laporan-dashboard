@@ -16,6 +16,13 @@ class AnggotaController extends Controller
         $anggotas = MyHelper::apiGet('anggota')['data'] ?? [];
         return DataTables::of($anggotas)
         ->editColumn('user.userdata.profile_photo_url', "anggota::index.thumb") 
+        ->editColumn('user.name', $user['name']??'') 
+        ->editColumn('jabatan.name', $jabatan['name']??'') 
+        ->editColumn('divisi.name', $divisi['name']??'') 
+        ->editColumn('cabang.name', $cabang['name']??'') 
+        ->editColumn('join_date', $join_date??'') 
+        ->editColumn('sk_pengangkatan', $sk_pengangkatan??'') 
+        ->editColumn('nik', $nik??'') 
         ->addColumn('actions', "anggota::index.action") 
         ->rawColumns(['user.userdata.profile_photo_url','actions'])
         ->make();
@@ -88,11 +95,11 @@ class AnggotaController extends Controller
             'nik'                   => $request->nik,
             'phone'                 => $request->phone,
             'status'                => $request->status,
-            'password'              => $request->password??substr($request->nik, -4)
+            'password'              => $request->password??1234
         ];
-        // return $anggota;
+
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
-        // return $newAnggota;
+        // return $newAnggota ;
         if(isset($newAnggota['status']) ) {
             if($newAnggota['status'] == 'success') {
                 return redirect()->route('anggota.index')->with('message', $newAnggota['message']);

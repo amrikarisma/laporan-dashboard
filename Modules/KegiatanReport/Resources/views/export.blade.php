@@ -20,7 +20,7 @@
             <th align="center" valign="center" style="border:1px solid black" ><strong>Judul</strong></th>
             <th align="center" valign="center" style="border:1px solid black" ><strong>Kategori</strong></th>
             <th align="center" valign="center" style="border:1px solid black" ><strong>Deskripsi</strong></th>
-            <th align="center" valign="center" style="border:1px solid black" ><strong>Rekomendasi</strong></th>
+            <th align="center" valign="center" style="border:1px solid black" ><strong>Usulan</strong></th>
             <th align="center" valign="center" style="border:1px solid black" ><strong>Lokasi</strong></th>
             <th align="center" valign="center" style="border:1px solid black" ><strong>Pengirim</strong></th>
             <th align="center" valign="center" style="border:1px solid black" ><strong>Penanganan</strong></th>

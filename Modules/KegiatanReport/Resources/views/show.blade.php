@@ -21,7 +21,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Kategori' }}</td>
-                            <td>{{ $kegiatan['category']['title']??'Tidak ada kategori' }}</td>
+                            <td>{{ $kegiatan['category']['name']??'Tidak ada kategori' }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Judul' }}</td>
@@ -32,7 +32,7 @@
                             <td>{!! $kegiatan['laporan_description']??'' !!}</td>
                         </tr>
                         <tr style="white-space: pre-line;">
-                            <td>{{ 'Rekomendasi' }}</td>
+                            <td>{{ 'Usulan' }}</td>
                             <td>{!! $kegiatan['recommendation']??'' !!}</td>
                         </tr>
                         <tr>
