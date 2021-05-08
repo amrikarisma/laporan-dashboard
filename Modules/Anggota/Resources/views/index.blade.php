@@ -42,31 +42,17 @@
                             {{ _('NIK')}}
                         </th>
                         <th>
+                            {{ _('Email')}}
+                        </th>
+                        <th>
+                            {{ _('No. Telepon')}}
+                        </th>
+                        <th>
                             {{ _('Aksi')}}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($anggotas as $anggota)
-                    <tr>
-                        <td>{{ $anggota['user']['name'] }}</td>
-                        <td>{{ $anggota['jabatan']['name'] }}</td>
-                        <td>{{ $anggota['divisi']['name'] }}</td>
-                        <td>{{ $anggota['cabang']['name'] }}</td>
-                        <td>{{ \Carbon\Carbon::parse($anggota['join_date'])->isoFormat('D MMMM Y')??'' }}</td>
-                        <td>{{ $anggota['sk_pengangkatan'] }}</td>
-                        <td>{{ $anggota['nik'] }}</td>
-                        <td>
-                            <div style="display: inline-block">
-                                <a class="btn btn-sm btn-outline-primary" href="{{ route('anggota.show', $anggota['id']) }}">Detail</a>
-                            </div>
-                            <div style="display: inline-block">
-                                <a class="btn btn-sm btn-outline-primary"
-                                href="{{ route('anggota.edit', $anggota['id']) }}">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach --}}
                 </tbody>
             </table>
         </div>
@@ -99,6 +85,8 @@
         { data: 'join_date'},
         { data: 'sk_pengangkatan'},
         { data: 'nik'},
+        { data: 'user.email'},
+        { data: 'user.userdata.phone'},
         { data: 'actions'},
     ]
     });

@@ -70,7 +70,8 @@ class BroadcastController extends Controller
             'title'         => $request->title,
             'description'   => $request->description,
             'image'         => $request->image,
-            'target_send'   => $request->target_send
+            'target_send'   => $request->target_send,
+            'target_send_with_children'   => $request->target_send_with_children
         ];
 
         $broadcast = MyHelper::apiPostWithFile('broadcast', $input, $request);
@@ -79,8 +80,10 @@ class BroadcastController extends Controller
             session()->put('repush', 1);
             return redirect()->route('broadcast.index')->with('message', $broadcast['message']);
         }
-
-        return redirect()->back()->withErrors($broadcast['error'])->withInput();
+        if(isset($broadcast['error'])) {
+            return redirect()->back()->withErrors($broadcast['error'])->withInput();
+        }
+        return redirect()->back()->with('error', 'Maaf, Ada Kesalahan sistem.')->withInput();
     }
 
     /**
@@ -91,7 +94,7 @@ class BroadcastController extends Controller
     public function show($id)
     {
         $broadcast = MyHelper::apiGet('broadcast/'.$id)['data']??[];
-        // return $broadcast;
+
         if(!$broadcast) {
             return redirect(route('broadcast.index'))->with('error', 'Pengumuman tidak ditemukan');
         }

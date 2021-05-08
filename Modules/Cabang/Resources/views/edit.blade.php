@@ -25,13 +25,13 @@
             <div class="form-group row">
                 {!! Form::label('branch', 'Tingkat Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('branch', $branch , $cabang['branch']['id']??'', array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Tingkat Cabang',) ) !!}
+                    {!! Form::select('branch', $branch , $cabang['branch']['id']??'', array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Tingkat Cabang','required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('anggota_id', 'Penanggung Jawab',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('anggota_id', $anggotas , $cabang['anggota']['id']??null, array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Penanggung Jawab', 'required') ) !!}
+                    {!! Form::select('anggota_id', $anggotas , $cabang['anggota']['id']??null, array( 'class' => 'form-control select2', 'placeholder' => 'Pilih Penanggung Jawab') ) !!}
                 </div>
             </div>
             <div class="form-group row">
@@ -70,6 +70,24 @@
 @endsection
 @section('js')
     <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+            });
+        }, false);
+        })();
         $('.select2').select2();
         $('#cabang_photo').on('change', function () {
             let reader = new FileReader();

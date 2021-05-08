@@ -4,6 +4,7 @@
     <input type="hidden" name="description" value="{{ $description }}">
     <input type="hidden" name="image" value="{{ $image_url }}">
     <input type="hidden" name="cabang" value="{{ $target_send['id']??null }}">
+    <input type="hidden" name="cabang_with_children" value="{{ $target_send_with_children??null }}">
     <button type="submit" class="btn btn-sm btn-outline-secondary"  {{ session('repush') == "1" ? 'disabled' : '' }}>Kirim Ulang Notifikasi</button>
     {{ Form::close() }}
 </div>
