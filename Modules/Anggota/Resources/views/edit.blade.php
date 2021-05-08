@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('anggota.update', $anggota['id']) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+<form action="{{ route('anggota.update', $anggota['id']) }}" method="POST" enctype="multipart/form-data" class="form-horizontal needs-validation" novalidate>
     @csrf
     <div class="row">
         <div class="col-md-6 col-lg-6">
@@ -14,41 +14,41 @@
                     <div class="form-group row">
                         {!! Form::label('cabang', 'Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('cabang', $cabang, $anggota['cabang']['id']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Cabang') ) !!}
+                            {!! Form::select('cabang', $cabang, $anggota['cabang']['id']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Cabang', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('divisi', 'Divisi',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('divisi', $divisi, $anggota['divisi']['id']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Divisi') ) !!}
+                            {!! Form::select('divisi', $divisi, $anggota['divisi']['id']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Divisi', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('jabatan', 'Jabatan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('jabatan', $jabatan, $anggota['jabatan']['id']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Jabatan') ) !!}
+                            {!! Form::select('jabatan', $jabatan, $anggota['jabatan']['id']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Jabatan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('join_date', 'Tanggal Bergabung',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('join_date', $anggota['join_date'], array( 'class' => 'form-control', 'placeholder' => 'Tanggal Bergabung') ) !!}
+                            {!! Form::text('join_date', $anggota['join_date'], array( 'class' => 'form-control', 'placeholder' => 'Tanggal Bergabung', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('sk_pengangkatan', 'SK Pengangkatan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('sk_pengangkatan', $anggota['sk_pengangkatan'], array( 'class' => 'form-control', 'placeholder' => 'SK Pengangkatan') ) !!}
+                            {!! Form::text('sk_pengangkatan', $anggota['sk_pengangkatan'], array( 'class' => 'form-control', 'placeholder' => 'SK Pengangkatan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('nik', 'NIK',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('nik', $anggota['nik'], array( 'class' => 'form-control', 'placeholder' => 'NIK') ) !!}
+                            {!! Form::text('nik', $anggota['nik'], array( 'class' => 'form-control', 'placeholder' => 'NIK', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
-                        {!! Form::label('status', 'Status',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
+                        {!! Form::label('status', 'Status',  array( 'class' => 'col-sm-3 col-form-label', 'required') ) !!}
                         <div class="col-sm-9">
                             <input type="hidden" name="status" value="Tidak Aktif">
                             <input type="checkbox" {{$anggota['status'] == 'Aktif' ? 'checked' : '' }} name="status" value="Aktif" data-toggle="toggle" data-on="Aktif" data-off="Tidak Aktif" data-onstyle="success" data-offstyle="danger">
@@ -80,7 +80,7 @@
                     <div class="form-group row">
                         {!! Form::label('first_name', 'Nama Depan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('first_name', $anggota['user']['userdata']['first_name']??'', array( 'class' => 'form-control', 'placeholder' => 'Nama Depan') ) !!}
+                            {!! Form::text('first_name', $anggota['user']['userdata']['first_name']??'', array( 'class' => 'form-control', 'placeholder' => 'Nama Depan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -92,7 +92,7 @@
                     <div class="form-group row">
                         {!! Form::label('nick_name', 'Nama Panggilan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('nick_name', $anggota['user']['userdata']['nick_name']??'', array( 'class' => 'form-control', 'placeholder' => 'Nama Panggilan') ) !!}
+                            {!! Form::text('nick_name', $anggota['user']['userdata']['nick_name']??'', array( 'class' => 'form-control', 'placeholder' => 'Nama Panggilan', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -128,19 +128,19 @@
                     <div class="form-group row">
                         {!! Form::label('marriage', 'Status',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('marriage', array('Menikah' => 'Menikah','Belum Menikah' => 'Belum Menikah')  ,$anggota['user']['userdata']['marriage']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Status') ) !!}
+                            {!! Form::select('marriage', array('Menikah' => 'Menikah','Belum Menikah' => 'Belum Menikah')  ,$anggota['user']['userdata']['marriage']??'', array( 'class' => 'form-control', 'placeholder' => 'Pilih Status', 'required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('email', 'Email',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::email('email', $anggota['user']['email']??'', array( 'class' => 'form-control', 'placeholder' => 'Email') ) !!}
+                            {!! Form::email('email', $anggota['user']['email']??'', array( 'class' => 'form-control', 'placeholder' => 'Email','required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                         {!! Form::label('phone', 'No. Telepon',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::tel('phone', $anggota['user']['userdata']['phone']??'', array( 'class' => 'form-control', 'placeholder' => 'No. Telepon') ) !!}
+                            {!! Form::tel('phone', $anggota['user']['userdata']['phone']??'', array( 'class' => 'form-control', 'placeholder' => 'No. Telepon','required') ) !!}
                         </div>
                     </div>
                     @if ($superadmin)
@@ -155,7 +155,7 @@
                     <div class="form-group row">
                         {!! Form::label('role', 'Wewenang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::select('role', $roles, $anggota['user']['role_array'], array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang') ) !!}
+                            {!! Form::select('role', $roles, $anggota['user']['role_array'], array( 'class' => 'form-control', 'placeholder' => 'Pilih Wewenang','required') ) !!}
                         </div>
                     </div>
 
@@ -178,6 +178,26 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    </script>
     <script>
         
         $(function() {
