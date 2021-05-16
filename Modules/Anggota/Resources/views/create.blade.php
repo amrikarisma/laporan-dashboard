@@ -16,6 +16,9 @@
                         {!! Form::label('cabang', 'Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
                             {!! Form::select('cabang', $cabang, old('cabang'), array( 'class' => 'form-control', 'placeholder' => 'Pilih Cabang' , 'required') ) !!}
+                            @error('cabang')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
@@ -87,7 +90,7 @@
                     <div class="form-group row">
                         {!! Form::label('last_name', 'Nama Belakang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::text('last_name', old('last_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Belakang', 'required') ) !!}
+                            {!! Form::text('last_name', old('last_name'), array( 'class' => 'form-control', 'placeholder' => 'Nama Belakang') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -141,7 +144,7 @@
                     <div class="form-group row">
                         {!! Form::label('phone', 'No. Telepon',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                         <div class="col-sm-9">
-                            {!! Form::tel('phone', old('phone'), array( 'class' => 'form-control', 'placeholder' => 'No. Telepon') ) !!}
+                            {!! Form::tel('phone', old('phone'), array( 'class' => 'form-control', 'placeholder' => 'No. Telepon','required') ) !!}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -170,6 +173,26 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    </script>
     <script>
         $(function() {
             $('#profile_photo').on('change', function () {

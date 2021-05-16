@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('kategori-presensi.update', $kategori['id'] ) }}" method="POST" class="form-horizontal">
+<form action="{{ route('kategori-presensi.update', $kategori['id'] ) }}" method="POST" class="form-horizontal needs-validation" novalidate>
     @csrf
     <div class="card">
         <div class="card-header">
@@ -11,13 +11,13 @@
             <div class="form-group row">
                 {!! Form::label('name', 'Nama',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('name', $kategori['name'], array( 'class' => 'form-control', 'placeholder' => 'Nama') ) !!}
+                    {!! Form::text('name', $kategori['name'], array( 'class' => 'form-control', 'placeholder' => 'Nama','required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('group', 'Grup',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('group', array('1' => 'Hadir', '2' => 'Tidak Hadir'),  $kategori['group']??'', array( 'class' => 'form-control') ) !!}
+                    {!! Form::select('group', array('1' => 'Hadir', '2' => 'Tidak Hadir'),  $kategori['group']??'', array( 'class' => 'form-control','required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
@@ -44,4 +44,24 @@
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+        });
+    }, false);
+})();
+</script>
 @endsection

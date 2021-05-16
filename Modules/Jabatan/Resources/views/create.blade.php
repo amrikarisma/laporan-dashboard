@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-<form action="{{ route('jabatan.store') }}" method="POST" class="form-horizontal">
+<form action="{{ route('jabatan.store') }}" method="POST" class="form-horizontal needs-validation" novalidate>
     @csrf
     <div class="card">
         <div class="card-header">
@@ -18,49 +18,43 @@
             <div class="form-group row">
                 {!! Form::label('name', 'Nama',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('name', old('name'), array( 'class' => 'form-control', 'placeholder' => 'Nama') ) !!}
+                    {!! Form::text('name', old('name'), array( 'class' => 'form-control', 'placeholder' => 'Nama', 'required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('time_in', 'Jam Masuk',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('time_in', old('time_in'), array( 'class' => 'form-control', 'placeholder' => 'Jam Masuk') ) !!}
+                    {!! Form::text('time_in', old('time_in'), array( 'class' => 'form-control', 'placeholder' => 'Jam Masuk', 'required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('time_out', 'Jam Keluar',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::text('time_out', old('time_out'), array( 'class' => 'form-control', 'placeholder' => 'Jam Keluar') ) !!}
+                    {!! Form::text('time_out', old('time_out'), array( 'class' => 'form-control', 'placeholder' => 'Jam Keluar', 'required') ) !!}
                 </div>
             </div>
-            {{-- <div class="form-group row">
-                {!! Form::label('work_time', 'Jam Kerja',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
-                <div class="col-sm-9">
-                    {!! Form::text('work_time', old('work_time'), array( 'class' => 'form-control', 'placeholder' => 'Jam Kerja') ) !!}
-                </div>
-            </div> --}}
             <div class="form-group row">
                 {!! Form::label('daily_report', 'Laporan Harian Wajib',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::number('daily_report', old('daily_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Harian Wajib') ) !!}
+                    {!! Form::number('daily_report', old('daily_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Harian Wajib', 'required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('daily_visit_report', 'Laporan Kunjungan Harian Wajib',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::number('daily_visit_report', old('daily_visit_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Kunjungan Harian Wajib') ) !!}
+                    {!! Form::number('daily_visit_report', old('daily_visit_report'), array( 'class' => 'form-control', 'placeholder' => 'Laporan Kunjungan Harian Wajib', 'required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('absent_without_note', 'Toleransi Presensi Tanpa Keterangan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::number('absent_without_note', old('absent_without_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Tanpa Keterangan') ) !!}
+                    {!! Form::number('absent_without_note', old('absent_without_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Tanpa Keterangan', 'required') ) !!}
                 </div>
             </div>
             <div class="form-group row">
                 {!! Form::label('absent_with_note', 'Toleransi Presensi Dengan Keterangan',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::number('absent_with_note', old('absent_with_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Dengan Keterangan') ) !!}
+                    {!! Form::number('absent_with_note', old('absent_with_note'), array( 'class' => 'form-control', 'placeholder' => 'Toleransi Presensi Dengan Keterangan', 'required') ) !!}
                 </div>
             </div>
 
@@ -78,6 +72,24 @@
 @section('plugins.Momentjs', true)
 @section('plugins.Daterangepicker', true)
 <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+            });
+        }, false);
+    })();
     $(function() {
         $('input[name="time_in"], input[name="time_out"], input[name="work_time"]').daterangepicker({
                 singleDatePicker: true,

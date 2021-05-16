@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td>{{ 'Tujuan' }}</td>
-                            <td>{{  $broadcast['target_send']['name']??'' }}</td>
+                            <td>{{  $broadcast['target_send']['name']??'' }} {!! $broadcast['target_send_with_children'] ? '(<em>Beserta cabang dibawahnya</em>)' : '' !!}</td>
                         </tr>
                         <tr>
                             <td>{{ 'Status' }}</td>

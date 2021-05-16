@@ -10,7 +10,7 @@
             <h3>Tambah Cabang</h3>
         </div>
         <div class="card-body">
-            @include('layouts.notification')
+            {{-- @include('layouts.notification') --}}
             <div class="form-group row">
                 {!! Form::label('parent_id', 'Cabang Diatasnya',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
@@ -36,7 +36,7 @@
             <div class="form-group row">
                 {!! Form::label('branch', 'Tingkat Cabang',  array( 'class' => 'col-sm-3 col-form-label') ) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('branch', $branch , $cabang['branch']['id']??'', array( 'class' => 'form-control select2 ' .($errors->has('branch') ? ' is-invalid' : null), 'placeholder' => 'Pilih Tingkat Cabang',) ) !!}
+                    {!! Form::select('branch', $branch , $cabang['branch']['id']??'', array( 'class' => 'form-control select2 ' .($errors->has('branch') ? ' is-invalid' : null), 'placeholder' => 'Pilih Tingkat Cabang','required') ) !!}
                     @error('branch')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -96,6 +96,24 @@
 @endsection
 @section('js')
     <script>
-        $('.select2').select2();
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    $('.select2').select2();
     </script>
 @endsection

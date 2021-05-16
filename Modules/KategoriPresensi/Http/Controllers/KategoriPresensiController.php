@@ -61,7 +61,7 @@ class KategoriPresensiController extends Controller
 
         $kategoripresensi = MyHelper::apiPost('kategori-presensi', $input);
         if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'success'){
-            return redirect()->route('kategori-laporan.index')->with('message', $kategoripresensi['message']);
+            return redirect()->route('kategori-presensi.index')->with('message', $kategoripresensi['message']);
         } else if(isset($kategoripresensi['status']) && $kategoripresensi['status'] == 'failed') {
             return redirect()->back()->with('error', $kategoripresensi['message']);
         }
@@ -78,7 +78,7 @@ class KategoriPresensiController extends Controller
     {
         $kategoripresensi = MyHelper::apiGet('kategori-presensi/'.$id)??[];
         if($kategoripresensi['status'] == 'failed') {
-            return redirect()->route('kategori-laporan.index')->with('error', 'Data tidak ditemukan');
+            return redirect()->route('kategori-presensi.index')->with('error', 'Data tidak ditemukan');
         }
         $kategori = $kategoripresensi['data']??[];
         return view('kategoripresensi::show', compact('kategori'));
@@ -93,7 +93,7 @@ class KategoriPresensiController extends Controller
     {
         $kategoripresensi = MyHelper::apiGet('kategori-presensi/'.$id)??[];
         if($kategoripresensi['status'] == 'failed') {
-            return redirect()->route('kategori-laporan.index')->with('error', 'Data tidak ditemukan');
+            return redirect()->route('kategori-presensi.index')->with('error', 'Data tidak ditemukan');
         }
         $kategori = $kategoripresensi['data']??[];
         return view('kategoripresensi::edit', compact('kategori'));

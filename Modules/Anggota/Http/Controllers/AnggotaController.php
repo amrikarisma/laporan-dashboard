@@ -84,6 +84,7 @@ class AnggotaController extends Controller
             'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg','max:2048'],
+            'nik' => ['required','max:50'],
             // 'phone' => ['nullable', 'numeric', 'min:8','max:15']
         ]);
         
@@ -115,11 +116,11 @@ class AnggotaController extends Controller
             'nik'                   => $request->nik,
             'phone'                 => $request->phone,
             'status'                => $request->status,
-            'password'              => $request->password??1234
+            'password'              => $request->password??substr($request->nik, -4)
         ];
 
         $newAnggota = MyHelper::apiPostWithFile('anggota', $anggota, $request);
-        // return $newAnggota ;
+
         if(isset($newAnggota['status']) ) {
             if($newAnggota['status'] == 'success') {
                 return redirect()->route('anggota.index')->with('message', $newAnggota['message']);
@@ -127,8 +128,10 @@ class AnggotaController extends Controller
                 return redirect()->back()->with('error', $newAnggota['message'])->withInput();
             }
         }
-
-        return redirect()->back()->withErrors($newAnggota['error'])->withInput();
+        if(isset($newAnggota['error'])) {
+            return redirect()->back()->withErrors($newAnggota['error'])->withInput();
+        }
+        return redirect()->back()->with('error', 'Maaf, Ada Kesalahan sistem.')->withInput();
 
     }
 
@@ -179,6 +182,7 @@ class AnggotaController extends Controller
             'last_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'profile_photo' => ['nullable','image:jpeg,png,jpg,gif,svg','max:2048'],
+            'nik' => ['required','max:50'],
             // 'phone' => ['nullable', 'numeric', 'min:8','max:15']
         ]);
         
@@ -228,7 +232,10 @@ class AnggotaController extends Controller
                 return redirect()->route('anggota.index')->with('error', $newAnggota['message']);
             }
         }
-        return redirect()->back()->withErrors($newAnggota['error'])->withInput();
+        if(isset($newAnggota['error'])) {
+            return redirect()->back()->withErrors($newAnggota['error'])->withInput();
+        }
+        return redirect()->back()->with('error', 'Maaf, Ada Kesalahan sistem.')->withInput();
 
     }
 
