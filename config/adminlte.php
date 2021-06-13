@@ -331,7 +331,7 @@ return [
             'text'        => 'Data Pegawai dan Anggota',
             'url'         => '/anggota',
             'icon'        => 'fas fa-fw fa-users',
-            'role'        => [1]
+            'role'        => [1,2]
         ],
         [
             'text'        => 'Kategori Presensi',
