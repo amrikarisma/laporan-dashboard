@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('kategori-presensi')->middleware('validate_session')->group(function() {
+Route::prefix('kategori-presensi')->middleware(['validate_session', 'has_access:1'])->group(function () {
     Route::get('/list', 'KategoriPresensiController@ajaxlist')->name('kategori-presensi.ajaxlist');
     Route::get('/', 'KategoriPresensiController@index')->name('kategori-presensi.index');
     Route::get('/create', 'KategoriPresensiController@create')->name('kategori-presensi.create');

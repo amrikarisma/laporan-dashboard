@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('indikator')->group(function() {
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('indikator')->group(function () {
     Route::get('/', 'IndikatorController@index');
 });

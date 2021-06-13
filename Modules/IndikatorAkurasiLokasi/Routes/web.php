@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('indikator/akurasi-lokasi')->middleware('validate_session')->group(function() {
+Route::prefix('indikator/akurasi-lokasi')->middleware(['validate_session', 'has_access:1'])->group(function () {
     Route::get('/', 'IndikatorAkurasiLokasiController@index')->name('akurasilokasi.index');
     Route::get('/create', 'IndikatorAkurasiLokasiController@create')->name('akurasilokasi.create');
     Route::post('/store', 'IndikatorAkurasiLokasiController@store')->name('akurasilokasi.store');
