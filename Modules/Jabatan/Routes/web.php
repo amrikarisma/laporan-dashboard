@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('jabatan')->middleware('validate_session')->group(function() {
+Route::prefix('jabatan')->middleware(['validate_session', 'has_access:1'])->group(function () {
     Route::get('/list', 'JabatanController@ajaxlist')->name('jabatan.ajaxlist');
     Route::get('/', 'JabatanController@index')->name('jabatan.index');
     Route::get('/create', 'JabatanController@create')->name('jabatan.create');

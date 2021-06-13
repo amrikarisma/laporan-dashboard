@@ -1,5 +1,5 @@
 @inject('menuItemHelper', '\JeroenNoten\LaravelAdminLte\Helpers\MenuItemHelper')
-@if (isset($item['role']) && hasAccess($item['role'], session('roles')))
+@if (isset($item['role']) && \App\Lib\Myhelper::hasAccess($item['role'], session('roles')))
 
     @if ($menuItemHelper->isHeader($item))
 
