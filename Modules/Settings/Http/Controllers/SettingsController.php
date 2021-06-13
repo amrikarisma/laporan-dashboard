@@ -52,7 +52,9 @@ class SettingsController extends Controller
         $checkAnggota = MyHelper::apiGet('anggota/'.$id)['data']??[];
 
         if(!$checkAnggota) {
+
             return redirect()->route('anggota.index');
+            
         }
 
         $anggota = [
