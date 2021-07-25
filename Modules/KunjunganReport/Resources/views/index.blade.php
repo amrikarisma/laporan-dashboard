@@ -206,45 +206,9 @@
         },
         order: [[ 0, "desc" ]],
         columns: [
-        // { 
-        //     data: {
-        //           _: 'date.display',
-        //           sort: 'date.timestamp'
-        //        },
-        //     name: 'date.timestamp',
 
-        // },
-        // { data: 'date' },
         { data: 'laporan_title' },
         { data: 'laporan_location' },
-        // { data: 'address' },
-        // { 
-        //     data: 'laporan_geolocation',
-        //     render: function (data, type, full, meta) {
-        //         if (type === 'display') {
-        //             var arr = data.split(', ');
-        //             if(typeof arr[1] != 'undefined') {
-        //                 var currentCell = $("#table").DataTable().cells({"row":meta.row, "column":meta.col}).nodes(0);
-        //                 var delay = Math.random() * (120000 - 7000) + 7000;
-        //                 setTimeout(function() {
-        //                     $.ajax({
-        //                         type: 'GET',
-        //                         url: "https://nominatim.openstreetmap.org/reverse?format=geojson&lat="+arr[0]+"&lon="+arr[1],
-        //                         success: function (x) {
-        //                                 console.log( x['features'][0]['properties']['display_name']);
-        //                                 $(currentCell).text(x['features'][0]['properties']['display_name']);
-        //                         },
-        //                         error: function (jqXHR) {
-        //                             console.log(jqXHR)
-        //                         }
-        //                     });
-        //                 }, delay);
-        //             }
-        //         }
-
-        //         return data;
-        //     }, 
-        // },
         { data: 'laporan_address_geo' },
         { data: 'created_at'},
         { data: 'user.name'},

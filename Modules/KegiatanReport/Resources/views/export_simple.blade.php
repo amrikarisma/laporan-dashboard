@@ -32,7 +32,7 @@
                 <td valign="center" style="border:1px solid black">{{ $laporan['laporan_title']??'' }}</td>
                 <td valign="center" style="border:1px solid black; table-layout: auto;width:60px;word-wrap:break-word;">{{ $laporan['laporan_description']??'' }}</td>
                 <td valign="center" style="border:1px solid black">{{ $laporan['recommendation']??'' }}</td>
-                @if (isset($laporan['image'][0]['path']))
+                @if (isset($laporan['image'][0]['path']) && file_exists(env('STORAGE_PATH').'/'.$laporan['image'][0]['path']) )
                     <td align="center" style="border:1px solid black"><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$laporan['image'][0]['path'] }}" alt=""></td>
                 @else
                     <td style="border:1px solid black"></td>
