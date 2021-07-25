@@ -32,7 +32,7 @@
             <tr>
                 <td align="center" valign="center" style="border:1px solid black" >{{ $loop->iteration}}</td>
                 <td valign="center" style="border:1px solid black" >{{ \Carbon\Carbon::parse($laporan['created_at'])->isoFormat('dddd, D MMMM Y / HH:mm') }}</td>
-                @if (isset($laporan['image'][0]['path']))
+                @if (isset($laporan['image'][0]['path']) && file_exists(env('STORAGE_PATH').'/'.$laporan['image'][0]['path']) )
                     <td valign="center" style="border:1px solid black"><img width="100" height="100" src="{{ env('STORAGE_PATH').'/'.$laporan['image'][0]['path'] }}" alt=""></td>
                 @else
                 <td></td>
