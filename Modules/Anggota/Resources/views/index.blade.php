@@ -60,6 +60,9 @@
 @endsection
 @section('css')
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<style>
+
+</style>
 @endsection
 @section('js')
 <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
@@ -73,9 +76,9 @@
         processing: true,
         serverSide: true,
         scrollCollapse:true,
-        scrollY:500,
+        // scrollY:500,
         scrollX:true,
-        ajax: '{{ route('anggota.listanggota') }}',
+        ajax: "{{ route('anggota.listanggota') }}",
         columns: [
         { data: 'user.userdata.profile_photo_url' },
         { data: 'user.name' },
@@ -90,5 +93,6 @@
         { data: 'actions'},
     ]
     });
+
     </script>
 @endsection
