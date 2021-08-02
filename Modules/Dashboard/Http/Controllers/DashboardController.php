@@ -16,6 +16,7 @@ class DashboardController extends Controller
     public function index()
     {
         $profile = MyHelper::apiGet('profile')['data'] ?? [];
+
         return view('dashboard::index', compact('profile'));
     }
 
